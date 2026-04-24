@@ -753,6 +753,58 @@
 
     .sched-note { font-size: 11px; color: var(--dim); text-align: center; }
 
+    /* ── MOST FAVOURITE ── */
+    .fav-sec { padding: 100px 0; background: var(--bg); }
+    .fav-header { text-align: center; margin-bottom: 56px; }
+    .fav-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); background: rgba(255,45,149,0.08); border: 1px solid rgba(255,45,149,0.2); border-radius: 50px; padding: 6px 18px; margin-bottom: 20px; }
+    .fav-h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -2px; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 14px; }
+    .fav-sub { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.6; }
+
+    .fav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    @media (max-width: 1024px) { .fav-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px)  { .fav-grid { grid-template-columns: 1fr; } }
+
+    .fav-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .fav-card:hover { border-color: rgba(255,45,149,0.35); transform: translateY(-6px); box-shadow: 0 20px 50px rgba(255,45,149,0.12); }
+
+    .fav-img {
+      position: relative; aspect-ratio: 3/4; overflow: hidden;
+      background: linear-gradient(155deg,#160824,#0a0a0a);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .fav-img img { width: 100%; height: 100%; object-fit: contain; padding: 20px; transition: transform 0.4s ease; }
+    .fav-card:hover .fav-img img { transform: scale(1.06); }
+    .fav-badge { position: absolute; top: 12px; left: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 50px; }
+    .fav-badge.best  { background: rgba(255,195,0,0.18); color: var(--yellow); border: 1px solid rgba(255,195,0,0.35); }
+    .fav-badge.fan   { background: rgba(255,45,149,0.15); color: var(--pink);   border: 1px solid rgba(255,45,149,0.3); }
+    .fav-badge.top   { background: rgba(57,255,20,0.12);  color: var(--green);  border: 1px solid rgba(57,255,20,0.3); }
+    .fav-badge.new   { background: rgba(108,43,255,0.15); color: #c084fc;       border: 1px solid rgba(108,43,255,0.3); }
+
+    .fav-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .fav-name { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.3px; color: var(--white); line-height: 1.2; }
+    .fav-desc { font-size: 12px; color: var(--dim); line-height: 1.5; flex: 1; }
+    .fav-stars { font-size: 12px; color: var(--yellow); letter-spacing: 1px; }
+    .fav-rnum  { font-size: 11px; color: var(--dim); }
+
+    .fav-footer { padding: 0 20px 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .fav-price { font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; }
+    .fav-price span { font-size: 12px; font-weight: 400; color: var(--dim); }
+    .fav-cart-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer;
+      background: var(--pink); color: #fff;
+      font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 16px rgba(255,45,149,0.3); white-space: nowrap;
+    }
+    .fav-cart-btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,45,149,0.5); }
+
     /* ── CTA BANNER ── */
     .cta-section {
       position: relative;
@@ -927,6 +979,92 @@
         <span class="carousel-dot" data-idx="4"></span>
       </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOST FAVOURITE -->
+<section class="fav-sec" id="favourites">
+  <div class="container">
+    <div class="fav-header">
+      <div class="fav-tag">⭐ Community Picks</div>
+      <h2 class="fav-h2">Most <span class="gradient-text">Favourite</span></h2>
+      <p class="fav-sub">The packets our community can't stop ordering. Tried, tested, and obsessed over.</p>
+    </div>
+    <div class="fav-grid">
+
+      <!-- Card 1 -->
+      <div class="fav-card">
+        <div class="fav-img">
+          <img src="images/packet/Container.png" alt="Pineapple &amp; Pisco" />
+          <span class="fav-badge best">Best Seller</span>
+        </div>
+        <div class="fav-body">
+          <div class="fav-name">Pineapple &amp; Pisco</div>
+          <div class="fav-desc">Sharp Peruvian Pisco meets cold-pressed golden pineapple. Tear it. Mix it. Go.</div>
+          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.8 (124 reviews)</span></div>
+        </div>
+        <div class="fav-footer">
+          <div class="fav-price">£1.99 <span>/ unit</span></div>
+          <button class="fav-cart-btn" onclick="favAddToCart('Pineapple & Pisco','1.99','images/packet/Container.png')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="fav-card">
+        <div class="fav-img">
+          <img src="images/packet/Exotic%20Passion.png" alt="Exotic Passion" />
+          <span class="fav-badge fan">Fan Favourite</span>
+        </div>
+        <div class="fav-body">
+          <div class="fav-name">Exotic Passion</div>
+          <div class="fav-desc">Tropical passion fruit with a citrus edge. The one that always runs out first.</div>
+          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.9 (98 reviews)</span></div>
+        </div>
+        <div class="fav-footer">
+          <div class="fav-price">£2.49 <span>/ unit</span></div>
+          <button class="fav-cart-btn" onclick="favAddToCart('Exotic Passion','2.49','images/packet/Exotic%20Passion.png')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="fav-card">
+        <div class="fav-img">
+          <img src="images/packet/Summer%20vibe.png" alt="Summer Vibe" />
+          <span class="fav-badge new">New Drop</span>
+        </div>
+        <div class="fav-body">
+          <div class="fav-name">Summer Vibe</div>
+          <div class="fav-desc">Sun-soaked citrus and tropical fruits blended for the ultimate warm-weather mix.</div>
+          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.7 (62 reviews)</span></div>
+        </div>
+        <div class="fav-footer">
+          <div class="fav-price">£2.99 <span>/ unit</span></div>
+          <button class="fav-cart-btn" onclick="favAddToCart('Summer Vibe','2.99','images/packet/Summer%20vibe.png')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="fav-card">
+        <div class="fav-img">
+          <img src="images/packet/Three%20wonders.png" alt="Three Wonders" />
+          <span class="fav-badge top">Top Rated</span>
+        </div>
+        <div class="fav-body">
+          <div class="fav-name">Three Wonders</div>
+          <div class="fav-desc">Three bold flavours in one — a triple-hit of mango, lychee and guava concentrate.</div>
+          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.8 (87 reviews)</span></div>
+        </div>
+        <div class="fav-footer">
+          <div class="fav-price">£2.49 <span>/ unit</span></div>
+          <button class="fav-cart-btn" onclick="favAddToCart('Three Wonders','2.49','images/packet/Three%20wonders.png')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:48px;">
+      <a href="shop.html" class="btn btn-outline" style="font-size:13px;padding:14px 36px;">View Full Shop →</a>
     </div>
   </div>
 </section>
@@ -1311,6 +1449,26 @@
     if (badge && count > 0) { badge.textContent = count; badge.style.display = 'flex'; }
   })();
 
+  /* ── Most Favourite Add to Cart ── */
+  function favAddToCart(name, price, image) {
+    const cart = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({ name, price: parseFloat(price), image, qty: 1, type: 'Cocktail Syrup', size: '30 ml' });
+    }
+    localStorage.setItem('ripSipCartItems', JSON.stringify(cart));
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    localStorage.setItem('ripSipCart', total);
+    // Update nav count
+    const el = document.getElementById('cartCount');
+    if (el) { el.textContent = total; el.style.display = 'flex'; }
+    // Toast
+    const t = document.getElementById('favToast');
+    if (t) { t.textContent = `✓ ${name} added to cart`; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800); }
+  }
+
   (function initCarousel() {
     const packets = document.querySelectorAll('.packet-carousel .packet');
     const dots    = document.querySelectorAll('.carousel-dot');
@@ -1333,6 +1491,9 @@
     timer = setInterval(() => goTo((cur + 1) % packets.length), 4500);
   })();
 </script>
+
+<div id="favToast" style="position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a24;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 24px;font-size:13px;font-weight:700;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),opacity 0.3s ease;opacity:0;white-space:nowrap;pointer-events:none;"></div>
+<style>#favToast.show{transform:translateX(-50%) translateY(0);opacity:1;}</style>
 
 <!-- FLOATING CONTACT BUTTON -->
 <a href="contact.html" class="contact-btn">
