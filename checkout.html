@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Rip & Sip</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A; --bg2: #111116; --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08); --pink: #FF2D95; --purple: #6C2BFF;
+      --green: #39FF14; --yellow: #FFC300; --white: #FFFFFF;
+      --text: #E4E1E9; --muted: #a1a1aa; --dim: #71717a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background: rgba(10,10,10,0.88); border-bottom: 1px solid var(--border);
+      box-shadow: 0 0 30px rgba(108,43,255,0.08);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 100px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 12px; font-weight: 700; color: var(--muted); text-decoration: none; text-transform: uppercase; letter-spacing: 1.2px; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    /* ── FLOATING CONTACT BUTTON ── */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 9998;
+      display: inline-flex; align-items: center; gap: 0;
+      padding: 14px; border-radius: 50px;
+      background: var(--pink); color: #fff !important; text-decoration: none;
+      white-space: nowrap; box-shadow: 0 4px 24px rgba(255,45,149,0.5);
+      transition: padding 0.42s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+    }
+    .contact-btn:hover { padding: 14px 22px; box-shadow: 0 8px 40px rgba(255,45,149,0.7); }
+    .contact-btn .env-icon { font-size: 20px; flex-shrink: 0; line-height: 1; }
+    .contact-btn .env-label {
+      width: 0; overflow: hidden; opacity: 0; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px; margin-left: 0; color: #fff;
+      transition: width 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease 0.06s, margin-left 0.42s cubic-bezier(0.4,0,0.2,1);
+    }
+    .contact-btn:hover .env-label { width: 100px; opacity: 1; margin-left: 10px; }
+    .cart-nav-btn {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
+      border-radius: 8px; background: rgba(108,43,255,0.1); border: 1px solid rgba(108,43,255,0.3);
+      color: var(--white) !important; text-decoration: none; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .cart-nav-btn:hover { background: rgba(108,43,255,0.2); box-shadow: 0 0 16px rgba(108,43,255,0.3); }
+    .cart-nav-count {
+      display: none; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--pink); color: #fff; font-size: 9px; font-weight: 700;
+    }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+    .admin-nav-btn {
+      width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03); color: var(--dim); font-size: 16px;
+      display: flex; align-items: center; justify-content: center; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .admin-nav-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.07); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 110px 0 40px; border-bottom: 1px solid var(--border);
+      background: linear-gradient(to bottom, #08001a, var(--bg));
+    }
+    .breadcrumb { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+    .breadcrumb a { color: var(--dim); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .page-title { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -2px; text-transform: uppercase; color: var(--white); line-height: 1; }
+    .page-title span { color: var(--pink); }
+
+    /* ── CHECKOUT STEPS ── */
+    .steps-bar {
+      display: flex; align-items: center; gap: 0; margin-top: 24px;
+      padding: 0 2px;
+    }
+    .step {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--dim);
+    }
+    .step.active { color: var(--white); }
+    .step.done { color: var(--green); }
+    .step-num {
+      width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+    }
+    .step-sep { flex: 1; height: 1px; background: var(--border); margin: 0 12px; max-width: 60px; }
+
+    /* ── MAIN LAYOUT ── */
+    .checkout-section { padding: 48px 0 100px; }
+    .checkout-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+    @media (max-width: 960px) { .checkout-layout { grid-template-columns: 1fr; } }
+
+    /* ── FORM BLOCKS ── */
+    .form-block {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px; margin-bottom: 20px;
+    }
+    .form-block-title {
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--muted); margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-block-title svg { opacity: 0.6; }
+
+    .form-row { display: grid; gap: 16px; margin-bottom: 16px; }
+    .form-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .form-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 600px) { .form-row.cols-2, .form-row.cols-3 { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--muted);
+    }
+    .form-input, .form-select {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--white);
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .form-input::placeholder { color: var(--dim); }
+    .form-input:focus, .form-select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(108,43,255,0.12); }
+    .form-select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2371717a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-select option { background: #1a1a22; }
+
+    /* ── STRIPE PAYMENT ── */
+    .stripe-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--dim); background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px;
+      margin-left: auto;
+    }
+    .stripe-logo {
+      font-size: 12px; font-weight: 900; letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #635BFF, #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .payment-methods { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .pay-method {
+      flex: 1; min-width: 120px; padding: 12px 16px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: rgba(255,255,255,0.02);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      font-size: 12px; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .pay-method.active { border-color: var(--purple); background: rgba(108,43,255,0.08); color: var(--white); }
+    .pay-method:hover:not(.active) { border-color: rgba(255,255,255,0.2); }
+    .pay-method-icon { font-size: 18px; }
+
+    .stripe-field-wrapper {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px; margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    .stripe-field-wrapper:focus-within { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(108,43,255,0.12); }
+    .stripe-field-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin-bottom: 8px; }
+    #stripe-card-element { min-height: 22px; }
+
+    /* Stripe placeholder (pre-integration) */
+    .stripe-placeholder {
+      background: rgba(99,91,255,0.05); border: 1px dashed rgba(99,91,255,0.3);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px; text-align: center;
+    }
+    .stripe-placeholder-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.5; }
+    .stripe-placeholder-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .stripe-placeholder-text strong { color: var(--purple); }
+
+    .card-icons { display: flex; gap: 8px; margin-bottom: 16px; }
+    .card-icon {
+      height: 26px; padding: 0 8px; border-radius: 4px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+    }
+    .card-icon.visa { color: #1a5fff; }
+    .card-icon.mc { color: #eb5757; }
+    .card-icon.amex { color: #59bfff; }
+    .card-icon.apple { color: var(--white); }
+
+    .security-note {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--dim); margin-top: 12px;
+    }
+    .security-note svg { flex-shrink: 0; color: var(--green); }
+
+    /* ── ORDER SIDEBAR ── */
+    .order-sidebar { position: sticky; top: 90px; }
+    .order-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .order-title {
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--muted); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+
+    .order-item { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .order-item-img {
+      width: 48px; height: 48px; border-radius: 8px;
+      background: rgba(108,43,255,0.1); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+      flex-shrink: 0; overflow: hidden;
+    }
+    .order-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .order-item-info { flex: 1; }
+    .order-item-name { font-size: 13px; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: -0.2px; }
+    .order-item-qty { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.8px; }
+    .order-item-price { font-size: 14px; font-weight: 700; color: var(--white); }
+
+    .order-divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .order-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .order-label { font-size: 13px; color: var(--muted); }
+    .order-value { font-size: 13px; font-weight: 700; color: var(--white); }
+    .order-value.free { color: var(--green); }
+    .order-value.discount { color: var(--green); }
+    .order-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+    .order-total-label { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--white); }
+    .order-total-value { font-size: 26px; font-weight: 700; color: var(--white); }
+
+    .pay-btn {
+      width: 100%; padding: 17px; border-radius: 10px; border: none; margin-top: 24px;
+      background: linear-gradient(135deg, var(--purple), #8b5cf6);
+      color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.4px; cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 24px rgba(108,43,255,0.35);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .pay-btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(108,43,255,0.5); }
+    .pay-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .back-link {
+      display: block; text-align: center; margin-top: 14px;
+      font-size: 12px; color: var(--dim); text-decoration: none;
+      text-transform: uppercase; letter-spacing: 1px; transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--white); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: #1a1a24; border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 24px; font-size: 13px; font-weight: 700; color: var(--white);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 9999;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+      opacity: 0; white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer { background: #05050A; border-top: 1px solid var(--border); padding: 64px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 48px; margin-bottom: 56px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand { margin-bottom: 10px; }
+    .footer-tag { font-size: 13px; color: var(--dim); line-height: 1.6; max-width: 240px; margin-bottom: 24px; }
+    .social-icons { display: flex; gap: 10px; }
+    .soc-icon { width: 34px; height: 34px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+    .soc-icon:hover { border-color: var(--pink); background: rgba(255,45,149,0.08); }
+    .f-col-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 18px; }
+    .f-links { display: flex; flex-direction: column; gap: 12px; }
+    .f-link { font-size: 13px; color: var(--dim); text-decoration: none; transition: color 0.15s; }
+    .f-link:hover { color: var(--white); }
+    .responsible { background: rgba(255,45,149,0.04); border: 1px solid rgba(255,45,149,0.12); border-radius: 10px; padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 16px; }
+    .age-ring { flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--pink); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--pink); }
+    .resp-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); margin-bottom: 6px; }
+    .resp-text { font-size: 12px; color: var(--dim); line-height: 1.6; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .f-copy { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cocktails.html">Our Cocktails</a></li>
+      <li>
+        <a href="cart.html" class="cart-nav-btn">
+          🛒 Cart <span class="cart-nav-count" id="cartNavCount"></span>
+        </a>
+      </li>
+    </ul>
+    <a href="admin.html" class="admin-nav-btn" title="Admin Panel">⚙</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> &rsaquo;
+      <a href="shop.html">Shop</a> &rsaquo;
+      <a href="cart.html">Cart</a> &rsaquo; Checkout
+    </div>
+    <h1 class="page-title">Secure <span>Checkout</span></h1>
+    <div class="steps-bar">
+      <div class="step done">
+        <div class="step-num">✓</div>
+        Cart
+      </div>
+      <div class="step-sep"></div>
+      <div class="step active">
+        <div class="step-num">2</div>
+        Details
+      </div>
+      <div class="step-sep"></div>
+      <div class="step">
+        <div class="step-num">3</div>
+        Payment
+      </div>
+      <div class="step-sep"></div>
+      <div class="step">
+        <div class="step-num">4</div>
+        Confirm
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<section class="checkout-section">
+  <div class="container">
+    <div class="checkout-layout">
+
+      <!-- LEFT: FORMS -->
+      <div class="checkout-forms">
+
+        <!-- Contact Info -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+            Contact Information
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input class="form-input" type="text" id="firstName" placeholder="Alex" autocomplete="given-name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" type="text" id="lastName" placeholder="Smith" autocomplete="family-name" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input class="form-input" type="email" id="email" placeholder="alex@example.com" autocomplete="email" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input class="form-input" type="tel" id="phone" placeholder="+44 7700 900000" autocomplete="tel" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Delivery Address
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Address Line 1</label>
+              <input class="form-input" type="text" id="address1" placeholder="123 High Street" autocomplete="address-line1" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Address Line 2 (optional)</label>
+              <input class="form-input" type="text" id="address2" placeholder="Apartment, suite, etc." autocomplete="address-line2" />
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input class="form-input" type="text" id="city" placeholder="London" autocomplete="address-level2" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Postcode</label>
+              <input class="form-input" type="text" id="postcode" placeholder="EC1A 1BB" autocomplete="postal-code" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Country</label>
+              <select class="form-select" id="country" autocomplete="country">
+                <option value="GB">United Kingdom</option>
+                <option value="IE">Ireland</option>
+                <option value="NL">Netherlands</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="ES">Spain</option>
+                <option value="IT">Italy</option>
+                <option value="SE">Sweden</option>
+                <option value="NO">Norway</option>
+                <option value="DK">Denmark</option>
+                <option value="AU">Australia</option>
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Options -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Delivery Options
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <label class="delivery-option" id="opt-standard">
+              <input type="radio" name="delivery" value="standard" checked style="display:none;" />
+              <div class="delivery-opt-inner active" onclick="selectDelivery('standard',this)">
+                <div>
+                  <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px;">Standard Delivery</div>
+                  <div style="font-size:12px;color:var(--dim);">3–5 business days</div>
+                </div>
+                <div id="delivery-standard-price" style="font-size:14px;font-weight:700;color:var(--green);">FREE</div>
+              </div>
+            </label>
+            <label class="delivery-option" id="opt-express">
+              <input type="radio" name="delivery" value="express" style="display:none;" />
+              <div class="delivery-opt-inner" onclick="selectDelivery('express',this)">
+                <div>
+                  <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px;">Express Delivery</div>
+                  <div style="font-size:12px;color:var(--dim);">Next business day · Order before 2pm</div>
+                </div>
+                <div style="font-size:14px;font-weight:700;color:var(--white);">£6.99</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Payment
+            <div class="stripe-badge">
+              <span class="stripe-logo">stripe</span>
+              Secured
+            </div>
+          </div>
+
+          <div class="payment-methods">
+            <div class="pay-method active" onclick="selectMethod(this,'card')">
+              <span class="pay-method-icon">💳</span> Card
+            </div>
+            <div class="pay-method" onclick="selectMethod(this,'apple')">
+              <span class="pay-method-icon">🍎</span> Apple Pay
+            </div>
+            <div class="pay-method" onclick="selectMethod(this,'google')">
+              <span class="pay-method-icon">🔵</span> Google Pay
+            </div>
+          </div>
+
+          <div class="card-icons">
+            <div class="card-icon visa">VISA</div>
+            <div class="card-icon mc">MC</div>
+            <div class="card-icon amex">AMEX</div>
+          </div>
+
+          <!-- Stripe Card Element will mount here -->
+          <div id="card-payment-form">
+            <div class="stripe-placeholder">
+              <div class="stripe-placeholder-icon">🔒</div>
+              <div class="stripe-placeholder-text">
+                Payment powered by <strong>Stripe</strong>.<br />
+                Add your Stripe publishable key to activate secure card entry.
+              </div>
+            </div>
+            <!-- When Stripe key is added, replace above with:
+            <div class="stripe-field-wrapper">
+              <div class="stripe-field-label">Card Number</div>
+              <div id="stripe-card-element"></div>
+            </div>
+            -->
+            <div class="form-row cols-2">
+              <div class="form-group">
+                <label class="form-label">Name on Card</label>
+                <input class="form-input" type="text" id="cardName" placeholder="Alex Smith" autocomplete="cc-name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Card Number</label>
+                <input class="form-input" type="text" id="cardNumber" placeholder="•••• •••• •••• ••••" maxlength="19" autocomplete="cc-number" oninput="formatCard(this)" />
+              </div>
+            </div>
+            <div class="form-row cols-2">
+              <div class="form-group">
+                <label class="form-label">Expiry Date</label>
+                <input class="form-input" type="text" id="cardExpiry" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp" oninput="formatExpiry(this)" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">CVC</label>
+                <input class="form-input" type="text" id="cardCvc" placeholder="•••" maxlength="4" autocomplete="cc-csc" />
+              </div>
+            </div>
+          </div>
+
+          <div class="security-note">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Your payment information is encrypted and never stored on our servers.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: ORDER SUMMARY -->
+      <div class="order-sidebar">
+        <div class="order-card">
+          <div class="order-title">Order Summary</div>
+          <div id="orderItems"><!-- rendered by JS --></div>
+          <div class="order-divider"></div>
+          <div class="order-row">
+            <span class="order-label">Subtotal</span>
+            <span class="order-value" id="orderSubtotal">£0.00</span>
+          </div>
+          <div class="order-row">
+            <span class="order-label">Delivery</span>
+            <span class="order-value" id="orderDelivery">£4.99</span>
+          </div>
+          <div class="order-row" id="orderDiscountRow" style="display:none;">
+            <span class="order-label">Discount</span>
+            <span class="order-value discount" id="orderDiscount">-£0.00</span>
+          </div>
+          <div class="order-divider"></div>
+          <div class="order-total-row">
+            <span class="order-total-label">Total</span>
+            <span class="order-total-value" id="orderTotal">£0.00</span>
+          </div>
+
+          <button class="pay-btn" id="payBtn" onclick="placeOrder()">
+            🔒 Pay Now
+          </button>
+          <a href="cart.html" class="back-link">← Back to Cart</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" style="height:88px;width:auto;" /></div>
+        <div class="footer-tag">Instant cocktail experience. Fully customizable. Portable nightlife in your pocket.</div>
+        <div class="social-icons">
+          <div class="soc-icon">𝕏</div>
+          <div class="soc-icon">📷</div>
+          <div class="soc-icon">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Products</div>
+        <div class="f-links">
+          <a href="shop.html" class="f-link">Pineapple &amp; Pisco</a>
+          <a href="shop.html" class="f-link">Strawberry, Lemon &amp; Mint</a>
+          <a href="shop.html" class="f-link">Passion Fruit Fusion</a>
+          <a href="shop.html" class="f-link">Limited Edition</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Company</div>
+        <div class="f-links">
+          <a href="#" class="f-link">About Us</a>
+          <a href="#" class="f-link">Careers</a>
+          <a href="#" class="f-link">Press</a>
+          <a href="#" class="f-link">Stockists</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Legal</div>
+        <div class="f-links">
+          <a href="#" class="f-link">Privacy Policy</a>
+          <a href="#" class="f-link">Terms of Service</a>
+          <a href="#" class="f-link">Age Verification</a>
+          <a href="#" class="f-link">Accessibility</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="responsible">
+      <div class="age-ring">18+</div>
+      <div>
+        <div class="resp-title">Responsible Drinking</div>
+        <div class="resp-text">TOMAR BEBIDAS ALCOHÓLICAS EN EXCESO ES DANINO. Drink responsibly. Must be of legal drinking age in your country. Do not drink and drive. Rip &amp; Sip products contain alcohol — please check your local laws and consume safely.</div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="f-copy">© 2024 Rip &amp; Sip Entertainment. All rights reserved.</div>
+      <div class="f-copy">Drink Responsibly &nbsp;·&nbsp; 18+ Only</div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<style>
+  .delivery-opt-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px; border-radius: 10px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,0.02);
+    cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  }
+  .delivery-opt-inner.active { border-color: var(--green); background: rgba(57,255,20,0.05); }
+  .delivery-opt-inner:hover:not(.active) { border-color: rgba(255,255,255,0.2); }
+</style>
+
+<script>
+  /* ── Cart Nav Count ── */
+  (function() {
+    const count = parseInt(localStorage.getItem('ripSipCart') || '0');
+    const el = document.getElementById('cartNavCount');
+    if (el && count > 0) { el.textContent = count; el.style.display = 'flex'; }
+  })();
+
+  /* ── Load cart from localStorage ── */
+  function getCart() {
+    return JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+  }
+
+  let deliveryCost = 0;
+  let activeDiscount = parseFloat(sessionStorage.getItem('checkoutDiscount') || '0');
+
+  function renderOrder() {
+    const cart = getCart();
+    if (cart.length === 0) { window.location.href = 'cart.html'; return; }
+
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    deliveryCost = subtotal >= 50 ? 0 : 4.99;
+
+    document.getElementById('orderItems').innerHTML = cart.map(item => `
+      <div class="order-item">
+        <div class="order-item-img">
+          ${item.image ? `<img src="${item.image}" alt="${item.name}" />` : '🍹'}
+        </div>
+        <div class="order-item-info">
+          <div class="order-item-name">${item.name}</div>
+          <div class="order-item-qty">Qty: ${item.qty}</div>
+        </div>
+        <div class="order-item-price">£${(item.price * item.qty).toFixed(2)}</div>
+      </div>
+    `).join('');
+
+    const discount = subtotal * activeDiscount;
+    const total = subtotal + deliveryCost - discount;
+
+    document.getElementById('orderSubtotal').textContent = `£${subtotal.toFixed(2)}`;
+    document.getElementById('orderDelivery').textContent = deliveryCost === 0 ? 'FREE' : `£${deliveryCost.toFixed(2)}`;
+    document.getElementById('orderDelivery').className = 'order-value' + (deliveryCost === 0 ? ' free' : '');
+    document.getElementById('orderTotal').textContent = `£${total.toFixed(2)}`;
+
+    if (activeDiscount > 0) {
+      document.getElementById('orderDiscountRow').style.display = 'flex';
+      document.getElementById('orderDiscount').textContent = `-£${discount.toFixed(2)}`;
+    }
+
+    // Update pay button text with total
+    document.getElementById('payBtn').innerHTML = `🔒 Pay £${total.toFixed(2)}`;
+  }
+
+  /* ── Delivery option toggle ── */
+  function selectDelivery(type, el) {
+    document.querySelectorAll('.delivery-opt-inner').forEach(d => d.classList.remove('active'));
+    el.classList.add('active');
+    if (type === 'express') {
+      deliveryCost = 6.99;
+    } else {
+      const cart = getCart();
+      const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      deliveryCost = sub >= 50 ? 0 : 4.99;
+    }
+    const cart = getCart();
+    const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const disc = sub * activeDiscount;
+    const total = sub + deliveryCost - disc;
+    document.getElementById('orderDelivery').textContent = deliveryCost === 0 ? 'FREE' : `£${deliveryCost.toFixed(2)}`;
+    document.getElementById('orderDelivery').className = 'order-value' + (deliveryCost === 0 ? ' free' : '');
+    document.getElementById('orderTotal').textContent = `£${total.toFixed(2)}`;
+    document.getElementById('payBtn').innerHTML = `🔒 Pay £${total.toFixed(2)}`;
+  }
+
+  /* ── Payment method toggle ── */
+  function selectMethod(el, type) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+    el.classList.add('active');
+    const form = document.getElementById('card-payment-form');
+    form.style.opacity = type === 'card' ? '1' : '0.4';
+    form.style.pointerEvents = type === 'card' ? 'auto' : 'none';
+  }
+
+  /* ── Card number formatting ── */
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').slice(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length >= 2) v = v.slice(0, 2) + ' / ' + v.slice(2);
+    input.value = v;
+  }
+
+  /* ── Validation ── */
+  function validate() {
+    const required = ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'postcode'];
+    for (const id of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.focus();
+        el.style.borderColor = 'var(--pink)';
+        showToast('Please fill in all required fields.');
+        setTimeout(() => { el.style.borderColor = ''; }, 2000);
+        return false;
+      }
+    }
+    const email = document.getElementById('email').value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('Please enter a valid email address.');
+      return false;
+    }
+    return true;
+  }
+
+  /* ── Place order ── */
+  function placeOrder() {
+    if (!validate()) return;
+
+    const btn = document.getElementById('payBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Processing...';
+
+    /* ── When Stripe is integrated, replace this block with:
+       stripe.createPaymentMethod({ type: 'card', card: cardElement })
+         .then(result => { ... })
+       ── */
+    setTimeout(() => {
+      // Simulate successful payment
+      localStorage.removeItem('ripSipCartItems');
+      localStorage.setItem('ripSipCart', '0');
+      sessionStorage.removeItem('checkoutDiscount');
+      showToast('✓ Order placed successfully!');
+      setTimeout(() => {
+        window.location.href = 'index.html?order=success';
+      }, 1800);
+    }, 2000);
+  }
+
+  /* ── Toast ── */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  /* ── Init ── */
+  renderOrder();
+</script>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="contact.html" class="contact-btn">
+  <span class="env-icon">✉</span>
+  <span class="env-label">Contact Us</span>
+</a>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Inventory · Rip & Sip</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A; --bg2: #111116; --bg3: #16161c;
+      --border: rgba(255,255,255,0.08); --pink: #FF2D95; --purple: #6C2BFF;
+      --green: #39FF14; --yellow: #FFC300; --red: #FF3B3B; --orange: #FF8C00;
+      --white: #FFFFFF; --text: #E4E1E9; --muted: #a1a1aa; --dim: #71717a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
+
+    /* ── LOGIN SCREEN ── */
+    .login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #06001a 0%, #0a0a0a 60%, #001006 100%);
+      position: relative; overflow: hidden;
+    }
+    .login-screen::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(108,43,255,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 65%, rgba(57,255,20,0.10) 0%, transparent 50%);
+    }
+    .login-card {
+      position: relative; z-index: 1;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 20px;
+      padding: 48px 40px; width: 100%; max-width: 420px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+    .login-logo { margin-bottom: 32px; }
+    .login-logo img { height: 56px; width: auto; }
+    .login-title { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -1px; margin-bottom: 6px; }
+    .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+    .login-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .login-field label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--dim); }
+    .login-field input {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px 14px; font-family: 'Space Grotesk', sans-serif; font-size: 14px;
+      color: var(--white); outline: none; transition: border-color 0.15s; width: 100%;
+    }
+    .login-field input::placeholder { color: var(--dim); }
+    .login-field input:focus { border-color: var(--purple); }
+    .login-error {
+      background: rgba(255,59,59,0.1); border: 1px solid rgba(255,59,59,0.3); border-radius: 8px;
+      padding: 10px 14px; font-size: 13px; color: #ff7777; margin-bottom: 16px; display: none;
+    }
+    .login-btn {
+      width: 100%; padding: 14px; border-radius: 8px; border: none;
+      background: var(--purple); color: #fff; font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px;
+      cursor: pointer; transition: box-shadow 0.2s, transform 0.15s; margin-top: 8px;
+      box-shadow: 0 0 20px rgba(108,43,255,0.3);
+    }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(108,43,255,0.5); }
+    .login-hint { font-size: 11px; color: var(--dim); text-align: center; margin-top: 16px; }
+    .login-hint code { color: var(--muted); background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; }
+
+    /* ── ADMIN DASHBOARD ── */
+    .dashboard { display: none; min-height: 100vh; }
+
+    /* Top bar */
+    .topbar {
+      position: sticky; top: 0; z-index: 99;
+      background: rgba(10,10,10,0.92); border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px); padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 20px; }
+    .topbar-logo img { height: 44px; width: auto; }
+    .topbar-divider { width: 1px; height: 32px; background: var(--border); }
+    .topbar-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .admin-badge {
+      padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      background: rgba(108,43,255,0.12); color: #b78bff; border: 1px solid rgba(108,43,255,0.3);
+    }
+    .logout-btn {
+      padding: 7px 16px; border-radius: 8px; border: 1px solid var(--border);
+      background: transparent; color: var(--dim); font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      cursor: pointer; transition: color 0.2s, border-color 0.2s;
+    }
+    .logout-btn:hover { color: var(--pink); border-color: rgba(255,45,149,0.3); }
+    .back-link {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--white); }
+
+    /* Main content */
+    .admin-content { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 768px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px 24px;
+    }
+    .stat-card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 8px; }
+    .stat-card-val { font-size: 32px; font-weight: 700; color: var(--white); letter-spacing: -2px; }
+    .stat-card-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .stat-green { border-color: rgba(57,255,20,0.2); }
+    .stat-green .stat-card-val { color: var(--green); }
+    .stat-yellow { border-color: rgba(255,195,0,0.2); }
+    .stat-yellow .stat-card-val { color: var(--yellow); }
+    .stat-red { border-color: rgba(255,59,59,0.2); }
+    .stat-red .stat-card-val { color: var(--red); }
+
+    /* Section header */
+    .section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .section-head-title { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: var(--white); }
+    .section-head-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .save-all-btn {
+      padding: 10px 22px; border-radius: 8px; border: none;
+      background: var(--green); color: #0a0a0a;
+      font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+      box-shadow: 0 0 16px rgba(57,255,20,0.25); transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .save-all-btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(57,255,20,0.45); }
+    .save-all-btn.saved { background: var(--purple); color: #fff; box-shadow: 0 0 16px rgba(108,43,255,0.3); }
+
+    /* Inventory table */
+    .inv-table { width: 100%; border-collapse: collapse; }
+    .inv-table th {
+      text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--dim); padding: 0 16px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .inv-row {
+      background: var(--bg2); border-radius: 12px; margin-bottom: 10px;
+      border: 1px solid var(--border); transition: border-color 0.2s;
+    }
+    .inv-row:hover { border-color: rgba(255,255,255,0.15); }
+    .inv-row td { padding: 16px; vertical-align: middle; }
+    .inv-row td:first-child { border-radius: 12px 0 0 12px; }
+    .inv-row td:last-child { border-radius: 0 12px 12px 0; }
+
+    .prod-thumb {
+      width: 52px; height: 52px; border-radius: 10px; overflow: hidden;
+      background: #0d0d12; flex-shrink: 0;
+    }
+    .prod-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .prod-thumb-emoji { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+
+    .prod-info-name { font-size: 14px; font-weight: 700; color: var(--white); }
+    .prod-info-cat { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+    .stock-input-wrap { display: flex; align-items: center; gap: 8px; }
+    .stock-input {
+      width: 90px; padding: 9px 12px; border-radius: 8px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--white); outline: none; text-align: center;
+      transition: border-color 0.15s;
+    }
+    .stock-input:focus { border-color: var(--purple); }
+    .stock-unit { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+
+    .threshold-input {
+      width: 72px; padding: 9px 12px; border-radius: 8px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px;
+      color: var(--muted); outline: none; text-align: center;
+      transition: border-color 0.15s;
+    }
+    .threshold-input:focus { border-color: var(--purple); }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 999px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .status-in   { background: rgba(57,255,20,0.1);  color: var(--green); border: 1px solid rgba(57,255,20,0.25); }
+    .status-in .status-dot { background: var(--green); }
+    .status-low  { background: rgba(255,195,0,0.1);  color: var(--yellow); border: 1px solid rgba(255,195,0,0.25); }
+    .status-low .status-dot { background: var(--yellow); }
+    .status-out  { background: rgba(255,59,59,0.1);  color: var(--red); border: 1px solid rgba(255,59,59,0.25); }
+    .status-out .status-dot { background: var(--red); }
+
+    /* Activity log */
+    .log-section { margin-top: 48px; }
+    .log-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+    .log-item {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 16px; font-size: 13px;
+    }
+    .log-time { font-size: 11px; color: var(--dim); white-space: nowrap; }
+    .log-msg { color: var(--text); flex: 1; }
+    .log-tag {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      padding: 3px 9px; border-radius: 999px;
+    }
+    .log-tag-update { background: rgba(108,43,255,0.12); color: #b78bff; }
+    .log-tag-login  { background: rgba(57,255,20,0.08); color: var(--green); }
+
+    /* Toast */
+    .toast-saved {
+      position: fixed; bottom: 32px; right: 32px;
+      background: var(--bg2); border: 1px solid rgba(57,255,20,0.3); border-radius: 12px;
+      padding: 14px 24px; font-size: 14px; font-weight: 600; color: var(--green);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(57,255,20,0.15);
+      z-index: 9999; transform: translateY(100px); opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+    }
+    .toast-saved.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ LOGIN SCREEN ═══════════ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="images/Logo/logo.png" alt="Rip & Sip" />
+    </div>
+    <div class="login-title">Admin Portal</div>
+    <div class="login-sub">Inventory & Stock Management — Staff Only</div>
+
+    <div class="login-error" id="loginError">Incorrect username or password. Please try again.</div>
+
+    <div class="login-field">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin" autocomplete="username" />
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="login-hint">Demo credentials: <code>admin</code> / <code>ripandsip2024</code></div>
+  </div>
+</div>
+
+<!-- ═══════════ DASHBOARD ═══════════ -->
+<div class="dashboard" id="dashboard">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo"><img src="images/Logo/logo.png" alt="Rip & Sip" /></div>
+      <div class="topbar-divider"></div>
+      <div class="topbar-title">Inventory Management</div>
+    </div>
+    <div class="topbar-right">
+      <a href="index.html" class="back-link">← Back to Site</a>
+      <div class="admin-badge">Admin</div>
+      <button class="logout-btn" onclick="doLogout()">Log Out</button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="admin-content">
+
+    <!-- Stats -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-card-label">Total Products</div>
+        <div class="stat-card-val" id="statTotal">10</div>
+        <div class="stat-card-sub">across all categories</div>
+      </div>
+      <div class="stat-card stat-green">
+        <div class="stat-card-label">In Stock</div>
+        <div class="stat-card-val" id="statIn">—</div>
+        <div class="stat-card-sub">fully stocked items</div>
+      </div>
+      <div class="stat-card stat-yellow">
+        <div class="stat-card-label">Low Stock</div>
+        <div class="stat-card-val" id="statLow">—</div>
+        <div class="stat-card-sub">below threshold</div>
+      </div>
+      <div class="stat-card stat-red">
+        <div class="stat-card-label">Out of Stock</div>
+        <div class="stat-card-val" id="statOut">—</div>
+        <div class="stat-card-sub">needs restocking</div>
+      </div>
+    </div>
+
+    <!-- Inventory table -->
+    <div class="section-head">
+      <div>
+        <div class="section-head-title">Stock Levels</div>
+        <div class="section-head-sub">Update quantities then click Save All to publish to the shop.</div>
+      </div>
+      <button class="save-all-btn" id="saveAllBtn" onclick="saveAll()">Save All Changes</button>
+    </div>
+
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th style="width:56px;"></th>
+          <th>Product</th>
+          <th>Category</th>
+          <th>Stock (units)</th>
+          <th>Low Stock Alert</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="invBody"></tbody>
+    </table>
+
+    <!-- Activity log -->
+    <div class="log-section">
+      <div class="section-head-title">Recent Activity</div>
+      <div class="log-list" id="logList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Saved toast -->
+<div class="toast-saved" id="savedToast">✓ Inventory saved & published to shop</div>
+
+<script>
+  /* ── Credentials ── */
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASS = 'ripandsip2024';
+
+  /* ── Products catalogue ── */
+  const PRODUCTS = [
+    { id: 'pineapple-pisco',   name: 'Pineapple & Pisco',          cat: 'Cocktail Syrup',   img: 'images/other%20images/Pineapple%20%26%20Pisco.png' },
+    { id: 'strawberry-mint',   name: 'Strawberry Lemon & Mint',     cat: 'Cocktail Syrup',   img: 'images/product/refreshing.png' },
+    { id: 'passion-fruit',     name: 'Passion Fruit Fusion',        cat: 'Cocktail Syrup',   img: 'images/product/Exotic%20passion.png' },
+    { id: 'lemon-crash',       name: 'Lemon Crash',                 cat: 'Cocktail Syrup',   img: 'images/other%20images/lemon%20crash.png' },
+    { id: 'highball-glass',    name: 'Highball Glass (Set of 2)',    cat: 'Glassware',        img: '', emoji: '🥃' },
+    { id: 'coupe-glass',       name: 'Coupe Glass (Set of 2)',       cat: 'Glassware',        img: '', emoji: '🍸' },
+    { id: 'rocks-glass',       name: 'Rocks Glass (Set of 2)',       cat: 'Glassware',        img: '', emoji: '🪨' },
+    { id: 'boston-shaker',     name: 'Boston Shaker Pro',           cat: 'Accessories',      img: '', emoji: '🍹' },
+    { id: 'bar-tool-set',      name: 'Bar Tool Set (6 Piece)',       cat: 'Accessories',      img: '', emoji: '🧑‍🍳' },
+    { id: 'eco-straws',        name: 'Eco Straws (Pack of 50)',     cat: 'Accessories',      img: '', emoji: '🌿' },
+  ];
+
+  /* ── Default inventory ── */
+  const DEFAULT_INV = {
+    'pineapple-pisco': { stock: 240, threshold: 50 },
+    'strawberry-mint': { stock: 180, threshold: 50 },
+    'passion-fruit':   { stock: 95,  threshold: 50 },
+    'lemon-crash':     { stock: 30,  threshold: 50 },
+    'highball-glass':  { stock: 60,  threshold: 20 },
+    'coupe-glass':     { stock: 45,  threshold: 20 },
+    'rocks-glass':     { stock: 0,   threshold: 20 },
+    'boston-shaker':   { stock: 22,  threshold: 10 },
+    'bar-tool-set':    { stock: 18,  threshold: 10 },
+    'eco-straws':      { stock: 110, threshold: 30 },
+  };
+
+  /* ── Log ── */
+  let activityLog = JSON.parse(localStorage.getItem('ripSipAdminLog') || '[]');
+
+  function addLog(msg, tag) {
+    const now = new Date();
+    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + now.toLocaleDateString([], { day: 'numeric', month: 'short' });
+    activityLog.unshift({ time, msg, tag });
+    if (activityLog.length > 20) activityLog.pop();
+    localStorage.setItem('ripSipAdminLog', JSON.stringify(activityLog));
+    renderLog();
+  }
+
+  function renderLog() {
+    const el = document.getElementById('logList');
+    if (!activityLog.length) { el.innerHTML = '<div style="color:var(--dim);font-size:13px;padding:12px 0;">No activity yet.</div>'; return; }
+    el.innerHTML = activityLog.slice(0, 8).map(l => `
+      <div class="log-item">
+        <span class="log-time">${l.time}</span>
+        <span class="log-msg">${l.msg}</span>
+        <span class="log-tag log-tag-${l.tag}">${l.tag}</span>
+      </div>
+    `).join('');
+  }
+
+  /* ── Status helper ── */
+  function getStatus(stock, threshold) {
+    if (stock <= 0)         return { cls: 'status-out',  label: 'Out of Stock' };
+    if (stock <= threshold) return { cls: 'status-low',  label: 'Low Stock' };
+    return                         { cls: 'status-in',   label: 'In Stock' };
+  }
+
+  /* ── Render table ── */
+  function renderTable(inv) {
+    const tbody = document.getElementById('invBody');
+    tbody.innerHTML = PRODUCTS.map(p => {
+      const { stock, threshold } = inv[p.id];
+      const s = getStatus(stock, threshold);
+      const imgCell = p.img
+        ? `<img src="${p.img}" alt="" />`
+        : `<div class="prod-thumb-emoji">${p.emoji}</div>`;
+      return `
+        <tr class="inv-row" data-id="${p.id}">
+          <td><div class="prod-thumb">${imgCell}</div></td>
+          <td><div class="prod-info-name">${p.name}</div></td>
+          <td><div class="prod-info-cat">${p.cat}</div></td>
+          <td>
+            <div class="stock-input-wrap">
+              <input type="number" class="stock-input" id="stock-${p.id}" value="${stock}" min="0" max="9999" oninput="onStockChange('${p.id}')" />
+              <span class="stock-unit">units</span>
+            </div>
+          </td>
+          <td>
+            <input type="number" class="threshold-input" id="thresh-${p.id}" value="${threshold}" min="0" max="999" title="Low stock alert threshold" />
+          </td>
+          <td><span class="status-badge ${s.cls}" id="status-${p.id}"><span class="status-dot"></span>${s.label}</span></td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function onStockChange(id) {
+    const inv = loadInv();
+    const stockEl = document.getElementById('stock-' + id);
+    const threshEl = document.getElementById('thresh-' + id);
+    const stock = parseInt(stockEl.value) || 0;
+    const threshold = parseInt(threshEl.value) || 0;
+    const s = getStatus(stock, threshold);
+    const badge = document.getElementById('status-' + id);
+    badge.className = 'status-badge ' + s.cls;
+    badge.innerHTML = `<span class="status-dot"></span>${s.label}`;
+    updateStats();
+  }
+
+  /* ── Stats ── */
+  function updateStats() {
+    let inCount = 0, lowCount = 0, outCount = 0;
+    PRODUCTS.forEach(p => {
+      const stock = parseInt(document.getElementById('stock-' + p.id)?.value || 0);
+      const thresh = parseInt(document.getElementById('thresh-' + p.id)?.value || 0);
+      const s = getStatus(stock, thresh);
+      if (s.cls === 'status-in')  inCount++;
+      else if (s.cls === 'status-low') lowCount++;
+      else outCount++;
+    });
+    document.getElementById('statIn').textContent  = inCount;
+    document.getElementById('statLow').textContent = lowCount;
+    document.getElementById('statOut').textContent = outCount;
+  }
+
+  /* ── Storage ── */
+  function loadInv() {
+    return JSON.parse(localStorage.getItem('ripSipInventory') || JSON.stringify(DEFAULT_INV));
+  }
+
+  function saveAll() {
+    const inv = {};
+    PRODUCTS.forEach(p => {
+      const stock = parseInt(document.getElementById('stock-' + p.id)?.value) || 0;
+      const threshold = parseInt(document.getElementById('thresh-' + p.id)?.value) || 0;
+      inv[p.id] = { stock, threshold };
+    });
+    localStorage.setItem('ripSipInventory', JSON.stringify(inv));
+    addLog('Inventory updated — all stock levels saved.', 'update');
+
+    const btn = document.getElementById('saveAllBtn');
+    btn.textContent = '✓ Saved!';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = 'Save All Changes'; btn.classList.remove('saved'); }, 2000);
+
+    const toast = document.getElementById('savedToast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  /* ── Login / Logout ── */
+  function doLogin() {
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    const err  = document.getElementById('loginError');
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+      err.style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      sessionStorage.setItem('ripSipAdminAuth', '1');
+      const inv = loadInv();
+      renderTable(inv);
+      updateStats();
+      addLog('Admin logged in.', 'login');
+      renderLog();
+    } else {
+      err.style.display = 'block';
+      document.getElementById('loginPass').value = '';
+    }
+  }
+
+  function doLogout() {
+    sessionStorage.removeItem('ripSipAdminAuth');
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+  }
+
+  /* ── Enter key for login ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') doLogin();
+  });
+
+  /* ── Auto-login if session exists ── */
+  if (sessionStorage.getItem('ripSipAdminAuth') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    const inv = loadInv();
+    renderTable(inv);
+    updateStats();
+    renderLog();
+  }
+</script>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="contact.html" class="contact-btn">
+  <span class="env-icon">✉</span>
+  <span class="env-label">Contact Us</span>
+</a>
+</body>
+</html>

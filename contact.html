@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Rip & Sip</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A; --bg2: #111116; --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08); --pink: #FF2D95; --purple: #6C2BFF;
+      --green: #39FF14; --white: #FFFFFF; --text: #E4E1E9; --muted: #a1a1aa; --dim: #71717a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background: rgba(10,10,10,0.88); border-bottom: 1px solid var(--border);
+      box-shadow: 0 0 30px rgba(108,43,255,0.08);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 100px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 12px; font-weight: 700; color: var(--muted); text-decoration: none; text-transform: uppercase; letter-spacing: 1.2px; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    /* ── FLOATING CONTACT BUTTON ── */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 9998;
+      display: inline-flex; align-items: center; gap: 0;
+      padding: 14px; border-radius: 50px;
+      background: var(--pink); color: #fff !important; text-decoration: none;
+      white-space: nowrap; box-shadow: 0 4px 24px rgba(255,45,149,0.5);
+      transition: padding 0.42s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+    }
+    .contact-btn:hover { padding: 14px 22px; box-shadow: 0 8px 40px rgba(255,45,149,0.7); }
+    .contact-btn .env-icon { font-size: 20px; flex-shrink: 0; line-height: 1; }
+    .contact-btn .env-label {
+      width: 0; overflow: hidden; opacity: 0; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px; margin-left: 0; color: #fff;
+      transition: width 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease 0.06s, margin-left 0.42s cubic-bezier(0.4,0,0.2,1);
+    }
+    .contact-btn:hover .env-label { width: 100px; opacity: 1; margin-left: 10px; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .cart-btn {
+      position: relative; display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 8px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08); cursor: pointer; font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: #fff; transition: border-color 0.2s; text-decoration: none;
+    }
+    .cart-btn:hover { border-color: #6C2BFF; }
+    .cart-count {
+      display: none; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #FF2D95; color: #fff; font-size: 10px; font-weight: 700;
+    }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+    .admin-nav-btn {
+      width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03); color: var(--dim); font-size: 16px;
+      display: flex; align-items: center; justify-content: center; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .admin-nav-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.07); }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 120px 0 56px; position: relative; overflow: hidden;
+      background: linear-gradient(to bottom, #08001a, var(--bg));
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 40% 60%, rgba(255,45,149,0.12) 0%, transparent 60%);
+    }
+    .breadcrumb { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .breadcrumb a { color: var(--dim); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--white); }
+    .page-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; letter-spacing: -2px; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 12px; }
+    .page-title span { color: var(--pink); }
+    .page-sub { font-size: 16px; color: var(--muted); }
+
+    /* CONTACT SECTION */
+    .contact-section { padding: 64px 0 100px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    /* Info column */
+    .info-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 36px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .info-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); margin-bottom: 8px; }
+    .info-value { font-size: 15px; color: var(--text); line-height: 1.6; }
+    .info-value a { color: var(--pink); text-decoration: none; }
+    .info-value a:hover { text-decoration: underline; }
+    .info-divider { width: 100%; height: 1px; background: var(--border); }
+
+    .social-row { display: flex; gap: 12px; }
+    .soc {
+      width: 38px; height: 38px; border-radius: 8px; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .soc:hover { border-color: var(--pink); background: rgba(255,45,149,0.08); }
+
+    /* Form column */
+    .form-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 36px;
+    }
+    .form-title { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: var(--white); margin-bottom: 6px; }
+    .form-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--dim); }
+    .field input, .field select, .field textarea {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--white);
+      outline: none; transition: border-color 0.15s; width: 100%;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--purple); }
+    .field select { appearance: none; cursor: pointer; }
+    .field select option { background: #111116; }
+    .field textarea { resize: vertical; min-height: 120px; }
+
+    .submit-btn {
+      width: 100%; padding: 15px; border-radius: 8px; border: none;
+      background: var(--pink); color: #fff;
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.4px; cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 20px rgba(255,45,149,0.3);
+      margin-top: 8px;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(255,45,149,0.5); }
+    .submit-btn.sent { background: var(--green); color: #0A0A0A; box-shadow: 0 0 20px rgba(57,255,20,0.4); }
+    .form-note { font-size: 11px; color: var(--dim); text-align: center; margin-top: 12px; }
+
+    /* FOOTER */
+    footer { background: #05050A; border-top: 1px solid var(--border); padding: 32px 0; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .f-logo { font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: -1px; }
+    .f-logo .fp { color: var(--pink); }
+    .f-copy { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+    .f-links { display: flex; gap: 24px; }
+    .f-link { font-size: 12px; color: var(--dim); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+    .f-link:hover { color: var(--white); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cocktails.html">Our Cocktails</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="cart.html" class="cart-btn">🛒 Cart <span class="cart-count" id="cartCount"></span></a>
+      <a href="admin.html" class="admin-nav-btn" title="Admin Panel">⚙</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Contact</div>
+    <h1 class="page-title">Get in <span>Touch</span></h1>
+    <p class="page-sub">Questions, wholesale orders, collabs or just want to talk cocktails — we're here.</p>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Info -->
+      <div class="info-card">
+        <div>
+          <div class="info-title">Email</div>
+          <div class="info-value"><a href="mailto:hello@ripandsip.com">hello@ripandsip.com</a></div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Wholesale & Bulk Orders</div>
+          <div class="info-value"><a href="mailto:trade@ripandsip.com">trade@ripandsip.com</a><br>For clubs, bars, and event organisers ordering 5L+</div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Location</div>
+          <div class="info-value">123 Vinyl Row<br>Downtown · EC1A 1BB<br>United Kingdom</div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Opening Hours</div>
+          <div class="info-value">Mon – Fri · 9am to 6pm<br>Sat · 10am to 4pm<br>Sun · Closed</div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Follow Us</div>
+          <div class="social-row">
+            <a class="soc" href="#">𝕏</a>
+            <a class="soc" href="#">📷</a>
+            <a class="soc" href="#">▶</a>
+            <a class="soc" href="#">🎵</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="form-card">
+        <div class="form-title">Send Us a Message</div>
+        <div class="form-sub">We reply within 24 hours on weekdays. For urgent orders, email trade@ripandsip.com directly.</div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" placeholder="Alex" />
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Kim" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" placeholder="alex@email.com" />
+        </div>
+
+        <div class="field">
+          <label>Enquiry Type</label>
+          <select>
+            <option value="">Select a topic…</option>
+            <option>General Enquiry</option>
+            <option>Wholesale / Bulk Order</option>
+            <option>Event Partnership</option>
+            <option>Cocktail Testing Day</option>
+            <option>Site Visit</option>
+            <option>Press & Media</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Message</label>
+          <textarea placeholder="Tell us what's on your mind…"></textarea>
+        </div>
+
+        <button class="submit-btn" onclick="sendForm(this)">Send Message →</button>
+        <div class="form-note">We never share your details with third parties.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <div class="f-logo"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" style="height:72px;width:auto;" /></div>
+      <div class="f-links">
+        <a href="index.html" class="f-link">Home</a>
+        <a href="shop.html" class="f-link">Shop</a>
+        <a href="#" class="f-link">Privacy</a>
+      </div>
+      <div class="f-copy">© 2024 Rip & Sip · Drink Responsibly · 18+</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function sendForm(btn) {
+    btn.textContent = '✓ Message Sent!';
+    btn.classList.add('sent');
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.classList.remove('sent');
+    }, 3000);
+  }
+
+  (function syncCart() {
+    const count = parseInt(localStorage.getItem('ripSipCart') || '0');
+    const badge = document.getElementById('cartCount');
+    if (badge && count > 0) { badge.textContent = count; badge.style.display = 'flex'; }
+  })();
+</script>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="contact.html" class="contact-btn">
+  <span class="env-icon">✉</span>
+  <span class="env-label">Contact Us</span>
+</a>
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart — Rip & Sip</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A; --bg2: #111116; --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08); --pink: #FF2D95; --purple: #6C2BFF;
+      --green: #39FF14; --yellow: #FFC300; --white: #FFFFFF;
+      --text: #E4E1E9; --muted: #a1a1aa; --dim: #71717a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background: rgba(10,10,10,0.88); border-bottom: 1px solid var(--border);
+      box-shadow: 0 0 30px rgba(108,43,255,0.08);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 100px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 12px; font-weight: 700; color: var(--muted); text-decoration: none; text-transform: uppercase; letter-spacing: 1.2px; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    /* ── FLOATING CONTACT BUTTON ── */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 9998;
+      display: inline-flex; align-items: center; gap: 0;
+      padding: 14px; border-radius: 50px;
+      background: var(--pink); color: #fff !important; text-decoration: none;
+      white-space: nowrap; box-shadow: 0 4px 24px rgba(255,45,149,0.5);
+      transition: padding 0.42s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+    }
+    .contact-btn:hover { padding: 14px 22px; box-shadow: 0 8px 40px rgba(255,45,149,0.7); }
+    .contact-btn .env-icon { font-size: 20px; flex-shrink: 0; line-height: 1; }
+    .contact-btn .env-label {
+      width: 0; overflow: hidden; opacity: 0; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px; margin-left: 0; color: #fff;
+      transition: width 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease 0.06s, margin-left 0.42s cubic-bezier(0.4,0,0.2,1);
+    }
+    .contact-btn:hover .env-label { width: 100px; opacity: 1; margin-left: 10px; }
+    .cart-nav-btn {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
+      border-radius: 8px; background: rgba(108,43,255,0.1); border: 1px solid rgba(108,43,255,0.3);
+      color: var(--white) !important; text-decoration: none; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .cart-nav-btn:hover, .cart-nav-btn.active { background: rgba(108,43,255,0.2); box-shadow: 0 0 16px rgba(108,43,255,0.3); }
+    .cart-nav-count {
+      display: none; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--pink); color: #fff; font-size: 9px; font-weight: 700;
+    }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+    .admin-nav-btn {
+      width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03); color: var(--dim); font-size: 16px;
+      display: flex; align-items: center; justify-content: center; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .admin-nav-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.07); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 110px 0 40px; border-bottom: 1px solid var(--border);
+      background: linear-gradient(to bottom, #08001a, var(--bg));
+    }
+    .breadcrumb { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+    .breadcrumb a { color: var(--dim); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .page-title { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -2px; text-transform: uppercase; color: var(--white); line-height: 1; }
+    .page-title span { color: var(--pink); }
+
+    /* ── CART LAYOUT ── */
+    .cart-section { padding: 48px 0 100px; }
+    .cart-layout { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
+    @media (max-width: 900px) { .cart-layout { grid-template-columns: 1fr; } }
+
+    /* ── ITEMS ── */
+    .items-col {}
+    .items-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .items-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+    .clear-btn {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--dim); background: none; border: none; cursor: pointer; transition: color 0.15s;
+    }
+    .clear-btn:hover { color: var(--pink); }
+
+    .cart-item {
+      display: grid; grid-template-columns: 88px 1fr auto auto auto;
+      gap: 16px; align-items: center;
+      padding: 18px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--bg2); margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    .cart-item:hover { border-color: rgba(108,43,255,0.25); }
+    @media (max-width: 540px) { .cart-item { grid-template-columns: 72px 1fr; grid-template-rows: auto auto auto; } }
+
+    .item-img {
+      width: 88px; height: 88px; border-radius: 10px; overflow: hidden;
+      background: #0d0d10; flex-shrink: 0;
+    }
+    .item-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .item-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+
+    .item-info {}
+    .item-name { font-size: 15px; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: -0.3px; margin-bottom: 4px; }
+    .item-meta { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .item-unit-price { font-size: 13px; color: var(--muted); }
+
+    .item-qty-ctrl { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .iq-btn { width: 32px; height: 36px; background: transparent; border: none; color: var(--white); font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    .iq-btn:hover { background: rgba(255,255,255,0.08); }
+    .iq-val { width: 32px; text-align: center; font-size: 13px; font-weight: 700; color: var(--white); }
+
+    .item-subtotal { font-size: 16px; font-weight: 700; color: var(--white); min-width: 64px; text-align: right; }
+
+    .remove-btn {
+      width: 32px; height: 32px; border-radius: 6px; background: rgba(255,45,149,0.08);
+      border: 1px solid rgba(255,45,149,0.2); color: var(--pink);
+      font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .remove-btn:hover { background: rgba(255,45,149,0.18); box-shadow: 0 0 10px rgba(255,45,149,0.25); }
+
+    /* ── ORDER SUMMARY ── */
+    .summary-col { position: sticky; top: 80px; }
+    .summary-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+    .summary-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .summary-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .summary-label { font-size: 13px; color: var(--muted); }
+    .summary-value { font-size: 13px; font-weight: 700; color: var(--white); }
+    .summary-value.free { color: var(--green); }
+    .summary-divider { width: 100%; height: 1px; background: var(--border); margin: 16px 0; }
+    .summary-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .summary-total-label { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--white); }
+    .summary-total-value { font-size: 24px; font-weight: 700; color: var(--white); }
+    .free-delivery-note { font-size: 11px; color: var(--green); text-align: center; margin-bottom: 16px; }
+    .delivery-note { font-size: 11px; color: var(--dim); text-align: center; margin-bottom: 16px; }
+
+    .checkout-btn {
+      width: 100%; padding: 16px; border-radius: 10px; border: none;
+      background: var(--green); color: #0A0A0A;
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.4px; cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 20px rgba(57,255,20,0.3);
+    }
+    .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(57,255,20,0.5); }
+
+    .continue-link {
+      display: block; text-align: center; margin-top: 16px;
+      font-size: 12px; color: var(--dim); text-decoration: none;
+      text-transform: uppercase; letter-spacing: 1px; transition: color 0.15s;
+    }
+    .continue-link:hover { color: var(--white); }
+
+    .promo-row { display: flex; gap: 8px; margin-bottom: 20px; }
+    .promo-input {
+      flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; color: var(--white);
+      outline: none; transition: border-color 0.15s;
+    }
+    .promo-input::placeholder { color: var(--dim); }
+    .promo-input:focus { border-color: var(--purple); }
+    .promo-btn {
+      padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border);
+      background: transparent; color: var(--white); font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      cursor: pointer; transition: border-color 0.15s;
+    }
+    .promo-btn:hover { border-color: var(--purple); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      display: none; flex-direction: column; align-items: center;
+      justify-content: center; padding: 80px 24px; text-align: center;
+    }
+    .empty-icon { font-size: 72px; margin-bottom: 24px; opacity: 0.4; }
+    .empty-title { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: var(--white); margin-bottom: 10px; }
+    .empty-sub { font-size: 15px; color: var(--muted); margin-bottom: 32px; }
+    .shop-btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px;
+      border-radius: 8px; background: var(--pink); color: #fff;
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.4px; text-decoration: none;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 20px rgba(255,45,149,0.3);
+    }
+    .shop-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(255,45,149,0.5); }
+
+    /* ── FOOTER ── */
+    footer { background: #05050A; border-top: 1px solid var(--border); padding: 64px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 48px; margin-bottom: 56px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand { font-size: 26px; font-weight: 700; letter-spacing: -1px; color: var(--white); margin-bottom: 10px; }
+    .footer-tag { font-size: 13px; color: var(--dim); line-height: 1.6; max-width: 240px; margin-bottom: 24px; }
+    .social-icons { display: flex; gap: 10px; }
+    .soc-icon { width: 34px; height: 34px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+    .soc-icon:hover { border-color: var(--pink); background: rgba(255,45,149,0.08); }
+    .f-col-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 18px; }
+    .f-links { display: flex; flex-direction: column; gap: 12px; }
+    .f-link { font-size: 13px; color: var(--dim); text-decoration: none; transition: color 0.15s; }
+    .f-link:hover { color: var(--white); }
+    .responsible { background: rgba(255,45,149,0.04); border: 1px solid rgba(255,45,149,0.12); border-radius: 10px; padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 16px; }
+    .age-ring { flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--pink); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--pink); }
+    .resp-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); margin-bottom: 6px; }
+    .resp-text { font-size: 12px; color: var(--dim); line-height: 1.6; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .f-copy { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cocktails.html">Our Cocktails</a></li>
+      <li>
+        <a href="cart.html" class="cart-nav-btn active">
+          🛒 Cart <span class="cart-nav-count" id="cartNavCount"></span>
+        </a>
+      </li>
+    </ul>
+    <a href="admin.html" class="admin-nav-btn" title="Admin Panel">⚙</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> &rsaquo;
+      <a href="shop.html">Shop</a> &rsaquo; Cart
+    </div>
+    <h1 class="page-title">Your <span>Cart</span></h1>
+  </div>
+</div>
+
+<!-- CART -->
+<section class="cart-section">
+  <div class="container">
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🛒</div>
+      <div class="empty-title">Your cart is empty</div>
+      <div class="empty-sub">Looks like you haven't added anything yet. Go find your vibe.</div>
+      <a href="shop.html" class="shop-btn">Go to Shop →</a>
+    </div>
+
+    <!-- Cart content -->
+    <div class="cart-layout" id="cartLayout" style="display:none;">
+
+      <!-- Items column -->
+      <div class="items-col">
+        <div class="items-header">
+          <div class="items-title" id="itemsTitle">0 items</div>
+          <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+        </div>
+        <div id="cartItems"></div>
+      </div>
+
+      <!-- Summary column -->
+      <div class="summary-col">
+        <div class="summary-card">
+          <div class="summary-title">Order Summary</div>
+
+          <div class="promo-row">
+            <input class="promo-input" type="text" placeholder="Promo code" id="promoInput" />
+            <button class="promo-btn" onclick="applyPromo()">Apply</button>
+          </div>
+
+          <div class="summary-row">
+            <span class="summary-label">Subtotal</span>
+            <span class="summary-value" id="subtotal">£0.00</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Delivery</span>
+            <span class="summary-value" id="delivery">£4.99</span>
+          </div>
+          <div class="summary-row" id="discountRow" style="display:none;">
+            <span class="summary-label">Promo Discount</span>
+            <span class="summary-value" style="color:var(--green);" id="discountVal">-£0.00</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-total-row">
+            <span class="summary-total-label">Total</span>
+            <span class="summary-total-value" id="orderTotal">£0.00</span>
+          </div>
+
+          <div id="deliveryNote" class="delivery-note">Free delivery on orders over £50</div>
+
+          <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+          <a href="shop.html" class="continue-link">← Continue Shopping</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" style="height:88px;width:auto;" /></div>
+        <div class="footer-tag">Instant cocktail experience. Fully customizable. Portable nightlife in your pocket.</div>
+        <div class="social-icons">
+          <div class="soc-icon">𝕏</div>
+          <div class="soc-icon">📷</div>
+          <div class="soc-icon">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Products</div>
+        <div class="f-links">
+          <a href="shop.html" class="f-link">Pineapple &amp; Pisco</a>
+          <a href="shop.html" class="f-link">Strawberry, Lemon &amp; Mint</a>
+          <a href="shop.html" class="f-link">Passion Fruit Fusion</a>
+          <a href="shop.html" class="f-link">Limited Edition</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Company</div>
+        <div class="f-links">
+          <a href="#" class="f-link">About Us</a>
+          <a href="#" class="f-link">Careers</a>
+          <a href="#" class="f-link">Press</a>
+          <a href="#" class="f-link">Stockists</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Legal</div>
+        <div class="f-links">
+          <a href="#" class="f-link">Privacy Policy</a>
+          <a href="#" class="f-link">Terms of Service</a>
+          <a href="#" class="f-link">Age Verification</a>
+          <a href="#" class="f-link">Accessibility</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="responsible">
+      <div class="age-ring">18+</div>
+      <div>
+        <div class="resp-title">Responsible Drinking</div>
+        <div class="resp-text">TOMAR BEBIDAS ALCOHÓLICAS EN EXCESO ES DANINO. Drink responsibly. Must be of legal drinking age in your country. Do not drink and drive. Rip &amp; Sip products contain alcohol — please check your local laws and consume safely.</div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="f-copy">© 2024 Rip &amp; Sip Entertainment. All rights reserved.</div>
+      <div class="f-copy">Drink Responsibly &nbsp;·&nbsp; 18+ Only</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const PROMO_CODES = { 'NIGHT10': 0.10, 'RIPANDSIP': 0.15, 'UNI20': 0.20 };
+  let activeDiscount = 0;
+
+  function getCart() {
+    return JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem('ripSipCartItems', JSON.stringify(cart));
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    localStorage.setItem('ripSipCart', total);
+    updateNavCount(total);
+  }
+
+  function updateNavCount(count) {
+    const el = document.getElementById('cartNavCount');
+    if (!el) return;
+    el.textContent = count;
+    el.style.display = count > 0 ? 'flex' : 'none';
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const emptyState  = document.getElementById('emptyState');
+    const cartLayout  = document.getElementById('cartLayout');
+
+    if (cart.length === 0) {
+      emptyState.style.display  = 'flex';
+      cartLayout.style.display  = 'none';
+      updateNavCount(0);
+      return;
+    }
+
+    emptyState.style.display = 'none';
+    cartLayout.style.display = 'grid';
+
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    document.getElementById('itemsTitle').textContent = `${total} item${total !== 1 ? 's' : ''}`;
+    updateNavCount(total);
+
+    document.getElementById('cartItems').innerHTML = cart.map((item, idx) => `
+      <div class="cart-item">
+        <div class="item-img">
+          ${item.image
+            ? `<img src="${item.image}" alt="${item.name}" />`
+            : `<div class="item-img-placeholder">🍹</div>`}
+        </div>
+        <div class="item-info">
+          <div class="item-name">${item.name}</div>
+          <div class="item-meta">${item.type} · ${item.size}</div>
+          <div class="item-unit-price">£${parseFloat(item.price).toFixed(2)} / unit</div>
+        </div>
+        <div class="item-qty-ctrl">
+          <button class="iq-btn" onclick="updateQty(${idx}, -1)">−</button>
+          <span class="iq-val">${item.qty}</span>
+          <button class="iq-btn" onclick="updateQty(${idx}, 1)">+</button>
+        </div>
+        <div class="item-subtotal">£${(item.price * item.qty).toFixed(2)}</div>
+        <button class="remove-btn" onclick="removeItem(${idx})" title="Remove">✕</button>
+      </div>
+    `).join('');
+
+    updateSummary(cart);
+  }
+
+  function updateQty(idx, delta) {
+    const cart = getCart();
+    cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+    saveCart(cart);
+    renderCart();
+  }
+
+  function removeItem(idx) {
+    const cart = getCart();
+    cart.splice(idx, 1);
+    saveCart(cart);
+    renderCart();
+  }
+
+  function clearCart() {
+    if (!confirm('Remove all items from your cart?')) return;
+    saveCart([]);
+    renderCart();
+  }
+
+  function updateSummary(cart) {
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const delivery  = subtotal >= 50 ? 0 : 4.99;
+    const discount  = subtotal * activeDiscount;
+    const total     = subtotal + delivery - discount;
+
+    document.getElementById('subtotal').textContent   = `£${subtotal.toFixed(2)}`;
+    document.getElementById('delivery').textContent   = delivery === 0 ? 'FREE' : `£${delivery.toFixed(2)}`;
+    document.getElementById('delivery').className     = `summary-value${delivery === 0 ? ' free' : ''}`;
+    document.getElementById('orderTotal').textContent = `£${total.toFixed(2)}`;
+    document.getElementById('deliveryNote').textContent =
+      subtotal >= 50 ? '🎉 You qualify for free delivery!' : `Free delivery on orders over £50 (£${(50 - subtotal).toFixed(2)} away)`;
+    document.getElementById('deliveryNote').className =
+      subtotal >= 50 ? 'free-delivery-note' : 'delivery-note';
+
+    if (activeDiscount > 0) {
+      document.getElementById('discountRow').style.display = 'flex';
+      document.getElementById('discountVal').textContent = `-£${discount.toFixed(2)}`;
+    }
+  }
+
+  function applyPromo() {
+    const code = document.getElementById('promoInput').value.trim().toUpperCase();
+    if (PROMO_CODES[code]) {
+      activeDiscount = PROMO_CODES[code];
+      updateSummary(getCart());
+      document.getElementById('promoInput').style.borderColor = 'var(--green)';
+      alert(`✓ Promo code applied! ${(activeDiscount * 100)}% off.`);
+    } else {
+      document.getElementById('promoInput').style.borderColor = 'var(--pink)';
+      alert('Invalid promo code. Try NIGHT10, RIPANDSIP or UNI20.');
+    }
+  }
+
+  function checkout() {
+    const cart = getCart();
+    if (cart.length === 0) return;
+    window.location.href = 'checkout.html';
+  }
+
+  // Init
+  renderCart();
+</script>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="contact.html" class="contact-btn">
+  <span class="env-icon">✉</span>
+  <span class="env-label">Contact Us</span>
+</a>
+</body>
+</html>

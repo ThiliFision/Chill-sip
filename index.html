@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rip & Sip — Own the Night</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:      #0A0A0A;
+      --bg2:     #111116;
+      --glass:   rgba(255,255,255,0.03);
+      --border:  rgba(255,255,255,0.08);
+      --pink:    #FF2D95;
+      --purple:  #6C2BFF;
+      --green:   #39FF14;
+      --yellow:  #FFC300;
+      --red:     #FF3B3B;
+      --orange:  #FF8C00;
+      --white:   #FFFFFF;
+      --text:    #E4E1E9;
+      --muted:   #a1a1aa;
+      --dim:     #71717a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-green {
+      background: var(--green);
+      color: #0A0A0A;
+      box-shadow: 0 0 20px rgba(57,255,20,0.35);
+    }
+    .btn-green:hover { box-shadow: 0 0 35px rgba(57,255,20,0.55); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.45); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(10,10,10,0.85);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 0 30px rgba(108,43,255,0.08);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 100px; width: auto; display: block; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+    /* ── FLOATING CONTACT BUTTON ── */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 9998;
+      display: inline-flex; align-items: center; gap: 0;
+      padding: 14px; border-radius: 50px;
+      background: var(--pink); color: #fff !important; text-decoration: none;
+      white-space: nowrap; box-shadow: 0 4px 24px rgba(255,45,149,0.5);
+      transition: padding 0.42s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+    }
+    .contact-btn:hover { padding: 14px 22px; box-shadow: 0 8px 40px rgba(255,45,149,0.7); }
+    .contact-btn .env-icon { font-size: 20px; flex-shrink: 0; line-height: 1; }
+    .contact-btn .env-label {
+      width: 0; overflow: hidden; opacity: 0; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px; margin-left: 0; color: #fff;
+      transition: width 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease 0.06s, margin-left 0.42s cubic-bezier(0.4,0,0.2,1);
+    }
+    .contact-btn:hover .env-label { width: 100px; opacity: 1; margin-left: 10px; }
+
+    .nav-shop { padding: 10px 20px !important; font-size: 12px !important; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .cart-btn {
+      position: relative; display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 8px; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); cursor: pointer; font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--white); transition: border-color 0.2s; text-decoration: none;
+    }
+    .cart-btn:hover { border-color: var(--purple); }
+    .cart-count {
+      display: none; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--pink); color: #fff; font-size: 10px; font-weight: 700;
+    }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+    .admin-nav-btn {
+      width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03); color: var(--dim); font-size: 16px;
+      display: flex; align-items: center; justify-content: center; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .admin-nav-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.07); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(108,43,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,43,255,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+    }
+    .hero-orbs {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 15% 60%, rgba(108,43,255,0.22) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 35%, rgba(255,45,149,0.18) 0%, transparent 50%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero-ctas { justify-content: center; }
+      .hero-visual { order: -1; }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid var(--pink);
+      border-radius: 9999px;
+      background: rgba(255,45,149,0.08);
+      color: var(--pink);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
+    }
+    .live-dot {
+      width: 6px; height: 6px;
+      background: var(--pink);
+      border-radius: 50%;
+      animation: blink 1.4s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; } 50% { opacity:0.3; }
+    }
+
+    .hero-h1 {
+      font-size: clamp(3.2rem, 6.5vw, 6.5rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -3px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .hero-h1-accent {
+      display: block;
+      font-size: clamp(3.2rem, 6.5vw, 6.5rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 32px;
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 460px;
+      margin-bottom: 40px;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Packets visual */
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      gap: 28px;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(108,43,255,0.22) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    /* Carousel wrapper — sized to the packet */
+    .packet-carousel {
+      position: relative;
+      width: 390px;
+      height: 630px;
+      z-index: 1;
+    }
+    .packet {
+      position: absolute;
+      inset: 0;
+      width: 390px;
+      height: 630px;
+      border-radius: 42px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 42px 30px;
+      overflow: hidden;
+      /* hidden by default, fade in when active */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.75s ease;
+    }
+    .packet.active {
+      opacity: 1;
+      pointer-events: auto;
+      animation: float 3.5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0px); }
+      50%      { transform: translateY(-18px); }
+    }
+    .p-pine { background: linear-gradient(155deg,#1c1400,#0a0a0a); box-shadow: 0 0 60px rgba(255,195,0,0.22), inset 0 0 60px rgba(255,195,0,0.05); }
+    .p-pass { background: linear-gradient(155deg,#1c0800,#0a0a0a); box-shadow: 0 0 60px rgba(255,140,0,0.22), inset 0 0 60px rgba(255,140,0,0.05); }
+    .p-purp { background: linear-gradient(155deg,#08001c,#0a0a0a); box-shadow: 0 0 60px rgba(108,43,255,0.30), inset 0 0 60px rgba(108,43,255,0.10); }
+    .p-stra { background: linear-gradient(155deg,#1c0000,#0a0a0a); box-shadow: 0 0 60px rgba(255,59,59,0.22), inset 0 0 60px rgba(255,59,59,0.05); }
+    .p-stripe {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 15px;
+      border-radius: 42px 42px 0 0;
+    }
+    .s-y { background: var(--yellow); box-shadow: 0 0 18px var(--yellow); }
+    .s-o { background: var(--orange); box-shadow: 0 0 18px var(--orange); }
+    .s-p { background: var(--purple); box-shadow: 0 0 18px var(--purple); }
+    .s-r { background: var(--red);    box-shadow: 0 0 18px var(--red); }
+    .p-tear {
+      position: absolute;
+      top: 54px; right: -2px;
+      width: 54px; height: 108px;
+      border-left: 4px dashed rgba(255,255,255,0.15);
+    }
+    .p-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.88;
+      border-radius: 42px;
+    }
+    .p-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.55) 100%);
+      border-radius: 42px;
+    }
+    .p-label { position: relative; z-index: 2; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); text-align: center; }
+    .p-name  { position: relative; z-index: 2; font-size: 26px; font-weight: 700; text-transform: uppercase; color: var(--white); text-align: center; margin-top: 8px; line-height: 1.2; }
+
+    /* Dot indicators */
+    .carousel-dots {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 2;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .carousel-dot.active {
+      background: var(--pink);
+      transform: scale(1.35);
+      box-shadow: 0 0 8px rgba(255,45,149,0.6);
+    }
+
+    @media (max-width: 900px) {
+      .packet-carousel { width: 240px; height: 388px; }
+      .packet { width: 240px; height: 388px; border-radius: 26px; padding: 26px 18px; }
+      .p-img { border-radius: 26px; }
+      .p-overlay { border-radius: 26px; }
+      .p-stripe { height: 9px; border-radius: 26px 26px 0 0; }
+      .p-label { font-size: 12px; }
+      .p-name  { font-size: 18px; }
+      .p-tear  { top: 32px; width: 32px; height: 64px; }
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,45,149,0.03);
+      padding: 14px 0;
+    }
+    .ticker-track {
+      display: flex;
+      animation: marquee 20s linear infinite;
+      width: max-content;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .t-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 28px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--pink);
+      white-space: nowrap;
+    }
+    .t-dot { width: 4px; height: 4px; background: var(--pink); border-radius: 50%; opacity: 0.5; }
+
+    /* ── SECTIONS ── */
+    .sec { padding: 100px 0; }
+    .sec-alt { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .sec-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 14px;
+    }
+    .sec-title {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 16px;
+    }
+    .sec-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 480px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 60px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    @media (max-width: 768px) { .how-grid { grid-template-columns: 1fr; } }
+
+    .how-step {
+      background: var(--bg2);
+      padding: 48px 36px;
+      transition: background 0.2s;
+    }
+    .how-step:hover { background: rgba(108,43,255,0.06); }
+
+    .step-num {
+      font-size: 80px;
+      font-weight: 700;
+      letter-spacing: -4px;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.35;
+      margin-bottom: 20px;
+    }
+    .step-icon {
+      width: 100%;
+      height: 180px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .step-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .si-1 { background: rgba(255,195,0,0.1); border: 1px solid rgba(255,195,0,0.2); }
+    .si-2 { background: rgba(108,43,255,0.1); border: 1px solid rgba(108,43,255,0.2); }
+    .si-3 { background: rgba(255,45,149,0.1); border: 1px solid rgba(255,45,149,0.2); }
+
+    .step-name {
+      font-size: 22px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: -0.5px;
+      color: var(--white); margin-bottom: 10px;
+    }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── PRODUCTS ── */
+    .products-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .products-header { flex-direction: column; align-items: flex-start; }
+    }
+
+    .prod-card {
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .prod-card:hover { transform: translateY(-6px); }
+    .pc-pine:hover  { box-shadow: 0 20px 60px rgba(255,195,0,0.12); border-color: rgba(255,195,0,0.2); }
+    .pc-stra:hover  { box-shadow: 0 20px 60px rgba(255,59,59,0.12); border-color: rgba(255,59,59,0.2); }
+    .pc-pass:hover  { box-shadow: 0 20px 60px rgba(255,140,0,0.12); border-color: rgba(255,140,0,0.2); }
+
+    .prod-img {
+      position: relative;
+      height: 280px;
+      overflow: hidden;
+    }
+    .prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .prod-img-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 45%, var(--bg) 100%);
+    }
+    .prod-tag {
+      position: absolute;
+      top: 14px; left: 14px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .pt-y { background: rgba(255,195,0,0.12); color: var(--yellow); border: 1px solid rgba(255,195,0,0.25); }
+    .pt-r { background: rgba(255,59,59,0.12);  color: var(--red);    border: 1px solid rgba(255,59,59,0.25); }
+    .pt-o { background: rgba(255,140,0,0.12);  color: var(--orange); border: 1px solid rgba(255,140,0,0.25); }
+
+    .prod-body { padding: 22px; }
+    .prod-vibe { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .pv-y { color: var(--yellow); }
+    .pv-r { color: var(--red); }
+    .pv-o { color: var(--orange); }
+
+    .prod-name { font-size: 19px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: var(--white); margin-bottom: 10px; }
+    .prod-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+    .prod-footer { display: flex; align-items: center; justify-content: space-between; }
+    .prod-pills { display: flex; gap: 6px; }
+    .pill { padding: 4px 10px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--dim); border: 1px solid var(--border); }
+
+    .prod-btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      cursor: pointer; border: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      color: #0A0A0A;
+    }
+    .prod-btn:hover { transform: translateY(-2px); }
+    .pb-y { background: var(--yellow); box-shadow: 0 0 15px rgba(255,195,0,0.3); }
+    .pb-y:hover { box-shadow: 0 0 25px rgba(255,195,0,0.5); }
+    .pb-r { background: var(--red);    box-shadow: 0 0 15px rgba(255,59,59,0.3); }
+    .pb-r:hover { box-shadow: 0 0 25px rgba(255,59,59,0.5); }
+    .pb-o { background: var(--orange); box-shadow: 0 0 15px rgba(255,140,0,0.3); }
+    .pb-o:hover { box-shadow: 0 0 25px rgba(255,140,0,0.5); }
+
+    /* ── SOCIAL PROOF ── */
+    .social-header { text-align: center; margin-bottom: 60px; }
+    .social-count {
+      display: block;
+      font-size: clamp(4rem, 9vw, 8rem);
+      font-weight: 700;
+      letter-spacing: -4px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .social-sub { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+
+    .ugc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 768px) { .ugc-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .ugc-grid { grid-template-columns: 1fr; } }
+
+    .ugc-card {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 26px;
+      background: var(--glass);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .ugc-card:hover { border-color: rgba(108,43,255,0.3); }
+    .ugc-card:nth-child(1) { grid-column: span 2; }
+    @media (max-width: 480px) { .ugc-card:nth-child(1) { grid-column: span 1; } }
+
+    .ugc-card::before {
+      content: '"';
+      position: absolute;
+      top: -16px; right: 12px;
+      font-size: 130px; font-weight: 700;
+      opacity: 0.05; color: var(--white); line-height: 1;
+      pointer-events: none;
+    }
+    .ugc-quote { font-size: 15px; color: var(--text); line-height: 1.6; margin-bottom: 20px; }
+    .ugc-user { display: flex; align-items: center; gap: 12px; }
+    .ugc-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: var(--white); flex-shrink: 0;
+    }
+    .av-1 { background: linear-gradient(135deg, var(--purple), var(--pink)); }
+    .av-2 { background: linear-gradient(135deg, var(--orange), var(--yellow)); }
+    .av-3 { background: linear-gradient(135deg, #39FF14, #00DBE9); }
+    .av-4 { background: linear-gradient(135deg, #00DBE9, var(--purple)); }
+    .av-5 { background: linear-gradient(135deg, var(--red), var(--orange)); }
+    .av-6 { background: linear-gradient(135deg, var(--pink), var(--purple)); }
+    .ugc-name { font-size: 13px; font-weight: 700; color: var(--white); }
+    .ugc-handle { font-size: 11px; color: var(--dim); }
+
+    /* ── SCHEDULE ── */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 60px;
+    }
+    @media (max-width: 768px) { .schedule-grid { grid-template-columns: 1fr; } }
+
+    .sched-card {
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .sched-card:hover { border-color: rgba(108,43,255,0.35); box-shadow: 0 12px 48px rgba(108,43,255,0.1); }
+
+    .sched-card-header {
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .sched-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .si-cocktail { background: rgba(255,45,149,0.1); border: 1px solid rgba(255,45,149,0.25); }
+    .si-visit    { background: rgba(108,43,255,0.1); border: 1px solid rgba(108,43,255,0.25); }
+
+    .sched-card-title { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: var(--white); margin-bottom: 6px; }
+    .sched-card-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .sched-card-body { padding: 24px 32px; display: flex; flex-direction: column; gap: 20px; }
+
+    .sched-dates-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--dim); margin-bottom: 10px; }
+
+    .dates-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+    .date-slot {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .date-slot:hover { border-color: var(--purple); background: rgba(108,43,255,0.08); }
+    .date-slot.selected { border-color: var(--pink); background: rgba(255,45,149,0.1); }
+    .date-slot.selected .slot-day { color: var(--pink); }
+
+    .slot-day  { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); }
+    .slot-date { font-size: 16px; font-weight: 700; color: var(--white); line-height: 1.3; }
+    .slot-spots { font-size: 10px; color: var(--dim); margin-top: 2px; }
+    .slot-spots.few { color: var(--orange); }
+
+    .sched-form { display: flex; flex-direction: column; gap: 10px; }
+
+    .sched-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .sched-input::placeholder { color: var(--dim); }
+    .sched-input:focus { border-color: var(--purple); }
+
+    .sched-submit {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-top: 4px;
+    }
+    .sched-submit:hover { transform: translateY(-2px); }
+    .sub-pink   { background: var(--pink);   color: #fff; box-shadow: 0 0 20px rgba(255,45,149,0.3); }
+    .sub-purple { background: var(--purple); color: #fff; box-shadow: 0 0 20px rgba(108,43,255,0.3); }
+    .sub-pink:hover   { box-shadow: 0 0 35px rgba(255,45,149,0.5); }
+    .sub-purple:hover { box-shadow: 0 0 35px rgba(108,43,255,0.5); }
+
+    .sched-note { font-size: 11px; color: var(--dim); text-align: center; }
+
+    /* ── CTA BANNER ── */
+    .cta-section {
+      position: relative;
+      padding: 120px 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #08001a 0%, #0a0a0a 50%, #180010 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 25% 50%, rgba(108,43,255,0.28) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 50%, rgba(255,45,149,0.22) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; text-align: center; }
+    .cta-over { display: block; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--pink); margin-bottom: 24px; }
+    .cta-h { font-size: clamp(2.8rem, 6vw, 6.5rem); font-weight: 700; letter-spacing: -2.5px; text-transform: uppercase; color: var(--white); line-height: 0.92; margin-bottom: 24px; }
+    .cta-p { font-size: 17px; color: var(--muted); margin-bottom: 48px; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #05050A;
+      border-top: 1px solid var(--border);
+      padding: 64px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr repeat(3, 1fr);
+      gap: 48px;
+      margin-bottom: 56px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+
+    .footer-brand { font-size: 26px; font-weight: 700; letter-spacing: -1px; color: var(--white); margin-bottom: 10px; }
+    .footer-brand .fp { color: var(--pink); }
+    .footer-brand .fpu { color: var(--purple); }
+    .footer-tag { font-size: 13px; color: var(--dim); line-height: 1.6; max-width: 240px; margin-bottom: 24px; }
+    .social-icons { display: flex; gap: 10px; }
+    .soc-icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .soc-icon:hover { border-color: var(--pink); background: rgba(255,45,149,0.08); }
+
+    .f-col-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 18px; }
+    .f-links { display: flex; flex-direction: column; gap: 12px; }
+    .f-link { font-size: 13px; color: var(--dim); text-decoration: none; transition: color 0.15s; }
+    .f-link:hover { color: var(--white); }
+
+    .responsible {
+      background: rgba(255,45,149,0.04);
+      border: 1px solid rgba(255,45,149,0.12);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .age-ring {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--pink);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: var(--pink);
+    }
+    .resp-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); margin-bottom: 6px; }
+    .resp-text { font-size: 12px; color: var(--dim); line-height: 1.6; }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .f-copy { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cocktails.html">Our Cocktails</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="cart.html" class="cart-btn">🛒 Cart <span class="cart-count" id="cartCount"></span></a>
+      <a href="admin.html" class="admin-nav-btn" title="Admin Panel">⚙</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orbs"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge"><span class="live-dot"></span>New · Summer '24 Drop</div>
+      <h1 class="hero-h1">RIP IT.<br>MIX IT.</h1>
+      <span class="hero-h1-accent">OWN THE NIGHT.</span>
+      <p class="hero-sub">Ready-to-rip cocktail packets engineered for the night you'll actually remember. Tear it. Mix it. Go.</p>
+      <div class="hero-ctas">
+        <a href="shop.html" class="btn btn-green">Start the Night ↗</a>
+        <a href="#how" class="btn btn-outline">How It Works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="packet-carousel">
+        <div class="packet p-pine active">
+          <div class="p-stripe s-y"></div>
+          <img class="p-img" src="images/other%20images/Pineapple%20%26%20Pisco.png" alt="" />
+          <div class="p-overlay"></div>
+          <div class="p-tear"></div>
+          <div class="p-label">Rip &amp; Sip</div>
+          <div class="p-name">Pineapple<br>&amp; Pisco</div>
+        </div>
+        <div class="packet p-pass">
+          <div class="p-stripe s-o"></div>
+          <img class="p-img" src="images/other%20images/passion.png" alt="" />
+          <div class="p-overlay"></div>
+          <div class="p-tear"></div>
+          <div class="p-label">Rip &amp; Sip</div>
+          <div class="p-name">Passion<br>Fruit</div>
+        </div>
+        <div class="packet p-purp">
+          <div class="p-stripe s-p"></div>
+          <img class="p-img" src="images/other%20images/lemon%20crash.png" alt="" />
+          <div class="p-overlay"></div>
+          <div class="p-tear"></div>
+          <div class="p-label">Rip &amp; Sip</div>
+          <div class="p-name">Lemon<br>Crash</div>
+        </div>
+        <div class="packet p-stra">
+          <div class="p-stripe s-r"></div>
+          <img class="p-img" src="images/other%20images/strawberry.png" alt="" />
+          <div class="p-overlay"></div>
+          <div class="p-tear"></div>
+          <div class="p-label">Rip &amp; Sip</div>
+          <div class="p-name">Strawberry<br>&amp; Mint</div>
+        </div>
+      </div>
+      <div class="carousel-dots">
+        <span class="carousel-dot active" data-idx="0"></span>
+        <span class="carousel-dot" data-idx="1"></span>
+        <span class="carousel-dot" data-idx="2"></span>
+        <span class="carousel-dot" data-idx="3"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="t-item">RIP <span class="t-dot"></span></span>
+    <span class="t-item">MIX <span class="t-dot"></span></span>
+    <span class="t-item">ENJOY <span class="t-dot"></span></span>
+    <span class="t-item">REPEAT <span class="t-dot"></span></span>
+    <span class="t-item">YOUR DRINK <span class="t-dot"></span></span>
+    <span class="t-item">YOUR RULES <span class="t-dot"></span></span>
+    <span class="t-item">NO BAR? <span class="t-dot"></span></span>
+    <span class="t-item">NO PROBLEM <span class="t-dot"></span></span>
+    <span class="t-item">RIP <span class="t-dot"></span></span>
+    <span class="t-item">MIX <span class="t-dot"></span></span>
+    <span class="t-item">ENJOY <span class="t-dot"></span></span>
+    <span class="t-item">REPEAT <span class="t-dot"></span></span>
+    <span class="t-item">YOUR DRINK <span class="t-dot"></span></span>
+    <span class="t-item">YOUR RULES <span class="t-dot"></span></span>
+    <span class="t-item">NO BAR? <span class="t-dot"></span></span>
+    <span class="t-item">NO PROBLEM <span class="t-dot"></span></span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="container">
+    <div class="sec-label">How It Works</div>
+    <h2 class="sec-title">Three Steps.<br>Zero Limits.</h2>
+    <p class="sec-sub">No bartender. No queue. Just you, a packet, and the night ahead.</p>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-icon si-1"><img src="images/other%20images/rip.png" alt="Rip" /></div>
+        <div class="step-name">Rip</div>
+        <div class="step-desc">Tear the packet along the perforated edge. One clean rip and you're ready. No tools, no mess.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-icon si-2"><img src="images/other%20images/mix.png" alt="Mix" /></div>
+        <div class="step-name">Mix</div>
+        <div class="step-desc">Add to soda, water, spirits — or take it straight. You call the shots. Every time.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-icon si-3"><img src="images/other%20images/magic%20cocktail.png" alt="Enjoy" /></div>
+        <div class="step-name">Enjoy</div>
+        <div class="step-desc">Sip, share, repeat. No bad drinks. No waiting. Just the night you actually wanted.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="sec sec-alt" id="products">
+  <div class="container">
+    <div class="products-header">
+      <div>
+        <div class="sec-label">The Lineup</div>
+        <h2 class="sec-title">Pick Your Vibe</h2>
+      </div>
+      <a href="#" class="btn btn-outline">View All Flavors</a>
+    </div>
+    <div class="products-grid">
+
+      <div class="prod-card pc-pine">
+        <div class="prod-img">
+          <img src="images/other%20images/Pineapple%20%26%20Pisco.png" alt="Pineapple & Pisco" />
+          <div class="prod-img-fade"></div>
+          <span class="prod-tag pt-y">Beach Party</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-vibe pv-y">The Tropical Disruptor</div>
+          <div class="prod-name">Pineapple &amp; Pisco</div>
+          <div class="prod-desc">A sharp, electrified blend of Peruvian Pisco, cold-pressed golden pineapple, and volcanic salt. Finished with vapor-infused lime zest.</div>
+          <div class="prod-footer">
+            <div class="prod-pills"><span class="pill">Tropical</span><span class="pill">Tart</span></div>
+            <button class="prod-btn pb-y">Order Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card pc-stra">
+        <div class="prod-img">
+          <img src="images/product/refreshing.png" alt="Strawberry, Lemon & Mint" />
+          <div class="prod-img-fade"></div>
+          <span class="prod-tag pt-r">Premium Small Batch</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-vibe pv-r">The Neon Refresh</div>
+          <div class="prod-name">Strawberry, Lemon &amp; Mint</div>
+          <div class="prod-desc">Muddled forest strawberries and cryogenic mint with bright lemon. Craft-inspired. Freezing, aromatic, and dangerously easy to drink.</div>
+          <div class="prod-footer">
+            <div class="prod-pills"><span class="pill">Icy</span><span class="pill">Floral</span></div>
+            <button class="prod-btn pb-r">Order Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card pc-pass">
+        <div class="prod-img">
+          <img src="images/product/Exotic%20passion.png" alt="Passion Fruit" />
+          <div class="prod-img-fade"></div>
+          <span class="prod-tag pt-o">High Energy</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-vibe pv-o">High Voltage</div>
+          <div class="prod-name">Passion Fruit Fusion</div>
+          <div class="prod-desc">Tart passion fruit nectar, artisanal agave, and a hidden habanero hit. Exotic, vibrant, and built for high-energy nights.</div>
+          <div class="prod-footer">
+            <div class="prod-pills"><span class="pill">Exotic</span><span class="pill">Vibrant</span></div>
+            <button class="prod-btn pb-o">Order Now</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="sec" id="vibes">
+  <div class="container">
+    <div class="social-header">
+      <span class="social-count">10,000+</span>
+      <div class="social-sub">Nights Started &bull; And Counting</div>
+    </div>
+    <div class="ugc-grid">
+      <div class="ugc-card">
+        <div class="ugc-quote">"Brought these to a festival and literally the whole crowd wanted one. We went through 40 packets in under 2 hours. The passion fruit hits different at 2am."</div>
+        <div class="ugc-user">
+          <div class="ugc-avatar av-1">AK</div>
+          <div><div class="ugc-name">Alex K.</div><div class="ugc-handle">@alexk_nights · Leeds Festival</div></div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <div class="ugc-quote">"No bar queue, no problem. Rip &amp; Sip saved our entire pre-game."</div>
+        <div class="ugc-user">
+          <div class="ugc-avatar av-2">MR</div>
+          <div><div class="ugc-name">Maya R.</div><div class="ugc-handle">@maya_raves · Manchester</div></div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <div class="ugc-quote">"Pineapple &amp; pisco is my go-to every weekend now. I'm not sorry."</div>
+        <div class="ugc-user">
+          <div class="ugc-avatar av-3">JD</div>
+          <div><div class="ugc-name">Jake D.</div><div class="ugc-handle">@jakedubs · Bristol Uni</div></div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <div class="ugc-quote">"Finally a drink that keeps up with us. Took these to Ibiza — they were the highlight."</div>
+        <div class="ugc-user">
+          <div class="ugc-avatar av-4">SC</div>
+          <div><div class="ugc-name">Sofia C.</div><div class="ugc-handle">@sofiacc · Ibiza 2024</div></div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <div class="ugc-quote">"Rip. Mix. Done. Best thing to happen to pre-drinks since forever."</div>
+        <div class="ugc-user">
+          <div class="ugc-avatar av-5">TM</div>
+          <div><div class="ugc-name">Tom M.</div><div class="ugc-handle">@tomm_ldn · London</div></div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <div class="ugc-quote">"Strawberry mint is elite. Our whole flat is hooked."</div>
+        <div class="ugc-user">
+          <div class="ugc-avatar av-6">LP</div>
+          <div><div class="ugc-name">Lily P.</div><div class="ugc-handle">@lily_parties · Edinburgh Uni</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="sec sec-alt" id="schedule">
+  <div class="container">
+    <div class="sec-label">Book Your Spot</div>
+    <h2 class="sec-title">Experience the Vibe<br><span class="gradient-text">In Person</span></h2>
+    <p class="sec-sub">Pick a date, reserve your seat, and come taste what the night is made of.</p>
+
+    <div class="schedule-grid">
+
+      <!-- Cocktail Testing Day -->
+      <div class="sched-card">
+        <div class="sched-card-header">
+          <div class="sched-icon si-cocktail">🍹</div>
+          <div>
+            <div class="sched-card-title">Cocktail Testing Day</div>
+            <div class="sched-card-desc">Try every flavour straight from the packet. Mix, match, and vote for your favourite. Limited seats per session.</div>
+          </div>
+        </div>
+        <div class="sched-card-body">
+          <div>
+            <div class="sched-dates-label">Available Dates — May 2025</div>
+            <div class="dates-grid">
+              <div class="date-slot selected" onclick="selectSlot(this)">
+                <div class="slot-day">Sat</div>
+                <div class="slot-date">10</div>
+                <div class="slot-spots few">4 left</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Sun</div>
+                <div class="slot-date">11</div>
+                <div class="slot-spots">12 spots</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Sat</div>
+                <div class="slot-date">17</div>
+                <div class="slot-spots">10 spots</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Sun</div>
+                <div class="slot-date">18</div>
+                <div class="slot-spots few">2 left</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Sat</div>
+                <div class="slot-date">24</div>
+                <div class="slot-spots">15 spots</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Sun</div>
+                <div class="slot-date">25</div>
+                <div class="slot-spots">8 spots</div>
+              </div>
+            </div>
+          </div>
+          <div class="sched-form">
+            <input class="sched-input" type="text" placeholder="Your name" />
+            <input class="sched-input" type="email" placeholder="Email address" />
+            <input class="sched-input" type="number" placeholder="Number of guests (max 4)" min="1" max="4" />
+            <button class="sched-submit sub-pink">Reserve My Spot →</button>
+          </div>
+          <div class="sched-note">Free entry · 18+ only · Confirmation sent by email</div>
+        </div>
+      </div>
+
+      <!-- Site Visit Day -->
+      <div class="sched-card">
+        <div class="sched-card-header">
+          <div class="sched-icon si-visit">🏭</div>
+          <div>
+            <div class="sched-card-title">Site Visit Day</div>
+            <div class="sched-card-desc">Go behind the scenes. See how the packets are made, meet the team, and get an exclusive first look at upcoming flavours.</div>
+          </div>
+        </div>
+        <div class="sched-card-body">
+          <div>
+            <div class="sched-dates-label">Available Dates — May 2025</div>
+            <div class="dates-grid">
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Fri</div>
+                <div class="slot-date">9</div>
+                <div class="slot-spots">6 spots</div>
+              </div>
+              <div class="date-slot selected" onclick="selectSlot(this)">
+                <div class="slot-day">Fri</div>
+                <div class="slot-date">16</div>
+                <div class="slot-spots few">3 left</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Fri</div>
+                <div class="slot-date">23</div>
+                <div class="slot-spots">8 spots</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Fri</div>
+                <div class="slot-date">30</div>
+                <div class="slot-spots">10 spots</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Sat</div>
+                <div class="slot-date">31</div>
+                <div class="slot-spots few">1 left</div>
+              </div>
+              <div class="date-slot" onclick="selectSlot(this)">
+                <div class="slot-day">Fri</div>
+                <div class="slot-date">6 Jun</div>
+                <div class="slot-spots">12 spots</div>
+              </div>
+            </div>
+          </div>
+          <div class="sched-form">
+            <input class="sched-input" type="text" placeholder="Your name" />
+            <input class="sched-input" type="email" placeholder="Email address" />
+            <input class="sched-input" type="text" placeholder="Company / University (optional)" />
+            <button class="sched-submit sub-purple">Book My Visit →</button>
+          </div>
+          <div class="sched-note">Groups welcome · NDA required · Confirmation sent by email</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <span class="cta-over">Your drink. Your rules.</span>
+      <h2 class="cta-h">No Bar?<br>No Problem.</h2>
+      <p class="cta-p">Join thousands of night owls who never wait at the bar again.</p>
+      <div class="cta-btns">
+        <a href="#" class="btn btn-green" style="padding:16px 36px; font-size:14px;">Start the Night ↗</a>
+        <a href="#products" class="btn btn-outline" style="padding:16px 36px; font-size:14px;">Explore Flavors</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="images/Logo/logo.png" alt="Rip &amp; Sip" style="height:88px;width:auto;" /></div>
+        <div class="footer-tag">Instant cocktail experience. Fully customizable. Portable nightlife in your pocket.</div>
+        <div class="social-icons">
+          <div class="soc-icon">𝕏</div>
+          <div class="soc-icon">📷</div>
+          <div class="soc-icon">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Products</div>
+        <div class="f-links">
+          <a href="#" class="f-link">Pineapple &amp; Pisco</a>
+          <a href="#" class="f-link">Strawberry, Lemon &amp; Mint</a>
+          <a href="#" class="f-link">Passion Fruit Fusion</a>
+          <a href="#" class="f-link">Limited Edition</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Company</div>
+        <div class="f-links">
+          <a href="#" class="f-link">About Us</a>
+          <a href="#" class="f-link">Careers</a>
+          <a href="#" class="f-link">Press</a>
+          <a href="#" class="f-link">Stockists</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Legal</div>
+        <div class="f-links">
+          <a href="#" class="f-link">Privacy Policy</a>
+          <a href="#" class="f-link">Terms of Service</a>
+          <a href="#" class="f-link">Age Verification</a>
+          <a href="#" class="f-link">Accessibility</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="responsible">
+      <div class="age-ring">18+</div>
+      <div>
+        <div class="resp-title">Responsible Drinking</div>
+        <div class="resp-text">TOMAR BEBIDAS ALCOHÓLICAS EN EXCESO ES DANINO. Drink responsibly. Must be of legal drinking age in your country. Do not drink and drive. Rip &amp; Sip products contain alcohol — please check your local laws and consume safely.</div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="f-copy">© 2024 Rip &amp; Sip Entertainment. All rights reserved.</div>
+      <div class="f-copy">Drink Responsibly &nbsp;·&nbsp; 18+ Only</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function selectSlot(el) {
+    const grid = el.closest('.dates-grid');
+    grid.querySelectorAll('.date-slot').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  (function syncCart() {
+    const count = parseInt(localStorage.getItem('ripSipCart') || '0');
+    const badge = document.getElementById('cartCount');
+    if (badge && count > 0) { badge.textContent = count; badge.style.display = 'flex'; }
+  })();
+
+  (function initCarousel() {
+    const packets = document.querySelectorAll('.packet-carousel .packet');
+    const dots    = document.querySelectorAll('.carousel-dot');
+    let cur = 0, timer;
+
+    function goTo(idx) {
+      packets[cur].classList.remove('active');
+      dots[cur].classList.remove('active');
+      cur = idx;
+      packets[cur].classList.add('active');
+      dots[cur].classList.add('active');
+    }
+
+    dots.forEach(dot => dot.addEventListener('click', () => {
+      clearInterval(timer);
+      goTo(parseInt(dot.dataset.idx));
+      timer = setInterval(() => goTo((cur + 1) % packets.length), 2800);
+    }));
+
+    timer = setInterval(() => goTo((cur + 1) % packets.length), 2800);
+  })();
+</script>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="contact.html" class="contact-btn">
+  <span class="env-icon">✉</span>
+  <span class="env-label">Contact Us</span>
+</a>
+</body>
+</html>
