@@ -805,6 +805,34 @@
     }
     .fav-cart-btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,45,149,0.5); }
 
+    /* Bundle card */
+    .fav-card.bundle-card { border-color: rgba(255,195,0,0.3); background: linear-gradient(160deg,#1a1200,#111116); }
+    .fav-card.bundle-card:hover { border-color: rgba(255,195,0,0.6); box-shadow: 0 20px 50px rgba(255,195,0,0.15); }
+    .bundle-imgs { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .bundle-imgs img { position: absolute; width: 52%; object-fit: contain; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5)); transition: transform 0.4s ease; }
+    .bundle-imgs img:nth-child(1) { transform: rotate(-18deg) translateX(-52px) translateY(6px); z-index: 1; }
+    .bundle-imgs img:nth-child(2) { transform: rotate(0deg) translateY(-8px); z-index: 3; }
+    .bundle-imgs img:nth-child(3) { transform: rotate(18deg) translateX(52px) translateY(6px); z-index: 1; }
+    .fav-card.bundle-card:hover .bundle-imgs img:nth-child(1) { transform: rotate(-20deg) translateX(-58px) translateY(4px); }
+    .fav-card.bundle-card:hover .bundle-imgs img:nth-child(2) { transform: rotate(0deg) translateY(-14px); }
+    .fav-card.bundle-card:hover .bundle-imgs img:nth-child(3) { transform: rotate(20deg) translateX(58px) translateY(4px); }
+    .bundle-discount-ring { position: absolute; top: 10px; right: 10px; width: 52px; height: 52px; border-radius: 50%; background: var(--yellow); color: #0A0A0A; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700; line-height: 1; z-index: 10; box-shadow: 0 0 18px rgba(255,195,0,0.5); }
+    .bundle-discount-ring .pct { font-size: 15px; }
+    .bundle-discount-ring .off { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .fav-price-old { font-size: 13px; color: var(--dim); text-decoration: line-through; margin-bottom: 2px; }
+    .fav-price-new { font-size: 22px; font-weight: 700; color: var(--yellow); letter-spacing: -0.5px; }
+    .fav-price-save { font-size: 11px; color: var(--green); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .bundle-cart-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer;
+      background: var(--yellow); color: #0A0A0A;
+      font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 16px rgba(255,195,0,0.35); white-space: nowrap;
+    }
+    .bundle-cart-btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,195,0,0.55); }
+
     /* ── CTA BANNER ── */
     .cta-section {
       position: relative;
@@ -1044,20 +1072,32 @@
         </div>
       </div>
 
-      <!-- Card 4 -->
-      <div class="fav-card">
-        <div class="fav-img">
-          <img src="images/packet/Three%20wonders.png" alt="Three Wonders" />
-          <span class="fav-badge new">New Drop</span>
+      <!-- Card 4 — Bundle -->
+      <div class="fav-card bundle-card">
+        <div class="fav-img" style="aspect-ratio:3/4;overflow:hidden;background:linear-gradient(155deg,#1a1200,#0a0a0a);">
+          <div class="bundle-imgs">
+            <img src="images/product/Pineapple.png" alt="Pineapple &amp; Pisco" />
+            <img src="images/product/Passion.png" alt="Exotic Passion" />
+            <img src="images/product/strawberry.png" alt="Strawberry &amp; Mint" />
+          </div>
+          <div class="bundle-discount-ring">
+            <span class="pct">20%</span>
+            <span class="off">OFF</span>
+          </div>
+          <span class="fav-badge best" style="top:12px;left:12px;">Bundle Deal</span>
         </div>
         <div class="fav-body">
-          <div class="fav-name">Three Wonders</div>
-          <div class="fav-desc">Three bold flavours in one — a triple-hit of mango, lychee and guava concentrate.</div>
-          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.7 (62 reviews)</span></div>
+          <div class="fav-name">Triple Pack Bundle</div>
+          <div class="fav-desc">Get all 3 fan-favourite flavours — Pineapple &amp; Pisco, Exotic Passion &amp; Strawberry Mint — at 20% off.</div>
+          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.9 (211 reviews)</span></div>
         </div>
         <div class="fav-footer">
-          <div class="fav-price">£2.99 <span>/ unit</span></div>
-          <button class="fav-cart-btn" onclick="favAddToCart('Three Wonders','2.99','images/packet/Three%20wonders.png')">🛒 Add to Cart</button>
+          <div>
+            <div class="fav-price-old">£7.47</div>
+            <div class="fav-price-new">£5.97</div>
+            <div class="fav-price-save">You save £1.50</div>
+          </div>
+          <button class="bundle-cart-btn" onclick="favAddToCart('Triple Pack Bundle','5.97','images/product/Pineapple.png')">🛒 Get Bundle</button>
         </div>
       </div>
 
