@@ -311,10 +311,11 @@
       0%,100% { transform: translateY(0px); }
       50%      { transform: translateY(-18px); }
     }
-    .p-pine { background: linear-gradient(155deg,#1c1400,#0a0a0a); box-shadow: 0 0 60px rgba(255,195,0,0.22), inset 0 0 60px rgba(255,195,0,0.05); }
-    .p-pass { background: linear-gradient(155deg,#1c0800,#0a0a0a); box-shadow: 0 0 60px rgba(255,140,0,0.22), inset 0 0 60px rgba(255,140,0,0.05); }
-    .p-purp { background: linear-gradient(155deg,#08001c,#0a0a0a); box-shadow: 0 0 60px rgba(108,43,255,0.30), inset 0 0 60px rgba(108,43,255,0.10); }
-    .p-stra { background: linear-gradient(155deg,#1c0000,#0a0a0a); box-shadow: 0 0 60px rgba(255,59,59,0.22), inset 0 0 60px rgba(255,59,59,0.05); }
+    .p-pine { background: linear-gradient(155deg,#1c0820,#0a0a0a); box-shadow: 0 0 60px rgba(255,45,149,0.28), inset 0 0 60px rgba(255,45,149,0.06); }
+    .p-pass { background: linear-gradient(155deg,#1c0800,#0a0a0a); box-shadow: 0 0 60px rgba(255,140,0,0.25), inset 0 0 60px rgba(255,140,0,0.06); }
+    .p-purp { background: linear-gradient(155deg,#08001c,#0a0a0a); box-shadow: 0 0 60px rgba(108,43,255,0.32), inset 0 0 60px rgba(108,43,255,0.10); }
+    .p-stra { background: linear-gradient(155deg,#001c0a,#0a0a0a); box-shadow: 0 0 60px rgba(0,200,100,0.25), inset 0 0 60px rgba(0,200,100,0.06); }
+    .p-cyan { background: linear-gradient(155deg,#00101c,#0a0a0a); box-shadow: 0 0 60px rgba(0,240,255,0.25), inset 0 0 60px rgba(0,240,255,0.06); }
     .p-stripe {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -335,8 +336,9 @@
       position: absolute;
       inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.88;
+      object-fit: contain;
+      padding: 32px 24px 80px;
+      opacity: 1;
       border-radius: 42px;
     }
     .p-overlay {
@@ -868,35 +870,38 @@
       <div class="packet-carousel">
         <div class="packet p-pine active">
           <div class="p-stripe s-y"></div>
-          <img class="p-img" src="images/other%20images/Pineapple%20%26%20Pisco.png" alt="" />
+          <img class="p-img" src="images/packet/Container.png" alt="Rip &amp; Sip Packet" />
           <div class="p-overlay"></div>
-          <div class="p-tear"></div>
           <div class="p-label">Rip &amp; Sip</div>
-          <div class="p-name">Pineapple<br>&amp; Pisco</div>
+          <div class="p-name">The<br>Original</div>
         </div>
         <div class="packet p-pass">
           <div class="p-stripe s-o"></div>
-          <img class="p-img" src="images/other%20images/passion.png" alt="" />
+          <img class="p-img" src="images/packet/Exotic%20Passion.png" alt="Exotic Passion" />
           <div class="p-overlay"></div>
-          <div class="p-tear"></div>
           <div class="p-label">Rip &amp; Sip</div>
-          <div class="p-name">Passion<br>Fruit</div>
+          <div class="p-name">Exotic<br>Passion</div>
+        </div>
+        <div class="packet p-cyan">
+          <div class="p-stripe" style="background:var(--green);box-shadow:0 0 18px var(--green);"></div>
+          <img class="p-img" src="images/packet/Refreshing.png" alt="Refreshing" />
+          <div class="p-overlay"></div>
+          <div class="p-label">Rip &amp; Sip</div>
+          <div class="p-name">Refreshing<br>Drop</div>
         </div>
         <div class="packet p-purp">
           <div class="p-stripe s-p"></div>
-          <img class="p-img" src="images/other%20images/lemon%20crash.png" alt="" />
+          <img class="p-img" src="images/packet/Three%20wonders.png" alt="Three Wonders" />
           <div class="p-overlay"></div>
-          <div class="p-tear"></div>
           <div class="p-label">Rip &amp; Sip</div>
-          <div class="p-name">Lemon<br>Crash</div>
+          <div class="p-name">Three<br>Wonders</div>
         </div>
         <div class="packet p-stra">
-          <div class="p-stripe s-r"></div>
-          <img class="p-img" src="images/other%20images/strawberry.png" alt="" />
+          <div class="p-stripe" style="background:var(--pink);box-shadow:0 0 18px var(--pink);"></div>
+          <img class="p-img" src="images/packet/image%202.png" alt="Rip &amp; Sip" />
           <div class="p-overlay"></div>
-          <div class="p-tear"></div>
           <div class="p-label">Rip &amp; Sip</div>
-          <div class="p-name">Strawberry<br>&amp; Mint</div>
+          <div class="p-name">Night<br>Edition</div>
         </div>
       </div>
       <div class="carousel-dots">
@@ -904,6 +909,7 @@
         <span class="carousel-dot" data-idx="1"></span>
         <span class="carousel-dot" data-idx="2"></span>
         <span class="carousel-dot" data-idx="3"></span>
+        <span class="carousel-dot" data-idx="4"></span>
       </div>
     </div>
   </div>
