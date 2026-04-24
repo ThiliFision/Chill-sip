@@ -755,10 +755,10 @@
 
     /* ── MOST FAVOURITE ── */
     .fav-sec { padding: 100px 0; background: var(--bg); }
-    .fav-header { text-align: center; margin-bottom: 56px; }
+    .fav-header { text-align: left; margin-bottom: 56px; }
     .fav-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--pink); background: rgba(255,45,149,0.08); border: 1px solid rgba(255,45,149,0.2); border-radius: 50px; padding: 6px 18px; margin-bottom: 20px; }
     .fav-h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -2px; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 14px; }
-    .fav-sub { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.6; }
+    .fav-sub { font-size: 15px; color: var(--muted); max-width: 480px; line-height: 1.6; }
 
     .fav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     @media (max-width: 1024px) { .fav-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -996,7 +996,7 @@
       <!-- Card 1 -->
       <div class="fav-card">
         <div class="fav-img">
-          <img src="images/packet/Container.png" alt="Pineapple &amp; Pisco" />
+          <img src="images/product/Pineapple.png" alt="Pineapple &amp; Pisco" />
           <span class="fav-badge best">Best Seller</span>
         </div>
         <div class="fav-body">
@@ -1006,14 +1006,14 @@
         </div>
         <div class="fav-footer">
           <div class="fav-price">£1.99 <span>/ unit</span></div>
-          <button class="fav-cart-btn" onclick="favAddToCart('Pineapple & Pisco','1.99','images/packet/Container.png')">🛒 Add to Cart</button>
+          <button class="fav-cart-btn" onclick="favAddToCart('Pineapple & Pisco','1.99','images/product/Pineapple.png')">🛒 Add to Cart</button>
         </div>
       </div>
 
       <!-- Card 2 -->
       <div class="fav-card">
         <div class="fav-img">
-          <img src="images/packet/Exotic%20Passion.png" alt="Exotic Passion" />
+          <img src="images/product/Passion.png" alt="Exotic Passion" />
           <span class="fav-badge fan">Fan Favourite</span>
         </div>
         <div class="fav-body">
@@ -1023,24 +1023,24 @@
         </div>
         <div class="fav-footer">
           <div class="fav-price">£2.49 <span>/ unit</span></div>
-          <button class="fav-cart-btn" onclick="favAddToCart('Exotic Passion','2.49','images/packet/Exotic%20Passion.png')">🛒 Add to Cart</button>
+          <button class="fav-cart-btn" onclick="favAddToCart('Exotic Passion','2.49','images/product/Passion.png')">🛒 Add to Cart</button>
         </div>
       </div>
 
       <!-- Card 3 -->
       <div class="fav-card">
         <div class="fav-img">
-          <img src="images/packet/Summer%20vibe.png" alt="Summer Vibe" />
-          <span class="fav-badge new">New Drop</span>
+          <img src="images/product/strawberry.png" alt="Strawberry &amp; Mint" />
+          <span class="fav-badge top">Top Rated</span>
         </div>
         <div class="fav-body">
-          <div class="fav-name">Summer Vibe</div>
-          <div class="fav-desc">Sun-soaked citrus and tropical fruits blended for the ultimate warm-weather mix.</div>
-          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.7 (62 reviews)</span></div>
+          <div class="fav-name">Strawberry &amp; Mint</div>
+          <div class="fav-desc">Fresh strawberry with a cool mint finish. Summer in a packet — any time of year.</div>
+          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.8 (87 reviews)</span></div>
         </div>
         <div class="fav-footer">
-          <div class="fav-price">£2.99 <span>/ unit</span></div>
-          <button class="fav-cart-btn" onclick="favAddToCart('Summer Vibe','2.99','images/packet/Summer%20vibe.png')">🛒 Add to Cart</button>
+          <div class="fav-price">£2.49 <span>/ unit</span></div>
+          <button class="fav-cart-btn" onclick="favAddToCart('Strawberry & Mint','2.49','images/product/strawberry.png')">🛒 Add to Cart</button>
         </div>
       </div>
 
@@ -1048,16 +1048,16 @@
       <div class="fav-card">
         <div class="fav-img">
           <img src="images/packet/Three%20wonders.png" alt="Three Wonders" />
-          <span class="fav-badge top">Top Rated</span>
+          <span class="fav-badge new">New Drop</span>
         </div>
         <div class="fav-body">
           <div class="fav-name">Three Wonders</div>
           <div class="fav-desc">Three bold flavours in one — a triple-hit of mango, lychee and guava concentrate.</div>
-          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.8 (87 reviews)</span></div>
+          <div><span class="fav-stars">★★★★★</span> <span class="fav-rnum">4.7 (62 reviews)</span></div>
         </div>
         <div class="fav-footer">
-          <div class="fav-price">£2.49 <span>/ unit</span></div>
-          <button class="fav-cart-btn" onclick="favAddToCart('Three Wonders','2.49','images/packet/Three%20wonders.png')">🛒 Add to Cart</button>
+          <div class="fav-price">£2.99 <span>/ unit</span></div>
+          <button class="fav-cart-btn" onclick="favAddToCart('Three Wonders','2.99','images/packet/Three%20wonders.png')">🛒 Add to Cart</button>
         </div>
       </div>
 
