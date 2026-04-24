@@ -270,6 +270,15 @@
       align-items: center;
       position: relative;
       gap: 28px;
+      perspective: 1000px;
+    }
+    .packet-carousel-wrapper {
+      transform: rotateY(-12deg) rotateX(4deg);
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
+    .packet-carousel-wrapper:hover {
+      transform: rotateY(-4deg) rotateX(2deg);
     }
     .hero-visual::before {
       content: '';
@@ -872,6 +881,7 @@
       </div>
     </div>
     <div class="hero-visual">
+      <div class="packet-carousel-wrapper">
       <div class="packet-carousel">
         <div class="packet p-pine active">
           <div class="p-stripe s-y"></div>
@@ -915,6 +925,7 @@
         <span class="carousel-dot" data-idx="2"></span>
         <span class="carousel-dot" data-idx="3"></span>
         <span class="carousel-dot" data-idx="4"></span>
+      </div>
       </div>
     </div>
   </div>
