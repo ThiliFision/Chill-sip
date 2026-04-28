@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rip &amp; Sip — Summer Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #ffffff;
+      --bg2:      #f8f8ff;
+      --text:     #2e1664;
+      --brand:    #3a0ba5;
+      --purple:   #6c2bff;
+      --pink:     #ff2d95;
+      --green:    #2ae500;
+      --yellow:   #efb609;
+      --orange:   #ef7c09;
+      --cyan:     #00dbe9;
+      --red:      #f12807;
+      --border:   rgba(46,22,100,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    .grad-text {
+      background: linear-gradient(135deg, var(--text) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ── PROMO BANNER ── */
+    .promo-bar {
+      background: var(--purple);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 8px 48px;
+      position: relative;
+    }
+    .promo-bar p { font-size: 13px; font-weight: 500; color: #fff; }
+    .promo-bar .promo-code { font-weight: 700; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; }
+    .promo-close {
+      position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.7; line-height: 1;
+    }
+    .promo-close:hover { opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 16px rgba(46,22,100,0.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px; max-width: 1296px; margin: 0 auto;
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 100px; width: auto; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text);
+      display: flex; align-items: center; gap: 4px; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-icons { display: flex; align-items: center; gap: 20px; }
+    .nav-icon-btn {
+      background: none; border: none; cursor: pointer; color: var(--text);
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s;
+    }
+    .nav-icon-btn:hover { color: var(--purple); }
+    .nav-icon-btn svg { width: 22px; height: 22px; }
+    .cart-btn-nav {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 10px; padding: 8px 16px;
+      font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cart-btn-nav:hover { background: var(--brand); }
+    .cart-count-badge {
+      background: var(--pink); color: #fff; border-radius: 50%;
+      width: 18px; height: 18px; font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* Theme toggle */
+    .theme-toggle {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 12px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: #eee; }
+
+    /* ── HERO ── */
+    .hero-img-wrap {
+      width: 100%; height: 560px; overflow: hidden; position: relative;
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center top;
+      display: block;
+    }
+    .hero-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 60%, rgba(255,255,255,0.9) 100%);
+    }
+    .hero-text { padding: 40px 0 60px; }
+    .hero-text .container { display: flex; gap: 48px; align-items: flex-start; }
+    .hero-headline {
+      flex: 0 0 auto; width: 58%;
+      font-size: 96px; font-weight: 700; line-height: 1; letter-spacing: -2px; color: var(--text);
+    }
+    .hero-headline .own { display: block; }
+    .hero-right { flex: 1; padding-top: 48px; }
+    .hero-sub {
+      font-size: 32px; font-weight: 500; color: var(--purple);
+      line-height: 1.35; letter-spacing: -0.5px; margin-bottom: 40px;
+    }
+    .hero-ctas { display: flex; gap: 24px; flex-wrap: wrap; }
+    .btn-summer-primary {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff; border: none; border-radius: 16px; padding: 20px 48px;
+      font-size: 24px; font-weight: 600; letter-spacing: -0.5px; cursor: pointer;
+      text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-summer-primary:hover { opacity: 0.92; transform: translateY(-2px); }
+    .btn-summer-outline {
+      display: flex; align-items: center; justify-content: center;
+      background: #fff; color: var(--text);
+      border: 2.5px solid var(--purple); border-radius: 16px; padding: 20px 48px;
+      font-size: 24px; font-weight: 600; letter-spacing: -0.5px; cursor: pointer;
+      text-decoration: none; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-summer-outline:hover { background: var(--bg2); transform: translateY(-2px); }
+
+    /* ── MOST FAVOURITE ── */
+    .fav-sec { padding: 64px 0 80px; background: #fff; }
+    .fav-section-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--purple); margin-bottom: 8px; }
+    .fav-h2 {
+      font-size: 48px; font-weight: 700; letter-spacing: -1px;
+      background: linear-gradient(90deg, var(--text) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .fav-desc-header { font-size: 18px; font-weight: 500; color: var(--text); opacity: 0.6; margin-bottom: 40px; }
+    .fav-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+
+    .sum-card {
+      border-radius: 24px; border: 1.5px solid transparent;
+      display: flex; flex-direction: column; padding: 32px 28px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .sum-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+    .sum-card.card-cyan  { background: rgba(186,253,255,0.2); border-color: var(--cyan); }
+    .sum-card.card-orange { background: #f7f1e9; border-color: var(--orange); }
+    .sum-card.card-pink  { background: #fff4f7; border-color: var(--pink); }
+    .sum-card.card-green { background: #f7fff4; border-color: var(--green); }
+
+    .card-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 8px 20px; border-radius: 40px; border: 1px solid rgba(228,212,212,0.6);
+      font-size: 14px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+      margin-bottom: 24px; width: fit-content;
+      background: rgba(255,255,255,0.15);
+    }
+    .card-badge.cyan   { color: var(--cyan); }
+    .card-badge.orange { color: var(--orange); }
+    .card-badge.pink   { color: var(--pink); }
+    .card-badge.green  { color: var(--green); }
+
+    .card-img-area {
+      width: 100%; aspect-ratio: 3/5; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 28px; position: relative;
+    }
+    .card-img-area img { width: 80%; height: 100%; object-fit: contain; }
+
+    /* Bundle card fanned images */
+    .bundle-fan { position: relative; width: 100%; height: 280px; }
+    .bundle-fan img { position: absolute; width: 42%; object-fit: contain; }
+    .bundle-fan img:nth-child(1) { left: 0; top: 40px; transform: rotate(-14deg); z-index: 1; }
+    .bundle-fan img:nth-child(2) { left: 50%; top: 0; transform: translateX(-50%) rotate(0deg); z-index: 3; }
+    .bundle-fan img:nth-child(3) { right: 0; top: 40px; transform: rotate(14deg); z-index: 1; }
+    .bundle-disc {
+      position: absolute; top: 8px; right: 8px; z-index: 5;
+      background: var(--yellow); border-radius: 50%; width: 64px; height: 64px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-weight: 700; color: #000; line-height: 1;
+    }
+    .bundle-disc .pct { font-size: 18px; }
+    .bundle-disc .off { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .card-name { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 10px; text-transform: uppercase; letter-spacing: -0.3px; }
+    .card-desc { font-size: 15px; font-weight: 500; color: rgba(0,0,0,0.7); line-height: 1.6; margin-bottom: 16px; flex: 1; }
+    .card-price { font-size: 18px; font-weight: 700; color: #000; margin-bottom: 4px; }
+    .card-price-old { font-size: 15px; color: #999; text-decoration: line-through; }
+    .card-price-new { font-size: 22px; font-weight: 700; color: var(--text); }
+    .card-save { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+    .card-stars { color: var(--orange); font-size: 14px; }
+    .card-reviews { font-size: 14px; color: rgba(0,0,0,0.5); }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+    .btn-add-cart {
+      background: var(--green); color: #000; border: none; border-radius: 12px;
+      padding: 12px 20px; font-size: 15px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .btn-add-cart:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .view-all-wrap { text-align: center; margin-top: 48px; }
+    .btn-view-all {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(120deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff; border: none; border-radius: 16px; padding: 18px 64px;
+      font-size: 22px; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-view-all:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    /* ── HOW IT WORKS ── */
+    .how-sec {
+      padding: 64px 0;
+      background: linear-gradient(210deg, #8cd2b5 24%, #f4aa5e 54%, #eed1cb 89%);
+    }
+    .how-label {
+      font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+      background: linear-gradient(90deg, var(--text) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 16px;
+    }
+    .how-h2 {
+      font-size: 48px; font-weight: 700; letter-spacing: -1px;
+      background: linear-gradient(90deg, var(--text) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 12px;
+    }
+    .how-sub { font-size: 18px; font-weight: 500; color: var(--text); opacity: 0.75; margin-bottom: 48px; }
+    .how-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .how-step { background: rgba(255,255,255,0.35); border-radius: 12px; overflow: hidden; }
+    .how-step img { width: 100%; height: 300px; object-fit: cover; display: block; }
+    .how-step-body { padding: 20px 24px; }
+    .how-step-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text); opacity: 0.5; margin-bottom: 6px; }
+    .how-step-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .how-step-desc { font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.7; line-height: 1.5; }
+
+    /* ── PICK YOUR VIBE ── */
+    .vibe-sec { padding: 80px 0; background: #fff; border-top: 1px solid var(--border); }
+    .vibe-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; }
+    .vibe-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--purple); margin-bottom: 8px; }
+    .vibe-h2 { font-size: 48px; font-weight: 700; letter-spacing: -1px; }
+    .vibe-h2 span {
+      background: linear-gradient(90deg, var(--text) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .vibe-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .vibe-card { border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; }
+    .vibe-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(46,22,100,0.1); }
+    .vibe-card img { width: 100%; height: 300px; object-fit: cover; display: block; }
+    .vibe-card-body { padding: 16px; }
+    .vibe-card-vibe { font-size: 13px; font-weight: 600; color: var(--text); opacity: 0.5; margin-bottom: 4px; }
+    .vibe-card-name { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .vibe-card-desc { font-size: 14px; font-weight: 500; color: rgba(0,0,0,0.6); line-height: 1.5; margin-bottom: 16px; }
+    .vibe-card-footer { display: flex; align-items: center; justify-content: flex-end; }
+    .btn-order {
+      padding: 8px 24px; border: none; border-radius: 16px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: opacity 0.2s, transform 0.15s; color: #000;
+    }
+    .btn-order:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-order.yellow { background: #e6d116; }
+    .btn-order.red    { background: var(--red); color: #fff; }
+    .btn-order.orange { background: var(--orange); color: #fff; }
+
+    /* ── TAGLINE SECTION ── */
+    .tagline-sec {
+      padding: 96px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .tagline-text {
+      font-size: 56px; font-weight: 700; color: var(--text);
+      letter-spacing: -1px; line-height: 1.15; max-width: 900px; margin: 0 auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff; border-top: 4px solid;
+      border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1;
+      padding: 56px 0 32px;
+    }
+    .footer-inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.8fr; gap: 48px; max-width: 1200px; margin: 0 auto; padding: 0 48px 40px; }
+    .footer-logo { font-size: 28px; font-weight: 600; color: var(--brand); letter-spacing: -1px; margin-bottom: 16px; }
+    .footer-socials { display: flex; gap: 14px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--text); font-size: 15px; transition: background 0.2s, color 0.2s; }
+    .footer-social:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .footer-col h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.65; transition: opacity 0.2s; }
+    .footer-col ul li a:hover { opacity: 1; color: var(--purple); }
+    .footer-newsletter p { font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.65; margin-bottom: 16px; line-height: 1.5; }
+    .newsletter-row { display: flex; gap: 10px; }
+    .newsletter-row input {
+      flex: 1; background: #f8f8ff; border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 10px 14px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text);
+      outline: none;
+    }
+    .newsletter-row input:focus { border-color: var(--purple); }
+    .newsletter-row button {
+      background: none; border: 1.5px solid var(--purple); border-radius: 12px; padding: 10px 20px;
+      font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; transition: background 0.2s, color 0.2s;
+    }
+    .newsletter-row button:hover { background: var(--purple); color: #fff; }
+    .footer-bottom { text-align: center; font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.4; padding: 0 48px; }
+
+    /* ── TOAST ── */
+    #sumToast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--text); color: #fff; padding: 14px 28px; border-radius: 50px;
+      font-size: 14px; font-weight: 600; z-index: 9999; pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0; white-space: nowrap;
+    }
+    #sumToast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* Contact float */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 800;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; border-radius: 50px; padding: 14px 0;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(108,43,255,0.4);
+      overflow: hidden; width: 52px; transition: width 0.3s ease, padding 0.3s ease;
+      justify-content: center;
+    }
+    .contact-btn:hover { width: 160px; padding: 14px 20px; }
+    .contact-btn .cb-label { white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0; transition: opacity 0.2s 0.1s, max-width 0.3s; }
+    .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
+
+    @media (max-width: 900px) {
+      .hero-text .container { flex-direction: column; }
+      .hero-headline { width: 100%; font-size: 60px; }
+      .fav-grid, .vibe-grid { grid-template-columns: repeat(2,1fr); }
+      .how-steps { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .fav-grid, .vibe-grid { grid-template-columns: 1fr; }
+      .hero-headline { font-size: 42px; }
+      .hero-ctas { flex-direction: column; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-bar" id="promoBanner">
+  <p>☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
+  <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="summer.html" class="nav-logo">
+      <img src="images/Logo/logo.png" alt="Rip &amp; Sip" />
+    </a>
+    <div class="nav-links">
+      <a href="summer.html">Home</a>
+      <a href="shop.html">Products</a>
+      <a href="summer.html#how">How It Works</a>
+      <a href="summer.html#vibe">Pick Your Vibe</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-icons">
+      <a href="index.html" class="theme-toggle" title="Switch to Night Mode">🌙 Night Mode</a>
+      <!-- Account icon -->
+      <button class="nav-icon-btn" onclick="window.location='membership.html'" title="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <!-- Cart icon -->
+      <a href="cart.html" class="cart-btn-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Cart <span class="cart-count-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-img-wrap">
+  <img src="https://www.figma.com/api/mcp/asset/e3937254-6dc5-470b-aad9-1720cb6a263a" alt="Summer cocktails" />
+</div>
+<div class="hero-text">
+  <div class="container">
+    <div class="hero-headline">
+      Rip it.<br>Mix it.<br>
+      <span class="own grad-text">Own the Day.</span>
+    </div>
+    <div class="hero-right">
+      <p class="hero-sub">Ready to drink cocktail packets with easy grip — made for the sunniest nights of your life.</p>
+      <div class="hero-ctas">
+        <a href="shop.html" class="btn-summer-primary">SHOP NEW ↗</a>
+        <a href="shop.html" class="btn-summer-outline">COCKTAILS</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOST FAVOURITE -->
+<section class="fav-sec" id="favourites">
+  <div class="container">
+    <div class="fav-section-label">⭐ Community Picks</div>
+    <h2 class="fav-h2">MOST FAVOURITE</h2>
+    <p class="fav-desc-header">The packets our community can't stop ordering</p>
+    <div class="fav-grid">
+
+      <!-- Card 1 — Pineapple -->
+      <div class="sum-card card-cyan">
+        <div class="card-badge cyan">Best Seller</div>
+        <div class="card-img-area">
+          <img src="images/product-packet/Container.png" alt="Pineapple &amp; Pisco" />
+        </div>
+        <div class="card-name">Pineapple &amp; Pisco</div>
+        <div class="card-desc">Sharp Peruvian Pisco meets cold-pressed golden pineapple. Tear it. Mix it. Go.</div>
+        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.8 (124 reviews)</span></div>
+        <div class="card-footer">
+          <div class="card-price">£1.99 <span style="font-weight:500;font-size:14px;color:#666;">/ unit</span></div>
+          <button class="btn-add-cart" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Card 2 — Exotic Passion -->
+      <div class="sum-card card-orange">
+        <div class="card-badge orange">Fan Favourite</div>
+        <div class="card-img-area">
+          <img src="images/product-packet/Exotic%20Passion.png" alt="Exotic Passion" />
+        </div>
+        <div class="card-name">Exotic Passion</div>
+        <div class="card-desc">Tropical passion fruit with a citrus edge. The one that always runs out first.</div>
+        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.9 (98 reviews)</span></div>
+        <div class="card-footer">
+          <div class="card-price">£2.49 <span style="font-weight:500;font-size:14px;color:#666;">/ unit</span></div>
+          <button class="btn-add-cart" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Card 3 — Strawberry & Mint -->
+      <div class="sum-card card-pink">
+        <div class="card-badge pink">Top Rated</div>
+        <div class="card-img-area">
+          <img src="images/product-packet/Refreshing.png" alt="Strawberry &amp; Mint" />
+        </div>
+        <div class="card-name">Strawberry &amp; Mint</div>
+        <div class="card-desc">Fresh strawberry with a cool mint finish. Summer in a packet — any time of year.</div>
+        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.8 (87 reviews)</span></div>
+        <div class="card-footer">
+          <div class="card-price">£2.49 <span style="font-weight:500;font-size:14px;color:#666;">/ unit</span></div>
+          <button class="btn-add-cart" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Card 4 — Bundle -->
+      <div class="sum-card card-green" style="position:relative;">
+        <div class="card-badge green">Bundle Deal</div>
+        <div style="position:relative; margin-bottom:28px;">
+          <div class="bundle-fan">
+            <img src="images/product-packet/Refreshing.png" alt="Strawberry" />
+            <img src="images/product-packet/Container.png" alt="Pineapple" />
+            <img src="images/product-packet/Exotic%20Passion.png" alt="Passion" />
+          </div>
+          <div class="bundle-disc"><span class="pct">20%</span><span class="off">OFF</span></div>
+        </div>
+        <div class="card-name">Triple Pack Bundle</div>
+        <div class="card-desc">Buy 3 packets and get 20% off the total price. Mix any flavours.</div>
+        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.9 (211 reviews)</span></div>
+        <div style="margin-bottom:16px;">
+          <div class="card-price-old">£7.47</div>
+          <div class="card-price-new">£5.97</div>
+          <div class="card-save">You save £1.50 (20% off)</div>
+        </div>
+        <button class="btn-add-cart" onclick="sumAddToCart('Triple Pack Bundle','5.97','images/product-packet/Three%20wonders.png')" style="width:100%;justify-content:center;">🛒 Get Bundle</button>
+      </div>
+
+    </div>
+    <div class="view-all-wrap">
+      <a href="shop.html" class="btn-view-all">VIEW FULL SHOP →</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-sec" id="how">
+  <div class="container">
+    <div class="how-label">How it works</div>
+    <h2 class="how-h2">TWO STEPS. ZERO LIMITS.</h2>
+    <p class="how-sub">No bartenders. No queue. Just you and the packet.</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <img src="https://www.figma.com/api/mcp/asset/ac74832d-434f-4a67-b10f-658515349ff5" alt="Rip it" />
+        <div class="how-step-body">
+          <div class="how-step-num">Step 01</div>
+          <div class="how-step-title">Rip it</div>
+          <div class="how-step-desc">Tear the packet along the perforated edge. One clean rip and you're ready. No tools, no mess.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <img src="https://www.figma.com/api/mcp/asset/c0355ead-af84-46af-b5ce-5635694777ff" alt="Drink it" />
+        <div class="how-step-body">
+          <div class="how-step-num">Step 02</div>
+          <div class="how-step-title">Drink it</div>
+          <div class="how-step-desc">Sip, share, repeat. No bad drinks. No waiting. Just the night you actually wanted.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PICK YOUR VIBE -->
+<section class="vibe-sec" id="vibe">
+  <div class="container">
+    <div class="vibe-header">
+      <div>
+        <div class="vibe-label">The Lineup</div>
+        <h2 class="vibe-h2">Pick Your <span>Vibe</span></h2>
+      </div>
+      <a href="shop.html" class="btn-summer-outline" style="font-size:15px;padding:12px 28px;border-radius:10px;">View All Flavors</a>
+    </div>
+    <div class="vibe-grid">
+
+      <div class="vibe-card">
+        <img src="https://www.figma.com/api/mcp/asset/54d4e325-ee3a-4213-a23b-38041cba2dc6" alt="Pineapple &amp; Pisco cocktail" />
+        <div class="vibe-card-body">
+          <div class="vibe-card-vibe">The Tropical Disruptor</div>
+          <div class="vibe-card-name">Pineapple &amp; Pisco</div>
+          <div class="vibe-card-desc">A sharp, electrified blend of Peruvian Pisco, cold-pressed golden pineapple, and volcanic salt. Finished with vapor-infused lime zest.</div>
+          <div class="vibe-card-footer">
+            <button class="btn-order yellow" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')">Order Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vibe-card">
+        <img src="https://www.figma.com/api/mcp/asset/a0e8862b-fdcc-4439-a0db-6b5c067af636" alt="Strawberry cocktail" />
+        <div class="vibe-card-body">
+          <div class="vibe-card-vibe">The Neon Refresh</div>
+          <div class="vibe-card-name">Strawberry, Lemon &amp; Mint</div>
+          <div class="vibe-card-desc">Muddled forest strawberries and cryogenic mint with bright lemon. Craft-inspired. Freezing, aromatic, and dangerously easy to drink.</div>
+          <div class="vibe-card-footer">
+            <button class="btn-order red" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')">Order Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vibe-card">
+        <img src="https://www.figma.com/api/mcp/asset/7106f3a6-6037-4fb0-b86d-fd5c9854efe3" alt="Passion Fruit cocktail" />
+        <div class="vibe-card-body">
+          <div class="vibe-card-vibe">High Voltage</div>
+          <div class="vibe-card-name">Passion Fruit Fusion</div>
+          <div class="vibe-card-desc">Tart passion fruit nectar, artisanal agave, and a hidden habanero hit. Exotic, vibrant, and built for high-energy nights.</div>
+          <div class="vibe-card-footer">
+            <button class="btn-order orange" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')">Order Now</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BOLD TAGLINE -->
+<section class="tagline-sec">
+  <div class="container">
+    <p class="tagline-text">Your drink, your rules.<br>No bar? No problem.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Rip &amp; Sip</div>
+      <p style="font-size:14px;font-weight:500;color:var(--text);opacity:0.55;margin-bottom:20px;line-height:1.5;">Ready-to-rip cocktail packets.<br>Engineered for the day you'll remember.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social">f</a>
+        <a href="#" class="footer-social">in</a>
+        <a href="#" class="footer-social">tw</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;">Stay Updated</h4>
+      <p>Join our newsletter for exclusive summer offers and new drop alerts.</p>
+      <div class="newsletter-row">
+        <input type="email" placeholder="Email address" />
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Rip &amp; Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="contact.html" class="contact-btn" title="Contact us">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span class="cb-label">Contact Us</span>
+</a>
+
+<div id="sumToast">Added to cart!</div>
+
+<script>
+  // ── CART COUNT ──
+  function updateCartCount() {
+    const items = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+    const total = items.reduce((s,i) => s + (i.qty||1), 0);
+    document.getElementById('cartCount').textContent = total;
+  }
+  updateCartCount();
+
+  // ── ADD TO CART ──
+  function sumAddToCart(name, price, img) {
+    const items = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+    const existing = items.find(i => i.name === name);
+    if (existing) {
+      existing.qty = (existing.qty || 1) + 1;
+    } else {
+      items.push({ name, price: parseFloat(price), img, qty: 1 });
+    }
+    localStorage.setItem('ripSipCartItems', JSON.stringify(items));
+    // legacy key for cart.html compatibility
+    const legacyCart = {};
+    items.forEach(i => { legacyCart[i.name] = { name: i.name, price: i.price, img: i.img, qty: i.qty }; });
+    localStorage.setItem('ripSipCart', JSON.stringify(legacyCart));
+    updateCartCount();
+    showToast(name + ' added to cart!');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('sumToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+</script>
+
+</body>
+</html>
