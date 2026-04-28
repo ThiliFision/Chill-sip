@@ -108,13 +108,11 @@
     }
     .hero-img-wrap::before {
       content: ''; position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, rgba(255,255,255,0.3) 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 55%, rgba(255,255,255,0.25) 100%);
     }
-    .hero-img-wrap::after {
-      content: ''; position: absolute; bottom: -2px; left: -5%; z-index: 2;
-      width: 110%; height: 110px;
-      background: #fff;
-      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    .hero-wave {
+      position: absolute; bottom: 0; left: 0; z-index: 2;
+      width: 100%; height: 100px; display: block;
     }
     .hero-text { padding: 40px 0 60px; }
     .hero-text .container { display: flex; flex-direction: column; gap: 0; }
@@ -409,6 +407,9 @@
 <!-- HERO -->
 <div class="hero-img-wrap">
   <img src="https://www.figma.com/api/mcp/asset/e3937254-6dc5-470b-aad9-1720cb6a263a" alt="Summer cocktails" />
+  <svg class="hero-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+    <path d="M0,0 Q720,100 1440,0 L1440,100 L0,100 Z" fill="#ffffff"/>
+  </svg>
 </div>
 <div class="hero-text">
   <div class="container">
