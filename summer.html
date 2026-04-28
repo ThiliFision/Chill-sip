@@ -111,18 +111,19 @@
       background: linear-gradient(to bottom, rgba(255,255,255,0) 60%, rgba(255,255,255,0.9) 100%);
     }
     .hero-text { padding: 40px 0 60px; }
-    .hero-text .container { display: flex; gap: 48px; align-items: flex-start; }
+    .hero-text .container { display: flex; flex-direction: column; gap: 0; }
+    .hero-top-row { display: flex; gap: 48px; align-items: flex-start; margin-bottom: 48px; }
     .hero-headline {
       flex: 0 0 auto; width: 58%;
       font-size: 96px; font-weight: 700; line-height: 1; letter-spacing: -2px; color: var(--text);
     }
     .hero-headline .own { display: block; }
-    .hero-right { flex: 1; padding-top: 48px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .hero-right { flex: 1; padding-top: 48px; }
     .hero-sub {
       font-size: 32px; font-weight: 500; color: var(--purple);
-      line-height: 1.35; letter-spacing: -0.5px; margin-bottom: 40px;
+      line-height: 1.35; letter-spacing: -0.5px;
     }
-    .hero-ctas { display: flex; gap: 24px; flex-wrap: nowrap; justify-content: center; }
+    .hero-ctas { display: flex; gap: 24px; flex-wrap: nowrap; justify-content: center; width: 100%; }
     .btn-summer-primary {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
@@ -405,16 +406,18 @@
 </div>
 <div class="hero-text">
   <div class="container">
-    <div class="hero-headline">
-      Rip it. Mix it.<br>
-      <span class="own grad-text">Own the Day.</span>
-    </div>
-    <div class="hero-right">
-      <p class="hero-sub">Ready to drink cocktail packets with easy grip — made for the sunniest nights of your life.</p>
-      <div class="hero-ctas">
-        <a href="shop.html" class="btn-summer-primary">SHOP NEW ↗</a>
-        <a href="shop.html" class="btn-summer-outline">COCKTAILS</a>
+    <div class="hero-top-row">
+      <div class="hero-headline">
+        Rip it. Mix it.<br>
+        <span class="own grad-text">Own the Day.</span>
       </div>
+      <div class="hero-right">
+        <p class="hero-sub">Ready to drink cocktail packets with easy grip — made for the sunniest nights of your life.</p>
+      </div>
+    </div>
+    <div class="hero-ctas">
+      <a href="shop.html" class="btn-summer-primary">SHOP NEW ↗</a>
+      <a href="shop.html" class="btn-summer-outline">COCKTAILS</a>
     </div>
   </div>
 </div>
