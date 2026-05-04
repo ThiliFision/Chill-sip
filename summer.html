@@ -328,11 +328,11 @@
     }
     .fav-carousel::-webkit-scrollbar { display: none; }
 
-    /* Cards inside carousel — fixed equal size */
+    /* Cards inside carousel — grow to fill width, scroll if more items added */
     .fav-carousel .uni-card {
-      flex: 0 0 300px; width: 300px;
+      flex: 1 0 260px; min-width: 260px; max-width: 420px;
       scroll-snap-align: start;
-      height: 520px; /* fixed equal height for all cards */
+      height: 520px;
     }
     .fav-carousel .uni-img {
       height: 220px; flex-shrink: 0; overflow: hidden;
