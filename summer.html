@@ -317,13 +317,13 @@
 
     /* ── CAROUSEL ── */
     .fav-carousel-outer {
-      position: relative; margin-top: 40px;
+      position: relative; max-width: 1200px; margin: 40px auto 0;
     }
     .fav-carousel {
       display: flex; gap: 20px;
       overflow-x: auto; scroll-snap-type: x mandatory;
       scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-      padding: 12px 96px 24px;
+      padding: 12px 48px 24px;
       scrollbar-width: none;
     }
     .fav-carousel::-webkit-scrollbar { display: none; }
