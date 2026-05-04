@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Checkout — Chill Sip Summer Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #ffffff;
+      --bg2:    #f8f8ff;
+      --text:   #2e1664;
+      --brand:  #3a0ba5;
+      --purple: #6c2bff;
+      --pink:   #ff2d95;
+      --green:  #2ae500;
+      --yellow: #efb609;
+      --orange: #ef7c09;
+      --cyan:   #00dbe9;
+      --border: rgba(46,22,100,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 16px rgba(46,22,100,0.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px; max-width: 1296px; margin: 0 auto;
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; font-size: 26px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text);
+      display: flex; align-items: center; gap: 4px; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-icons { display: flex; align-items: center; gap: 20px; }
+    .nav-icon-btn {
+      background: none; border: none; cursor: pointer; color: var(--text);
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s;
+    }
+    .nav-icon-btn:hover { color: var(--purple); }
+    .nav-icon-btn svg { width: 22px; height: 22px; }
+    .theme-toggle {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 12px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: #eee; }
+    .cart-btn-nav {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 10px; padding: 8px 16px;
+      font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cart-btn-nav:hover { background: var(--brand); }
+    .cart-count-badge {
+      background: var(--pink); color: #fff; border-radius: 50%;
+      width: 18px; height: 18px; font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: linear-gradient(135deg, #fff4e0, #ffe8f5, #f0eaff);
+      padding: 56px 0 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb {
+      font-size: 12px; font-weight: 500; color: var(--text);
+      opacity: 0.55; text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+    .breadcrumb a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
+    .breadcrumb a:hover { opacity: 1; color: var(--purple); }
+    .breadcrumb .sep { opacity: 0.4; }
+    .page-title {
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -1.5px;
+      color: var(--text); line-height: 1; margin-bottom: 28px;
+    }
+    .page-title .grad-word {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ── STEPS BAR ── */
+    .steps-bar {
+      display: flex; align-items: center; gap: 0;
+    }
+    .step {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: rgba(46,22,100,0.4);
+    }
+    .step.active { color: var(--purple); }
+    .step.done { color: var(--green); }
+    .step-circle {
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+      border: 2px solid currentColor;
+      flex-shrink: 0;
+    }
+    .step.active .step-circle {
+      background: var(--purple); border-color: var(--purple); color: #fff;
+    }
+    .step.done .step-circle {
+      background: var(--green); border-color: var(--green); color: #000;
+    }
+    .step-sep {
+      flex: 1; height: 1.5px; background: var(--border); margin: 0 12px; max-width: 56px;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .checkout-section { padding: 48px 0 100px; }
+    .checkout-layout {
+      display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start;
+    }
+    @media (max-width: 960px) { .checkout-layout { grid-template-columns: 1fr; } }
+
+    /* ── FORM BLOCKS ── */
+    .form-block {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 28px; margin-bottom: 20px;
+    }
+    .form-block-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px;
+      color: var(--purple); margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-block-title svg { flex-shrink: 0; opacity: 0.7; }
+
+    .form-row { display: grid; gap: 16px; margin-bottom: 16px; }
+    .form-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 600px) { .form-row.cols-2 { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.4px; color: rgba(46,22,100,0.55);
+    }
+    .form-input, .form-select {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 12px 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500;
+      color: var(--text); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .form-input::placeholder { color: rgba(46,22,100,0.3); }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(108,43,255,0.12);
+    }
+    .form-select {
+      cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236c2bff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .form-select option { background: #fff; color: var(--text); }
+
+    /* ── DELIVERY OPTIONS ── */
+    .delivery-options { display: flex; flex-direction: column; gap: 10px; }
+    .delivery-opt-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px; border-radius: 12px;
+      border: 1.5px solid var(--border); background: #fff;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    }
+    .delivery-opt-inner.active {
+      border-color: var(--green);
+      background: rgba(42,229,0,0.06);
+    }
+    .delivery-opt-inner:hover:not(.active) {
+      border-color: rgba(108,43,255,0.35);
+    }
+    .delivery-opt-label { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .delivery-opt-sub { font-size: 12px; color: rgba(46,22,100,0.5); font-weight: 500; }
+    .delivery-opt-price { font-size: 14px; font-weight: 700; color: var(--text); }
+    .delivery-opt-price.free { color: var(--green); }
+
+    /* ── PAYMENT METHODS ── */
+    .payment-methods { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .pay-method {
+      flex: 1; min-width: 110px; padding: 12px 16px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: #fff;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      font-size: 12px; font-weight: 700; color: rgba(46,22,100,0.6);
+      text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .pay-method.active {
+      border-color: var(--purple); background: rgba(108,43,255,0.08); color: var(--purple);
+    }
+    .pay-method:hover:not(.active) { border-color: rgba(108,43,255,0.35); }
+    .pay-method-icon { font-size: 16px; }
+
+    .card-icons { display: flex; gap: 8px; margin-bottom: 18px; }
+    .card-icon {
+      height: 28px; padding: 0 10px; border-radius: 5px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+    }
+    .card-icon.visa  { color: #1a5fff; }
+    .card-icon.mc    { color: #eb5757; }
+    .card-icon.amex  { color: #007bc1; }
+
+    .stripe-note {
+      background: rgba(108,43,255,0.05); border: 1.5px dashed rgba(108,43,255,0.25);
+      border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; text-align: center;
+    }
+    .stripe-note-icon { font-size: 28px; margin-bottom: 8px; }
+    .stripe-note-text { font-size: 12px; color: rgba(46,22,100,0.6); line-height: 1.6; }
+    .stripe-note-text strong { color: var(--purple); }
+
+    .security-note {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: rgba(46,22,100,0.5); margin-top: 14px;
+    }
+    .security-note svg { flex-shrink: 0; color: var(--green); }
+
+    /* ── MEMBERSHIP PROMPT ── */
+    .member-prompt {
+      border-radius: 14px; padding: 16px 18px; margin-bottom: 16px;
+      border: 1.5px solid rgba(108,43,255,0.22);
+      background: linear-gradient(135deg, #f4f2ff 0%, #fff5fb 100%);
+    }
+    .member-prompt-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--purple); margin-bottom: 6px;
+    }
+    .member-prompt-title {
+      font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.35;
+    }
+    .member-prompt-pts {
+      font-size: 22px; font-weight: 800; color: var(--purple); line-height: 1;
+      margin-bottom: 4px;
+    }
+    .member-prompt-pts-sub {
+      font-size: 11px; font-weight: 600; color: rgba(46,22,100,0.45); margin-bottom: 10px;
+    }
+    .member-prompt-row {
+      display: flex; gap: 8px;
+    }
+    .member-prompt-input {
+      flex: 1; padding: 9px 12px; border-radius: 8px;
+      border: 1.5px solid rgba(108,43,255,0.22); background: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 500;
+      color: var(--text); outline: none; transition: border-color 0.15s;
+    }
+    .member-prompt-input:focus { border-color: var(--purple); }
+    .member-prompt-btn {
+      padding: 9px 14px; border-radius: 8px; border: none; outline: none;
+      background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .member-prompt-btn:hover { opacity: 0.88; }
+    .member-prompt-join {
+      font-size: 11px; font-weight: 600; color: rgba(46,22,100,0.45);
+      margin-top: 8px; text-align: center;
+    }
+    .member-prompt-join a {
+      color: var(--purple); text-decoration: none; font-weight: 700;
+    }
+    .member-prompt-join a:hover { text-decoration: underline; }
+    /* connected state */
+    .member-prompt-connected {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .member-prompt-avatar {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 800; color: #fff;
+    }
+    .member-prompt-info { flex: 1; min-width: 0; }
+    .member-prompt-email-text {
+      font-size: 12px; font-weight: 700; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .member-prompt-earn {
+      font-size: 11px; font-weight: 600; color: var(--purple); margin-top: 2px;
+    }
+    .member-prompt-switch {
+      font-size: 11px; font-weight: 600; color: rgba(46,22,100,0.35);
+      cursor: pointer; background: none; border: none; padding: 0; flex-shrink: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: color 0.15s;
+    }
+    .member-prompt-switch:hover { color: var(--pink); }
+
+    /* ── ORDER SIDEBAR ── */
+    .order-sidebar { position: sticky; top: 100px; }
+    .order-card {
+      background: #fff; border: 1.5px solid rgba(108,43,255,0.18);
+      border-radius: 20px; padding: 28px;
+    }
+    .order-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px;
+      color: var(--purple); margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .order-item { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .order-item-img {
+      width: 52px; height: 52px; border-radius: 10px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+      flex-shrink: 0; overflow: hidden;
+    }
+    .order-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .order-item-info { flex: 1; min-width: 0; }
+    .order-item-name {
+      font-size: 13px; font-weight: 700; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .order-item-qty { font-size: 11px; color: rgba(46,22,100,0.45); font-weight: 500; }
+    .order-item-price { font-size: 14px; font-weight: 700; color: var(--text); flex-shrink: 0; }
+
+    .order-divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .order-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .order-label { font-size: 13px; color: rgba(46,22,100,0.55); font-weight: 500; }
+    .order-value { font-size: 13px; font-weight: 700; color: var(--text); }
+    .order-value.free { color: var(--green); }
+    .order-value.discount { color: var(--green); }
+    .order-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+    .order-total-label { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text); }
+    .order-total-value { font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -1px; }
+
+    .pay-btn {
+      width: 100%; padding: 18px; border-radius: 12px; border: none; margin-top: 24px;
+      background: var(--green); color: #000;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800;
+      letter-spacing: -0.3px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(42,229,0,0.35);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .pay-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(42,229,0,0.45); }
+    .pay-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .back-link {
+      display: block; text-align: center; margin-top: 14px;
+      font-size: 12px; color: rgba(46,22,100,0.45); text-decoration: none; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px; transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--purple); }
+
+    /* ── TOAST ── */
+    #sumToast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--text); color: #fff; padding: 14px 28px; border-radius: 50px;
+      font-size: 14px; font-weight: 600; z-index: 9999; pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0; white-space: nowrap;
+    }
+    #sumToast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff; border-top: 4px solid;
+      border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1;
+      padding: 56px 0 32px;
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.8fr;
+      gap: 48px; max-width: 1200px; margin: 0 auto; padding: 0 48px 40px;
+    }
+    .footer-logo { font-size: 28px; font-weight: 600; color: var(--brand); letter-spacing: -1px; margin-bottom: 16px; }
+    .footer-socials { display: flex; gap: 14px; }
+    .footer-social {
+      width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: var(--text); font-size: 15px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .footer-social:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .footer-col h4 {
+      font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a {
+      text-decoration: none; font-size: 14px; font-weight: 500;
+      color: var(--text); opacity: 0.65; transition: opacity 0.2s;
+    }
+    .footer-col ul li a:hover { opacity: 1; color: var(--purple); }
+    .footer-newsletter p {
+      font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.65;
+      margin-bottom: 16px; line-height: 1.5;
+    }
+    .newsletter-row { display: flex; gap: 10px; }
+    .newsletter-row input {
+      flex: 1; background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 10px 14px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text); outline: none;
+    }
+    .newsletter-row input:focus { border-color: var(--purple); }
+    .newsletter-row button {
+      background: none; border: 1.5px solid var(--purple); border-radius: 12px;
+      padding: 10px 20px; font-size: 14px; font-weight: 600; color: var(--text);
+      cursor: pointer; transition: background 0.2s, color 0.2s;
+    }
+    .newsletter-row button:hover { background: var(--purple); color: #fff; }
+    .footer-bottom {
+      text-align: center; font-size: 13px; font-weight: 500;
+      color: var(--text); opacity: 0.4; padding: 0 48px;
+    }
+
+    /* ── FLOATING CONTACT BUTTON ── */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 800;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; border-radius: 50px; padding: 14px 0;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(108,43,255,0.4);
+      overflow: hidden; width: 52px; transition: width 0.3s ease, padding 0.3s ease;
+      justify-content: center;
+    }
+    .contact-btn:hover { width: 160px; padding: 14px 20px; }
+    .contact-btn .cb-label {
+      white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0;
+      transition: opacity 0.2s 0.1s, max-width 0.3s;
+    }
+    .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 12px 24px; }
+    }
+    @media (max-width: 600px) {
+      .footer-inner { grid-template-columns: 1fr; }
+      .steps-bar { flex-wrap: wrap; gap: 8px; }
+      .step-sep { display: none; }
+    }
+    /* ── NIGHT EDITION ── */
+    html.night-edition{--bg:#1d0536;--bg2:#27084a;--text:#ffffff;--brand:#c084fc;--purple:#b06bff;--pink:#ff6eb8;--green:#4ade80;--yellow:#fbbf24;--orange:#fb923c;--cyan:#22d3ee;--red:#f87171;--muted:rgba(255,255,255,.82);--dim:rgba(255,255,255,.58);--border:rgba(176,107,255,.25)}
+    html.night-edition body{background:linear-gradient(160deg,#1d0536 0%,#2a0850 28%,#200636 55%,#2a0848 80%,#1d0536 100%) fixed !important;min-height:100vh;color-scheme:dark}
+    html.night-edition nav{background:#130230 !important;box-shadow:0 1px 32px rgba(176,107,255,.2) !important}
+    html.night-edition footer{background:#130230 !important}
+    html.night-edition .promo-bar{background:#220545 !important}
+    html.night-edition .theme-toggle{background:rgba(176,107,255,.18) !important;border-color:rgba(176,107,255,.4) !important;color:var(--text) !important}
+    html.night-edition .theme-toggle:hover{background:rgba(176,107,255,.30) !important}
+    html.night-edition .fav-sec,html.night-edition .vibe-sec{background:var(--bg) !important}
+    html.night-edition .fav-arrow{background:#1a0535 !important;border-color:var(--border) !important;color:var(--text) !important;box-shadow:0 4px 18px rgba(168,85,247,.12) !important}
+    html.night-edition .proof-sec{background:linear-gradient(160deg,#0d0220 0%,#120223 45%,#07081e 100%) !important}
+    html.night-edition .proof-stats{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition .age-box,html.night-edition .sample-modal{background:var(--bg2) !important}
+    html.night-edition .toolbar-wrap{background:#130230 !important}
+    html.night-edition .rc,
+    html.night-edition .summary-card,
+    html.night-edition .cart-item,
+    html.night-edition .form-block,
+    html.night-edition .delivery-opt-inner,
+    html.night-edition .pay-method,
+    html.night-edition .form-note,
+    html.night-edition .soc,
+    html.night-edition .cb-label,
+    html.night-edition .pk-card,
+    html.night-edition .vg-cta,
+    html.night-edition .why-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
+    html.night-edition textarea,
+    html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
+    html.night-edition .page-title{color:#2d0652 !important;-webkit-text-fill-color:#2d0652 !important}
+    html.night-edition .page-title .grad-word{background:linear-gradient(120deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .breadcrumb,html.night-edition .breadcrumb a{color:rgba(45,6,82,.55) !important}
+  </style>
+  <script>
+  (function(){
+    function syncBtn(){
+      var n=document.documentElement.classList.contains('night-edition');
+      document.querySelectorAll('.theme-toggle').forEach(function(b){
+        b.textContent=n?'☀️ Summer Edition':'🌙 Night Edition';
+      });
+      document.querySelectorAll('[data-summer]').forEach(function(el){
+        el.textContent=n?el.dataset.night:el.dataset.summer;
+      });
+      document.querySelectorAll('[data-summer-html]').forEach(function(el){
+        el.innerHTML=n?el.dataset.nightHtml:el.dataset.summerHtml;
+      });
+    }
+    if(localStorage.getItem('rns-theme')==='night')document.documentElement.classList.add('night-edition');
+    document.addEventListener('DOMContentLoaded',function(){
+      syncBtn();
+      document.querySelectorAll('.theme-toggle').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var on=document.documentElement.classList.toggle('night-edition');
+          localStorage.setItem('rns-theme',on?'night':'summer');
+          syncBtn();
+        });
+      });
+    });
+  })();
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="summer.html" class="nav-logo">Chill Sip</a>
+    <div class="nav-links">
+      <a href="summer.html">Home</a>
+      <a href="summer-shop.html">Shop</a>
+      <a href="summer-cocktails.html">Our Cocktails</a>
+      <a href="summer-companies.html">For Companies</a>
+      <a href="summer-virgin.html">Virgin Collection</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
+      <!-- Account icon -->
+      <button class="nav-icon-btn" onclick="window.location='summer-membership.html'" title="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <!-- Cart button -->
+      <a href="summer-cart.html" class="cart-btn-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Cart <span class="cart-count-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="summer.html">Home</a>
+      <span class="sep">›</span>
+      <a href="summer-shop.html">Shop</a>
+      <span class="sep">›</span>
+      <a href="summer-cart.html">Cart</a>
+      <span class="sep">›</span>
+      <span>Checkout</span>
+    </div>
+    <h1 class="page-title">Secure <span class="grad-word">Checkout</span></h1>
+    <div class="steps-bar">
+      <div class="step done">
+        <div class="step-circle">✓</div>
+        Cart
+      </div>
+      <div class="step-sep"></div>
+      <div class="step active">
+        <div class="step-circle">2</div>
+        Details
+      </div>
+      <div class="step-sep"></div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        Payment
+      </div>
+      <div class="step-sep"></div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        Confirm
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<section class="checkout-section">
+  <div class="container">
+    <div class="checkout-layout">
+
+      <!-- LEFT: FORMS -->
+      <div class="checkout-forms">
+
+        <!-- Contact Info -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            Contact Information
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label" for="firstName">First Name</label>
+              <input class="form-input" type="text" id="firstName" placeholder="Alex" autocomplete="given-name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="lastName">Last Name</label>
+              <input class="form-input" type="text" id="lastName" placeholder="Smith" autocomplete="family-name" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address</label>
+              <input class="form-input" type="email" id="email" placeholder="alex@example.com" autocomplete="email" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone Number</label>
+              <input class="form-input" type="tel" id="phone" placeholder="+44 7700 900000" autocomplete="tel" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Address -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Delivery Address
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="address1">Address Line 1</label>
+              <input class="form-input" type="text" id="address1" placeholder="123 High Street" autocomplete="address-line1" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="address2">Address Line 2 (optional)</label>
+              <input class="form-input" type="text" id="address2" placeholder="Apartment, suite, etc." autocomplete="address-line2" />
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label" for="city">City</label>
+              <input class="form-input" type="text" id="city" placeholder="London" autocomplete="address-level2" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="postcode">Postcode</label>
+              <input class="form-input" type="text" id="postcode" placeholder="EC1A 1BB" autocomplete="postal-code" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="country">Country</label>
+              <select class="form-select" id="country" autocomplete="country">
+                <option value="GB">United Kingdom</option>
+                <option value="IE">Ireland</option>
+                <option value="NL">Netherlands</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="ES">Spain</option>
+                <option value="IT">Italy</option>
+                <option value="SE">Sweden</option>
+                <option value="NO">Norway</option>
+                <option value="DK">Denmark</option>
+                <option value="AU">Australia</option>
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Options -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            Delivery Options
+          </div>
+          <div class="delivery-options">
+            <label>
+              <input type="radio" name="delivery" value="standard" checked style="display:none;" />
+              <div class="delivery-opt-inner active" id="opt-standard" onclick="selectDelivery('standard', this)">
+                <div>
+                  <div class="delivery-opt-label">Standard Delivery</div>
+                  <div class="delivery-opt-sub">3–5 business days</div>
+                </div>
+                <div class="delivery-opt-price free" id="delivery-standard-price">FREE</div>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="delivery" value="express" style="display:none;" />
+              <div class="delivery-opt-inner" id="opt-express" onclick="selectDelivery('express', this)">
+                <div>
+                  <div class="delivery-opt-label">Express Delivery</div>
+                  <div class="delivery-opt-sub">Next business day · Order before 2pm</div>
+                </div>
+                <div class="delivery-opt-price">£6.99</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="form-block">
+          <div class="form-block-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            Payment
+            <span style="margin-left:auto;font-size:10px;font-weight:700;letter-spacing:1px;background:var(--bg2);border:1.5px solid var(--border);border-radius:6px;padding:3px 10px;color:rgba(46,22,100,0.5);">
+              🔒 SECURE
+            </span>
+          </div>
+
+          <div class="payment-methods">
+            <div class="pay-method active" onclick="selectMethod(this,'card')">
+              <span class="pay-method-icon">💳</span> Card
+            </div>
+            <div class="pay-method" onclick="selectMethod(this,'apple')">
+              <span class="pay-method-icon">🍎</span> Apple Pay
+            </div>
+            <div class="pay-method" onclick="selectMethod(this,'google')">
+              <span class="pay-method-icon">🔵</span> Google Pay
+            </div>
+          </div>
+
+          <div class="card-icons">
+            <div class="card-icon visa">VISA</div>
+            <div class="card-icon mc">MC</div>
+            <div class="card-icon amex">AMEX</div>
+          </div>
+
+          <div id="card-payment-form">
+            <div class="stripe-note">
+              <div class="stripe-note-icon">🔒</div>
+              <div class="stripe-note-text">
+                Payment powered by <strong>Stripe</strong>.<br />
+                Add your Stripe publishable key to activate secure card entry.
+              </div>
+            </div>
+
+            <div class="form-row cols-2">
+              <div class="form-group">
+                <label class="form-label" for="cardName">Name on Card</label>
+                <input class="form-input" type="text" id="cardName" placeholder="Alex Smith" autocomplete="cc-name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cardNumber">Card Number</label>
+                <input class="form-input" type="text" id="cardNumber" placeholder="•••• •••• •••• ••••" maxlength="19" autocomplete="cc-number" oninput="formatCard(this)" />
+              </div>
+            </div>
+            <div class="form-row cols-2">
+              <div class="form-group">
+                <label class="form-label" for="cardExpiry">Expiry Date</label>
+                <input class="form-input" type="text" id="cardExpiry" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp" oninput="formatExpiry(this)" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cardCvc">CVC</label>
+                <input class="form-input" type="text" id="cardCvc" placeholder="•••" maxlength="4" autocomplete="cc-csc" />
+              </div>
+            </div>
+          </div>
+
+          <div class="security-note">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Your payment information is encrypted and never stored on our servers.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: ORDER SUMMARY -->
+      <div class="order-sidebar">
+        <div class="order-card">
+          <div class="order-title">Order Summary</div>
+          <div id="orderItems"><!-- rendered by JS --></div>
+          <div class="order-divider"></div>
+          <div class="order-row">
+            <span class="order-label">Subtotal</span>
+            <span class="order-value" id="orderSubtotal">£0.00</span>
+          </div>
+          <div class="order-row">
+            <span class="order-label">Delivery</span>
+            <span class="order-value" id="orderDelivery">£4.99</span>
+          </div>
+          <div class="order-row" id="orderDiscountRow" style="display:none;">
+            <span class="order-label">Discount</span>
+            <span class="order-value discount" id="orderDiscount">-£0.00</span>
+          </div>
+          <div class="order-divider"></div>
+          <div class="order-total-row">
+            <span class="order-total-label">Total</span>
+            <span class="order-total-value" id="orderTotal">£0.00</span>
+          </div>
+
+          <!-- Membership prompt — renders dynamically -->
+          <div id="memberPrompt" style="margin-top:16px;"></div>
+
+          <button class="pay-btn" id="payBtn" onclick="placeOrder()">
+            🔒 Pay £0.00
+          </button>
+          <a href="summer-cart.html" class="back-link">← Back to Cart</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Chill Sip</div>
+      <p style="font-size:14px;font-weight:500;color:var(--text);opacity:0.55;margin-bottom:20px;line-height:1.5;">Ready-to-rip cocktail packets.<br>Engineered for the day you'll remember.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social">f</a>
+        <a href="#" class="footer-social">in</a>
+        <a href="#" class="footer-social">tw</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="summer-contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;">Stay Updated</h4>
+      <p>Join our newsletter for exclusive summer offers and new drop alerts.</p>
+      <div class="newsletter-row">
+        <input type="email" placeholder="Email address" />
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="summer-contact.html" class="contact-btn" title="Contact us">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span class="cb-label">Contact Us</span>
+</a>
+
+<!-- TOAST -->
+<div id="sumToast"></div>
+
+<script>
+  /* ── Cart count in nav ── */
+  function updateCartCount() {
+    const items = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+    const total = items.reduce((s, i) => s + (i.qty || 1), 0);
+    document.getElementById('cartCount').textContent = total;
+  }
+  updateCartCount();
+
+  /* ── Helpers ── */
+  function getCart() {
+    return JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+  }
+
+  let deliveryCost = 0;
+  let activeDiscount = parseFloat(sessionStorage.getItem('checkoutDiscount') || '0');
+
+  /* ── Render order summary ── */
+  function renderOrder() {
+    const cart = getCart();
+    if (cart.length === 0) {
+      window.location.href = 'summer-cart.html';
+      return;
+    }
+
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    deliveryCost = subtotal >= 50 ? 0 : 4.99;
+
+    // Update standard delivery label
+    const stdPriceEl = document.getElementById('delivery-standard-price');
+    if (stdPriceEl) {
+      stdPriceEl.textContent = deliveryCost === 0 ? 'FREE' : `£${deliveryCost.toFixed(2)}`;
+      stdPriceEl.className = 'delivery-opt-price' + (deliveryCost === 0 ? ' free' : '');
+    }
+
+    document.getElementById('orderItems').innerHTML = cart.map(item => `
+      <div class="order-item">
+        <div class="order-item-img">
+          ${(item.img || item.image) ? `<img src="${item.img || item.image}" alt="${item.name}" />` : '🍹'}
+        </div>
+        <div class="order-item-info">
+          <div class="order-item-name">${item.name}</div>
+          <div class="order-item-qty">Qty: ${item.qty}</div>
+        </div>
+        <div class="order-item-price">£${(item.price * item.qty).toFixed(2)}</div>
+      </div>
+    `).join('');
+
+    const discount = subtotal * activeDiscount;
+    const total = subtotal + deliveryCost - discount;
+
+    document.getElementById('orderSubtotal').textContent = `£${subtotal.toFixed(2)}`;
+    document.getElementById('orderDelivery').textContent = deliveryCost === 0 ? 'FREE' : `£${deliveryCost.toFixed(2)}`;
+    document.getElementById('orderDelivery').className = 'order-value' + (deliveryCost === 0 ? ' free' : '');
+    document.getElementById('orderTotal').textContent = `£${total.toFixed(2)}`;
+
+    if (activeDiscount > 0) {
+      document.getElementById('orderDiscountRow').style.display = 'flex';
+      document.getElementById('orderDiscount').textContent = `-£${discount.toFixed(2)}`;
+    }
+
+    document.getElementById('payBtn').innerHTML = `🔒 Pay £${total.toFixed(2)}`;
+  }
+
+  /* ── Delivery option toggle ── */
+  function selectDelivery(type, el) {
+    document.querySelectorAll('.delivery-opt-inner').forEach(d => d.classList.remove('active'));
+    el.classList.add('active');
+    if (type === 'express') {
+      deliveryCost = 6.99;
+    } else {
+      const cart = getCart();
+      const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      deliveryCost = sub >= 50 ? 0 : 4.99;
+    }
+    const cart = getCart();
+    const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const disc = sub * activeDiscount;
+    const total = sub + deliveryCost - disc;
+    document.getElementById('orderDelivery').textContent = deliveryCost === 0 ? 'FREE' : `£${deliveryCost.toFixed(2)}`;
+    document.getElementById('orderDelivery').className = 'order-value' + (deliveryCost === 0 ? ' free' : '');
+    document.getElementById('orderTotal').textContent = `£${total.toFixed(2)}`;
+    document.getElementById('payBtn').innerHTML = `🔒 Pay £${total.toFixed(2)}`;
+  }
+
+  /* ── Payment method toggle ── */
+  function selectMethod(el, type) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+    el.classList.add('active');
+    const form = document.getElementById('card-payment-form');
+    form.style.opacity = type === 'card' ? '1' : '0.4';
+    form.style.pointerEvents = type === 'card' ? 'auto' : 'none';
+  }
+
+  /* ── Card number formatting ── */
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').slice(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  /* ── Expiry formatting ── */
+  function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length >= 2) v = v.slice(0, 2) + ' / ' + v.slice(2);
+    input.value = v;
+  }
+
+  /* ── Validation ── */
+  function validate() {
+    const required = ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'postcode'];
+    for (const id of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.focus();
+        el.style.borderColor = 'var(--pink)';
+        el.style.boxShadow = '0 0 0 3px rgba(255,45,149,0.12)';
+        showToast('Please fill in all required fields.');
+        setTimeout(() => {
+          el.style.borderColor = '';
+          el.style.boxShadow = '';
+        }, 2000);
+        return false;
+      }
+    }
+    const email = document.getElementById('email').value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('Please enter a valid email address.');
+      return false;
+    }
+    return true;
+  }
+
+  /* ── Place order ── */
+  function placeOrder() {
+    if (!validate()) return;
+
+    const btn = document.getElementById('payBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Processing...';
+
+    setTimeout(() => {
+      const cart = getCart();
+      awardMemberPoints(cart);
+      localStorage.removeItem('ripSipCartItems');
+      localStorage.setItem('ripSipCart', JSON.stringify({}));
+      sessionStorage.removeItem('checkoutDiscount');
+      showToast('✓ Order placed successfully!');
+      setTimeout(() => {
+        window.location.href = 'summer.html?order=success';
+      }, 1800);
+    }, 2000);
+  }
+
+  /* ── Membership prompt ── */
+  function renderMemberPrompt() {
+    const el = document.getElementById('memberPrompt');
+    if (!el) return;
+    const email = sessionStorage.getItem('ripSipMemberSession');
+    const cart  = getCart();
+    const totalItems = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    const pts = Math.floor(totalItems / 10);
+
+    if (email) {
+      const members = JSON.parse(localStorage.getItem('ripSipMembers') || '{}');
+      const m = members[email];
+      if (!m) { sessionStorage.removeItem('ripSipMemberSession'); renderMemberPrompt(); return; }
+      const earnText = pts > 0
+        ? `+${pts} point${pts !== 1 ? 's' : ''} earned on this order`
+        : `${totalItems} packet${totalItems !== 1 ? 's' : ''} — buy ${10 - (totalItems % 10)} more to earn a point`;
+      el.innerHTML = `
+        <div class="member-prompt">
+          <div class="member-prompt-label">⭐ Membership Connected</div>
+          <div class="member-prompt-connected">
+            <div class="member-prompt-avatar">${email.charAt(0).toUpperCase()}</div>
+            <div class="member-prompt-info">
+              <div class="member-prompt-email-text">${email}</div>
+              <div class="member-prompt-earn">${earnText}</div>
+            </div>
+            <button class="member-prompt-switch" onclick="disconnectMember()">✕</button>
+          </div>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        <div class="member-prompt">
+          <div class="member-prompt-label">⭐ Earn Points</div>
+          <div class="member-prompt-title">Log in to earn points on this order and get a free packet faster.</div>
+          <div class="member-prompt-row">
+            <input class="member-prompt-input" type="email" id="promptEmail" placeholder="your@email.com" />
+            <button class="member-prompt-btn" onclick="quickLogin()">Log In</button>
+          </div>
+          <div class="member-prompt-join">Not a member? <a href="summer-membership.html" target="_blank">Join free →</a></div>
+        </div>`;
+    }
+  }
+
+  function quickLogin() {
+    const email = (document.getElementById('promptEmail')?.value || '').trim().toLowerCase();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('Please enter a valid email address.');
+      return;
+    }
+    const members = JSON.parse(localStorage.getItem('ripSipMembers') || '{}');
+    if (!members[email]) {
+      showToast('No membership found for that email. Join free first.');
+      return;
+    }
+    sessionStorage.setItem('ripSipMemberSession', email);
+    showToast('✓ Membership connected — points will be awarded on checkout!');
+    renderMemberPrompt();
+  }
+
+  function disconnectMember() {
+    sessionStorage.removeItem('ripSipMemberSession');
+    renderMemberPrompt();
+  }
+
+  /* ── Award loyalty points ── */
+  function awardMemberPoints(cart) {
+    const email = sessionStorage.getItem('ripSipMemberSession');
+    if (!email) return;
+    const members = JSON.parse(localStorage.getItem('ripSipMembers') || '{}');
+    if (!members[email]) return;
+    const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+    const pointsEarned = Math.floor(totalItems / 10);
+    members[email].totalPurchases = (members[email].totalPurchases || 0) + totalItems;
+    members[email].points = (members[email].points || 0) + pointsEarned;
+    if (pointsEarned > 0) {
+      members[email].history = members[email].history || [];
+      members[email].history.unshift({
+        date: new Date().toLocaleDateString('en-GB'),
+        desc: `Purchased ${totalItems} item${totalItems !== 1 ? 's' : ''}`,
+        items: totalItems,
+        points: pointsEarned
+      });
+    }
+    localStorage.setItem('ripSipMembers', JSON.stringify(members));
+  }
+
+  /* ── Toast ── */
+  function showToast(msg) {
+    const t = document.getElementById('sumToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  /* ── Init ── */
+  renderOrder();
+  renderMemberPrompt();
+</script>
+
+</body>
+</html>

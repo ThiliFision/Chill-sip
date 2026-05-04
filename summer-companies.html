@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Companies — Chill Sip Summer Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #ffffff;
+      --bg2:    #f8f8ff;
+      --text:   #2e1664;
+      --brand:  #3a0ba5;
+      --purple: #6c2bff;
+      --pink:   #ff2d95;
+      --green:  #2ae500;
+      --border: rgba(46,22,100,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── PROMO BANNER ── */
+    .promo-bar {
+      background: var(--purple);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 8px 48px; position: relative;
+    }
+    .promo-bar p { font-size: 13px; font-weight: 500; color: #fff; }
+    .promo-bar .promo-code { font-weight: 700; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; }
+    .promo-close {
+      position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.7; line-height: 1;
+    }
+    .promo-close:hover { opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: #fff; border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 16px rgba(46,22,100,0.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px; max-width: 1296px; margin: 0 auto;
+    }
+    .nav-logo {
+      text-decoration: none; display: flex; align-items: center;
+      font-size: 26px; font-weight: 800; letter-spacing: -0.8px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-links a.active { color: var(--purple); font-weight: 700; }
+    .nav-icons { display: flex; align-items: center; gap: 20px; }
+    .cart-btn-nav {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 10px; padding: 8px 16px;
+      font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cart-btn-nav:hover { background: var(--brand); }
+    .theme-toggle {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 12px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+    }
+    .theme-toggle:hover { background: #eee; }
+
+    /* ── HERO ── */
+    .co-hero {
+      padding: 88px 0 80px;
+      background: linear-gradient(135deg, #f0edff 0%, #fff5fb 55%, #edfffe 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .co-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 30%, rgba(108,43,255,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse at 15% 80%, rgba(255,45,149,0.07) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .co-hero-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .co-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px;
+      color: var(--purple); background: rgba(108,43,255,0.08);
+      border: 1px solid rgba(108,43,255,0.18); border-radius: 50px; padding: 6px 16px;
+      margin-bottom: 24px;
+    }
+    .co-hero-title {
+      font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; letter-spacing: -2px;
+      color: var(--text); line-height: 1.05; margin-bottom: 20px;
+    }
+    .co-hero-title .grad {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .co-hero-sub {
+      font-size: 17px; font-weight: 500; color: rgba(46,22,100,0.58); line-height: 1.65;
+      margin-bottom: 36px; max-width: 500px;
+    }
+    .co-hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 14px 28px; border-radius: 12px; border: none; cursor: pointer; outline: none;
+      background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 8px 28px rgba(108,43,255,0.3); transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(108,43,255,0.42); }
+    .btn-outline {
+      padding: 14px 28px; border-radius: 12px; cursor: pointer; outline: none;
+      background: rgba(108,43,255,0.06); border: 2px solid rgba(108,43,255,0.35);
+      color: var(--purple); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-outline:hover { background: rgba(108,43,255,0.12); }
+    .co-hero-img-wrap {
+      position: relative;
+    }
+    .co-hero-img-placeholder {
+      width: 100%; aspect-ratio: 4/3; border-radius: 28px;
+      background: linear-gradient(135deg, rgba(108,43,255,0.08) 0%, rgba(255,45,149,0.08) 100%);
+      border: 2px dashed rgba(108,43,255,0.2);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    }
+    .co-hero-img-placeholder .ph-icon { font-size: 52px; opacity: 0.4; }
+    .co-hero-img-placeholder .ph-text {
+      font-size: 13px; font-weight: 600; color: rgba(46,22,100,0.3); text-align: center; line-height: 1.5;
+    }
+
+    /* ── INTRO: WHAT IS CHILL SIP ── */
+    .intro-section { padding: 88px 0 72px; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px;
+      color: var(--purple); margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 800; letter-spacing: -1.5px;
+      color: var(--text); line-height: 1.1; margin-bottom: 18px;
+    }
+    .section-title .grad {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .section-sub {
+      font-size: 16px; font-weight: 500; color: rgba(46,22,100,0.55); line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .intro-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-top: 56px;
+    }
+    .intro-text-col { }
+    .intro-body {
+      font-size: 16px; font-weight: 500; color: rgba(46,22,100,0.6); line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .intro-features { display: flex; flex-direction: column; gap: 14px; }
+    .intro-feat {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 18px; background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 14px;
+    }
+    .intro-feat-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .intro-feat-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .intro-feat-desc { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); line-height: 1.5; }
+    .intro-img-col { }
+    .img-placeholder {
+      width: 100%; border-radius: 24px;
+      background: linear-gradient(135deg, rgba(108,43,255,0.07) 0%, rgba(255,45,149,0.07) 100%);
+      border: 2px dashed rgba(108,43,255,0.18);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+      padding: 48px 32px;
+    }
+    .img-placeholder .ph-icon { font-size: 48px; opacity: 0.35; }
+    .img-placeholder .ph-text {
+      font-size: 12px; font-weight: 600; color: rgba(46,22,100,0.28);
+      text-align: center; line-height: 1.5;
+    }
+
+    /* ── WHY CHILL SIP STRIP ── */
+    .why-strip {
+      padding: 56px 0;
+      background: linear-gradient(135deg, #f0edff 0%, #fff5fb 100%);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .why-card {
+      background: #fff; border: 1.5px solid var(--border); border-radius: 20px;
+      padding: 28px 24px; text-align: center;
+    }
+    .why-card-icon { font-size: 36px; margin-bottom: 12px; }
+    .why-card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; letter-spacing: -0.3px; }
+    .why-card-desc { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); line-height: 1.55; }
+
+    /* ── USE CASES ── */
+    .usecases-section { padding: 96px 0 80px; }
+    .usecases-header { text-align: center; margin-bottom: 72px; }
+    .usecases-header .section-sub { margin: 0 auto; }
+
+    .usecase {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+      margin-bottom: 100px;
+    }
+    .usecase:last-child { margin-bottom: 0; }
+    .usecase.reverse .uc-img-col { order: -1; }
+
+    .uc-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      border-radius: 50px; padding: 6px 16px; margin-bottom: 20px;
+    }
+    .uc-tag.purple { color: var(--purple); background: rgba(108,43,255,0.08); border: 1px solid rgba(108,43,255,0.2); }
+    .uc-tag.pink   { color: #c2006b; background: rgba(255,45,149,0.07); border: 1px solid rgba(255,45,149,0.2); }
+    .uc-tag.green  { color: #18a800; background: rgba(42,229,0,0.07); border: 1px solid rgba(42,229,0,0.2); }
+    .uc-tag.orange { color: #c25c00; background: rgba(239,124,9,0.08); border: 1px solid rgba(239,124,9,0.2); }
+
+    .uc-title {
+      font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -1px;
+      color: var(--text); line-height: 1.1; margin-bottom: 16px;
+    }
+    .uc-desc {
+      font-size: 15px; font-weight: 500; color: rgba(46,22,100,0.58); line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .uc-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .uc-chip {
+      font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 50px;
+      background: var(--bg2); border: 1.5px solid var(--border); color: var(--text);
+    }
+    .uc-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 700; color: var(--purple); text-decoration: none;
+      border-bottom: 2px solid rgba(108,43,255,0.3); padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+    .uc-cta:hover { border-color: var(--purple); }
+
+    .uc-img-col { }
+    .uc-img-wrap {
+      border-radius: 24px; overflow: hidden; position: relative;
+    }
+    .uc-img-placeholder {
+      width: 100%; aspect-ratio: 5/4;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      border: 2px dashed rgba(108,43,255,0.18); border-radius: 24px;
+    }
+    .uc-img-placeholder .ph-icon { font-size: 52px; opacity: 0.35; }
+    .uc-img-placeholder .ph-text {
+      font-size: 12px; font-weight: 600; color: rgba(46,22,100,0.28);
+      text-align: center; line-height: 1.5;
+    }
+    /* Each use case gets a tinted placeholder bg */
+    .ph-events  { background: linear-gradient(135deg, #f0edff, #fff0f9); }
+    .ph-clubs   { background: linear-gradient(135deg, #0e0528, #2a0a5e); }
+    .ph-clubs .ph-icon, .ph-clubs .ph-text { opacity: 0.4; filter: brightness(10); }
+    .ph-uniclubs{ background: linear-gradient(135deg, #f0f9ff, #f5fff0); }
+    .ph-office  { background: linear-gradient(135deg, #fff8ed, #fffbf0); }
+    .ph-sport   { background: linear-gradient(135deg, #edfff4, #f0fff9); }
+    .ph-football{ background: linear-gradient(135deg, #f0f9ff, #eef6ff); }
+
+    /* ── ENQUIRY CTA ── */
+    .enquiry-section {
+      padding: 80px 0 96px;
+      background: linear-gradient(135deg, #0e0528 0%, #2e0e70 50%, #1a0645 100%);
+      position: relative; overflow: hidden;
+    }
+    .enquiry-section::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(108,43,255,0.3) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 30%, rgba(255,45,149,0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .enquiry-inner { position: relative; z-index: 1; text-align: center; }
+    .enquiry-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 50px; padding: 6px 16px;
+      margin-bottom: 24px;
+    }
+    .enquiry-title {
+      font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 800; letter-spacing: -1.5px;
+      color: #fff; line-height: 1.08; margin-bottom: 16px;
+    }
+    .enquiry-title .grad {
+      background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .enquiry-sub {
+      font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.52); line-height: 1.65;
+      max-width: 520px; margin: 0 auto 40px;
+    }
+    .enquiry-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      padding: 15px 32px; border-radius: 12px; border: none; cursor: pointer; outline: none;
+      background: #fff; color: var(--purple);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25); transition: transform 0.15s;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+    .btn-ghost {
+      padding: 15px 32px; border-radius: 12px; cursor: pointer; outline: none;
+      background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.12); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff; border-top: 4px solid;
+      border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1;
+      padding: 40px 0 28px;
+    }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 48px;
+    }
+    .f-logo {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.8px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .f-links { display: flex; gap: 24px; }
+    .f-link { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); text-decoration: none; transition: color 0.2s; }
+    .f-link:hover { color: var(--purple); }
+    .f-copy { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.35); }
+
+    /* ── CONTACT FLOAT ── */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 800;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; border-radius: 50px; padding: 14px 0;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(108,43,255,0.4);
+      overflow: hidden; width: 52px; transition: width 0.3s ease, padding 0.3s ease;
+      justify-content: center;
+    }
+    .contact-btn:hover { width: 160px; padding: 14px 20px; }
+    .contact-btn .cb-label { white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0; transition: opacity 0.2s 0.1s, max-width 0.3s; }
+    .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .co-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .intro-grid { grid-template-columns: 1fr; gap: 36px; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .usecase { grid-template-columns: 1fr; gap: 36px; }
+      .usecase.reverse .uc-img-col { order: 0; }
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 16px 24px; }
+    }
+    @media (max-width: 600px) {
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .co-hero { padding: 56px 0 52px; }
+      .intro-section { padding: 60px 0 52px; }
+      .usecases-section { padding: 64px 0 52px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .f-links { flex-wrap: wrap; gap: 14px; }
+    }
+    @media (max-width: 400px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+    /* ── NIGHT EDITION ── */
+    html.night-edition{--bg:#1d0536;--bg2:#27084a;--text:#ffffff;--brand:#c084fc;--purple:#b06bff;--pink:#ff6eb8;--green:#4ade80;--yellow:#fbbf24;--orange:#fb923c;--cyan:#22d3ee;--red:#f87171;--muted:rgba(255,255,255,.82);--dim:rgba(255,255,255,.58);--border:rgba(176,107,255,.25)}
+    html.night-edition body{background:linear-gradient(160deg,#1d0536 0%,#2a0850 28%,#200636 55%,#2a0848 80%,#1d0536 100%) fixed !important;min-height:100vh;color-scheme:dark}
+    html.night-edition nav{background:#130230 !important;box-shadow:0 1px 32px rgba(176,107,255,.2) !important}
+    html.night-edition footer{background:#130230 !important}
+    html.night-edition .promo-bar{background:#220545 !important}
+    html.night-edition .theme-toggle{background:rgba(176,107,255,.18) !important;border-color:rgba(176,107,255,.4) !important;color:var(--text) !important}
+    html.night-edition .theme-toggle:hover{background:rgba(176,107,255,.30) !important}
+    html.night-edition .fav-sec,html.night-edition .vibe-sec{background:var(--bg) !important}
+    html.night-edition .fav-arrow{background:#1a0535 !important;border-color:var(--border) !important;color:var(--text) !important;box-shadow:0 4px 18px rgba(168,85,247,.12) !important}
+    html.night-edition .proof-sec{background:linear-gradient(160deg,#0d0220 0%,#120223 45%,#07081e 100%) !important}
+    html.night-edition .proof-stats{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition .age-box,html.night-edition .sample-modal{background:var(--bg2) !important}
+    html.night-edition .toolbar-wrap{background:#130230 !important}
+    html.night-edition .rc,
+    html.night-edition .summary-card,
+    html.night-edition .cart-item,
+    html.night-edition .form-block,
+    html.night-edition .delivery-opt-inner,
+    html.night-edition .pay-method,
+    html.night-edition .form-note,
+    html.night-edition .soc,
+    html.night-edition .cb-label,
+    html.night-edition .pk-card,
+    html.night-edition .vg-cta,
+    html.night-edition .why-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
+    html.night-edition textarea,
+    html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
+    html.night-edition .co-hero-title{color:#2d0652 !important;-webkit-text-fill-color:#2d0652 !important}
+    html.night-edition .co-hero-title .grad{background:linear-gradient(135deg,#5a18cc 0%,#c0006e 100%) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .co-eyebrow{background:linear-gradient(135deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important;border-color:rgba(90,24,204,.3) !important}
+    html.night-edition .co-hero-sub{color:rgba(45,6,82,.72) !important}
+  </style>
+  <script>
+  (function(){
+    function syncBtn(){
+      var n=document.documentElement.classList.contains('night-edition');
+      document.querySelectorAll('.theme-toggle').forEach(function(b){
+        b.textContent=n?'☀️ Summer Edition':'🌙 Night Edition';
+      });
+      document.querySelectorAll('[data-summer]').forEach(function(el){
+        el.textContent=n?el.dataset.night:el.dataset.summer;
+      });
+      document.querySelectorAll('[data-summer-html]').forEach(function(el){
+        el.innerHTML=n?el.dataset.nightHtml:el.dataset.summerHtml;
+      });
+    }
+    if(localStorage.getItem('rns-theme')==='night')document.documentElement.classList.add('night-edition');
+    document.addEventListener('DOMContentLoaded',function(){
+      syncBtn();
+      document.querySelectorAll('.theme-toggle').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var on=document.documentElement.classList.toggle('night-edition');
+          localStorage.setItem('rns-theme',on?'night':'summer');
+          syncBtn();
+        });
+      });
+    });
+  })();
+  </script>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-bar" id="promoBanner">
+  <p>☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
+  <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="summer.html" class="nav-logo">Chill Sip</a>
+    <div class="nav-links">
+      <a href="summer.html">Home</a>
+      <a href="summer-shop.html">Shop</a>
+      <a href="summer-cocktails.html">Our Cocktails</a>
+      <a href="summer-companies.html" class="active">For Companies</a>
+      <a href="summer-virgin.html">Virgin Collection</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#" class="theme-toggle">🌙 Night Edition</a>
+      <a href="summer-cart.html" class="cart-btn-nav">🛒 Cart</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ────────────────────────────────────────────
+     HERO
+──────────────────────────────────────────── -->
+<section class="co-hero">
+  <div class="container">
+    <div class="co-hero-inner">
+
+      <div>
+        <div class="co-eyebrow">☀️ B2B &amp; Events</div>
+        <h1 class="co-hero-title">
+          Cocktails that <span class="grad">chill every crowd</span>
+        </h1>
+        <p class="co-hero-sub">
+          From wedding receptions to Friday office drinks, Chill Sip packets make premium cocktail service effortless — no bar, no bartender, no mess. Just shake, sip, and enjoy.
+        </p>
+        <div class="co-hero-btns">
+          <a href="summer-contact.html" class="btn-primary">Get a Quote →</a>
+          <a href="#use-cases" class="btn-outline">See How It Works</a>
+        </div>
+      </div>
+
+      <div class="co-hero-img-wrap">
+        <div class="co-hero-img-placeholder">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text">Hero image coming soon<br><span style="opacity:0.5">Drop your image here</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     SECTION 1 — COCKTAIL INTRODUCTION
+──────────────────────────────────────────── -->
+<section class="intro-section" id="intro">
+  <div class="container">
+
+    <div class="section-eyebrow">Section 01 — The Product</div>
+    <h2 class="section-title">Meet the cocktail <span class="grad">in a packet</span></h2>
+    <p class="section-sub">Chill Sip is a range of premium ready-to-mix cocktail sachets. Real fruit flavours, real spirits, real fun — engineered so anyone can serve a perfect drink in seconds.</p>
+
+    <div class="intro-grid">
+
+      <div class="intro-text-col">
+        <p class="intro-body">
+          Every Chill Sip sachet contains a single-serve cocktail concentrate crafted by our mixologists. Tear, pour over ice, and top with your choice of mixer. No shakers, no syrup bottles, no training needed. Each packet is portioned perfectly so every guest gets the same great drink — from the first round to the last.
+        </p>
+        <p class="intro-body">
+          Available in a rotating seasonal lineup — from tropical Pineapple Fizz and Passion Fruit Margarita to classic Strawberry Daiquiri — Chill Sip brings colour, taste, and vibe to any occasion. Our summer collection was built for high-energy settings where speed and quality matter equally.
+        </p>
+        <div class="intro-features">
+          <div class="intro-feat">
+            <span class="intro-feat-icon">🍹</span>
+            <div>
+              <div class="intro-feat-title">Ready in 10 seconds</div>
+              <div class="intro-feat-desc">Tear open, pour over ice, add your mixer. No tools, no training, no spillage.</div>
+            </div>
+          </div>
+          <div class="intro-feat">
+            <span class="intro-feat-icon">📦</span>
+            <div>
+              <div class="intro-feat-title">Bulk packs for any scale</div>
+              <div class="intro-feat-desc">Order from 50 to 5,000+ sachets. Custom branding available for large events.</div>
+            </div>
+          </div>
+          <div class="intro-feat">
+            <span class="intro-feat-icon">🌿</span>
+            <div>
+              <div class="intro-feat-title">Real ingredients, no nasties</div>
+              <div class="intro-feat-desc">Natural fruit extracts, no artificial colouring. Always 18+ responsible serving.</div>
+            </div>
+          </div>
+          <div class="intro-feat">
+            <span class="intro-feat-icon">🎨</span>
+            <div>
+              <div class="intro-feat-title">Custom branding available</div>
+              <div class="intro-feat-desc">Add your company logo, event name, or personal message to the packet design.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="intro-img-col">
+        <div class="img-placeholder">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text">Product flat-lay image<br><span style="opacity:0.5">Add your photo here</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     WHY CHILL SIP STRIP
+──────────────────────────────────────────── -->
+<div class="why-strip">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-card-icon">⚡</div>
+        <div class="why-card-title">Zero setup time</div>
+        <div class="why-card-desc">No ice sculpture, no cocktail station — just packets in a bucket of ice and you're done.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-card-icon">💸</div>
+        <div class="why-card-title">Cost-controlled</div>
+        <div class="why-card-desc">Fixed price per serve. No over-pouring, no waste, no surprise bar tab at the end.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-card-icon">🔒</div>
+        <div class="why-card-title">Age-verified &amp; compliant</div>
+        <div class="why-card-desc">All packaging carries 18+ labelling. Easy to manage responsible service at any event.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-card-icon">🎁</div>
+        <div class="why-card-title">Gifts &amp; goody bags</div>
+        <div class="why-card-desc">A packet in a gift bag is an instant talking point. Great for favour tables and welcome kits.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────────────
+     SECTION 2 — USE CASES
+──────────────────────────────────────────── -->
+<section class="usecases-section" id="use-cases">
+  <div class="container">
+
+    <div class="usecases-header">
+      <div class="section-eyebrow">Section 02 — Where We Fit</div>
+      <h2 class="section-title">The places <span class="grad">Chill Sip belongs</span></h2>
+      <p class="section-sub">We designed every flavour with a moment in mind. Here's where our cocktail packets come alive.</p>
+    </div>
+
+    <!-- ── BIG EVENTS ── -->
+    <div class="usecase" id="uc-events">
+      <div class="uc-text-col">
+        <div class="uc-tag purple">🎉 Big Events</div>
+        <h3 class="uc-title">Weddings, parties &amp; year-end celebrations</h3>
+        <p class="uc-desc">
+          Whether it's a grand wedding reception, a summer birthday bash, a university year-end ceremony, or an 18+ high school celebration — Chill Sip turns any drinks table into a talking point. Guests help themselves, pick their flavour, and the vibe stays high from the welcome drink to the last dance. No queues at the bar, no stressed staff — just great cocktails flowing freely.
+        </p>
+        <div class="uc-chips">
+          <span class="uc-chip">💍 Weddings</span>
+          <span class="uc-chip">🎂 Birthday Parties</span>
+          <span class="uc-chip">🎓 Year-End Balls</span>
+          <span class="uc-chip">🥂 Galas &amp; Formals</span>
+          <span class="uc-chip">🎊 18+ Celebrations</span>
+        </div>
+        <a href="summer-contact.html" class="uc-cta">Plan your event with us →</a>
+      </div>
+      <div class="uc-img-col">
+        <div class="uc-img-placeholder ph-events">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text">Event photo coming soon<br><span style="opacity:0.5">Weddings · Parties · Galas</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NIGHT CLUBS ── -->
+    <div class="usecase reverse" id="uc-clubs">
+      <div class="uc-text-col">
+        <div class="uc-tag pink">🌙 Night Clubs</div>
+        <h3 class="uc-title">Elevate the dance floor experience</h3>
+        <p class="uc-desc">
+          Night clubs need speed and style in equal measure. Chill Sip sachets let bar staff serve a premium cocktail in the time it takes to grab a beer — cutting queue times and boosting spend per head. Display them behind the bar as a premium upsell, hand them out as a welcome drink on entry, or bundle them into VIP table packages. The bold packaging looks incredible under club lighting, and the flavours hit different at 1am.
+        </p>
+        <div class="uc-chips">
+          <span class="uc-chip">🍸 Premium upsell</span>
+          <span class="uc-chip">🚀 Faster service</span>
+          <span class="uc-chip">💜 VIP packages</span>
+          <span class="uc-chip">✨ Welcome drinks</span>
+        </div>
+        <a href="summer-contact.html" class="uc-cta">Wholesale enquiry →</a>
+      </div>
+      <div class="uc-img-col">
+        <div class="uc-img-placeholder ph-clubs">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text" style="color:rgba(255,255,255,0.3)">Night club photo coming soon<br><span style="opacity:0.6">Bar · VIP · Dance floor</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── UNIVERSITY CLUBS ── -->
+    <div class="usecase" id="uc-uniclubs">
+      <div class="uc-text-col">
+        <div class="uc-tag green">🎓 University Clubs</div>
+        <h3 class="uc-title">The go-to drink for student socials</h3>
+        <p class="uc-desc">
+          University club nights, society socials, sports team celebrations, and freshers events all share one thing — a crowd that wants something better than warm beer. Chill Sip packets are affordable enough to stock in bulk for a student budget, easy to serve without a dedicated bar, and varied enough that everyone finds a flavour they love. Available in cases sized for 50 to 500 people, with student society discounts on bulk orders.
+        </p>
+        <div class="uc-chips">
+          <span class="uc-chip">🏆 Sports socials</span>
+          <span class="uc-chip">🎭 Society nights</span>
+          <span class="uc-chip">🌟 Freshers events</span>
+          <span class="uc-chip">📚 End-of-term parties</span>
+          <span class="uc-chip">💰 Student bulk pricing</span>
+        </div>
+        <a href="summer-contact.html" class="uc-cta">Get student pricing →</a>
+      </div>
+      <div class="uc-img-col">
+        <div class="uc-img-placeholder ph-uniclubs">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text">University event photo<br><span style="opacity:0.5">Socials · Sports · Freshers</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── OFFICE FRIDAY ── -->
+    <div class="usecase reverse" id="uc-office">
+      <div class="uc-text-col">
+        <div class="uc-tag orange">🏢 Office Friday Drinks</div>
+        <h3 class="uc-title">The Dutch tradition of borrel, done better</h3>
+        <p class="uc-desc">
+          Friday afternoon drinks — the borrel — is woven into Dutch office culture. Teams across the Netherlands gather at 4pm to wind down, connect, and celebrate the week. Chill Sip is the perfect borrel upgrade: no bar setup, no cleaning up wine bottles, no awkward warm prosecco. Just a box of packets, a bucket of ice, and a fridge full of mixers. HR teams love it for team events, team leads love it for milestone celebrations, and everyone else loves it because it actually tastes good.
+        </p>
+        <div class="uc-chips">
+          <span class="uc-chip">🇳🇱 Borrel culture</span>
+          <span class="uc-chip">🎯 Team milestones</span>
+          <span class="uc-chip">👋 Onboarding events</span>
+          <span class="uc-chip">🏆 Company celebrations</span>
+          <span class="uc-chip">📦 Office bulk orders</span>
+        </div>
+        <a href="summer-contact.html" class="uc-cta">Order for your team →</a>
+      </div>
+      <div class="uc-img-col">
+        <div class="uc-img-placeholder ph-office">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text">Office borrel photo coming soon<br><span style="opacity:0.5">Friday drinks · Team events</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SPORT CLUBS ── -->
+    <div class="usecase" id="uc-sport">
+      <div class="uc-text-col">
+        <div class="uc-tag green">🏅 Sport Clubs</div>
+        <h3 class="uc-title">Celebrate every win — big or small</h3>
+        <p class="uc-desc">
+          Sport clubs run on team spirit, and Chill Sip gives that spirit something to toast with. End-of-season banquets, trophy nights, club anniversaries, charity fundraisers, and sponsor evenings all deserve a proper drink — one that's quick to serve, impressive to look at, and easy to manage for a volunteer committee. Our bulk packs fit the typical club budget, and the sachets work beautifully on trestle tables, in sports halls, or in the changing room after a hard-earned promotion.
+        </p>
+        <div class="uc-chips">
+          <span class="uc-chip">🏆 End-of-season nights</span>
+          <span class="uc-chip">🎗 Trophy ceremonies</span>
+          <span class="uc-chip">🤝 Sponsor evenings</span>
+          <span class="uc-chip">🎟 Club fundraisers</span>
+          <span class="uc-chip">🥳 Team socials</span>
+        </div>
+        <a href="summer-contact.html" class="uc-cta">Talk to us about your club →</a>
+      </div>
+      <div class="uc-img-col">
+        <div class="uc-img-placeholder ph-sport">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text">Sport club photo coming soon<br><span style="opacity:0.5">Trophy nights · Club socials</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AFTER FOOTBALL ── -->
+    <div class="usecase reverse" id="uc-football">
+      <div class="uc-text-col">
+        <div class="uc-tag purple">⚽ After Football</div>
+        <h3 class="uc-title">The perfect post-match celebration drink</h3>
+        <p class="uc-desc">
+          Whether it's a Sunday league final, a five-a-side tournament, or a professional club's hospitality suite — the moment the final whistle goes, the party starts. Chill Sip sachets are made for that post-match energy. Serve them in the club bar, hand them out to players on the pitch, or stock the hospitality tent for fans and sponsors. No glassware needed, no clean-up crew required. Just ice-cold cocktails and the buzz of a great game. For stadium hospitality and matchday packages, we offer custom-branded sachets printed with your club colours and badge.
+        </p>
+        <div class="uc-chips">
+          <span class="uc-chip">⚽ Matchday hospitality</span>
+          <span class="uc-chip">🏟 Stadium events</span>
+          <span class="uc-chip">🎽 Player celebrations</span>
+          <span class="uc-chip">🍺 Club bar upsell</span>
+          <span class="uc-chip">🎨 Club-branded packets</span>
+          <span class="uc-chip">🏅 Tournament finals</span>
+        </div>
+        <a href="summer-contact.html" class="uc-cta">Get club-branded packets →</a>
+      </div>
+      <div class="uc-img-col">
+        <div class="uc-img-placeholder ph-football">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text">Football celebration photo<br><span style="opacity:0.5">Matchday · Club bar · Hospitality</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     ENQUIRY CTA
+──────────────────────────────────────────── -->
+<section class="enquiry-section">
+  <div class="container">
+    <div class="enquiry-inner">
+      <div class="enquiry-badge">☀️ Let's make it happen</div>
+      <h2 class="enquiry-title">Ready to chill <span class="grad">your crowd?</span></h2>
+      <p class="enquiry-sub">
+        Tell us your event size, date, and flavour preferences and we'll put together a tailored quote within 24 hours. Minimum order from 50 packets.
+      </p>
+      <div class="enquiry-btns">
+        <a href="summer-contact.html" class="btn-white">Get a Free Quote →</a>
+        <a href="summer-shop.html" class="btn-ghost">Browse Flavours</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <div class="f-logo">Chill Sip</div>
+    <div class="f-links">
+      <a href="summer.html" class="f-link">Home</a>
+      <a href="summer-shop.html" class="f-link">Shop</a>
+      <a href="summer-cocktails.html" class="f-link">Our Cocktails</a>
+      <a href="summer-companies.html" class="f-link">For Companies</a>
+      <a href="#" class="f-link">Privacy</a>
+    </div>
+    <div class="f-copy">© 2026 Chill Sip · Drink Responsibly · 18+</div>
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="summer-contact.html" class="contact-btn" title="Contact us">
+  <span>✉</span>
+  <span class="cb-label">Contact Us</span>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Chill Sip Summer Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #ffffff;
+      --bg2:    #f8f8ff;
+      --text:   #2e1664;
+      --brand:  #3a0ba5;
+      --purple: #6c2bff;
+      --pink:   #ff2d95;
+      --green:  #2ae500;
+      --border: rgba(46,22,100,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── PROMO BANNER ── */
+    .promo-bar {
+      background: var(--purple);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 8px 48px; position: relative;
+    }
+    .promo-bar p { font-size: 13px; font-weight: 500; color: #fff; }
+    .promo-bar .promo-code { font-weight: 700; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; }
+    .promo-close {
+      position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.7; line-height: 1;
+    }
+    .promo-close:hover { opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: #fff; border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 16px rgba(46,22,100,0.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px; max-width: 1296px; margin: 0 auto;
+    }
+    .nav-logo {
+      text-decoration: none; display: flex; align-items: center;
+      font-size: 26px; font-weight: 800; letter-spacing: -0.8px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-links a.active { color: var(--purple); font-weight: 700; }
+    .nav-icons { display: flex; align-items: center; gap: 20px; }
+    .cart-btn-nav {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 10px; padding: 8px 16px;
+      font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cart-btn-nav:hover { background: var(--brand); }
+    .theme-toggle {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 12px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+    }
+    .theme-toggle:hover { background: #eee; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 72px 0 56px;
+      background: linear-gradient(135deg, #f4f2ff 0%, #fff5fb 60%, #f0faff 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(108,43,255,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .breadcrumb {
+      font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+      color: rgba(46,22,100,0.45); margin-bottom: 16px;
+    }
+    .breadcrumb a { color: inherit; text-decoration: none; }
+    .breadcrumb a:hover { color: var(--purple); }
+    .page-label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--purple); margin-bottom: 12px;
+    }
+    .page-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; letter-spacing: -2px;
+      color: var(--text); line-height: 1.05; margin-bottom: 12px;
+    }
+    .page-title span {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-sub { font-size: 17px; font-weight: 500; color: rgba(46,22,100,0.55); line-height: 1.6; max-width: 520px; }
+
+    /* ── CONTACT SECTION ── */
+    .contact-section { padding: 64px 0 100px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: start; }
+
+    /* Info card */
+    .info-card {
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 24px; padding: 36px;
+      display: flex; flex-direction: column; gap: 28px;
+    }
+    .info-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--purple); margin-bottom: 6px;
+    }
+    .info-value { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.65; }
+    .info-value a { color: var(--purple); text-decoration: none; }
+    .info-value a:hover { text-decoration: underline; }
+    .info-divider { width: 100%; height: 1px; background: var(--border); }
+
+    .social-row { display: flex; gap: 10px; }
+    .soc {
+      width: 40px; height: 40px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .soc:hover { border-color: var(--purple); background: rgba(108,43,255,0.06); }
+
+    /* Form card */
+    .form-card {
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 24px; padding: 40px;
+    }
+    .form-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; letter-spacing: -0.5px; }
+    .form-sub { font-size: 14px; font-weight: 500; color: rgba(46,22,100,0.5); margin-bottom: 28px; line-height: 1.5; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px;
+      color: rgba(46,22,100,0.45);
+    }
+    .field input, .field select, .field textarea {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 12px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500;
+      color: var(--text); outline: none; transition: border-color 0.15s; width: 100%;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(46,22,100,0.28); }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--purple); }
+    .field select { appearance: none; cursor: pointer; }
+    .field textarea { resize: vertical; min-height: 120px; }
+
+    .submit-btn {
+      width: 100%; padding: 16px; border-radius: 14px; border: none; outline: none;
+      background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.3px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s; margin-top: 8px;
+      box-shadow: 0 8px 28px rgba(108,43,255,0.28);
+    }
+    .submit-btn:hover { opacity: 0.92; transform: translateY(-2px); }
+    .submit-btn.sent {
+      background: linear-gradient(112deg, var(--green) 0%, #00c87a 100%);
+      box-shadow: 0 8px 28px rgba(42,229,0,0.28);
+    }
+    .form-note { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.35); text-align: center; margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff; border-top: 4px solid;
+      border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1;
+      padding: 40px 0 28px;
+    }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 48px;
+    }
+    .f-logo {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.8px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .f-links { display: flex; gap: 24px; }
+    .f-link { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); text-decoration: none; transition: color 0.2s; }
+    .f-link:hover { color: var(--purple); }
+    .f-copy { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.35); }
+
+    /* ── CONTACT FLOAT ── */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 800;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; border-radius: 50px; padding: 14px 0;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(108,43,255,0.4);
+      overflow: hidden; width: 52px; transition: width 0.3s ease, padding 0.3s ease;
+      justify-content: center;
+    }
+    .contact-btn:hover { width: 160px; padding: 14px 20px; }
+    .contact-btn .cb-label { white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0; transition: opacity 0.2s 0.1s, max-width 0.3s; }
+    .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
+
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 16px 24px; }
+    }
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .f-links { flex-wrap: wrap; gap: 14px; }
+    }
+    /* ── NIGHT EDITION ── */
+    html.night-edition{--bg:#1d0536;--bg2:#27084a;--text:#ffffff;--brand:#c084fc;--purple:#b06bff;--pink:#ff6eb8;--green:#4ade80;--yellow:#fbbf24;--orange:#fb923c;--cyan:#22d3ee;--red:#f87171;--muted:rgba(255,255,255,.82);--dim:rgba(255,255,255,.58);--border:rgba(176,107,255,.25)}
+    html.night-edition body{background:linear-gradient(160deg,#1d0536 0%,#2a0850 28%,#200636 55%,#2a0848 80%,#1d0536 100%) fixed !important;min-height:100vh;color-scheme:dark}
+    html.night-edition nav{background:#130230 !important;box-shadow:0 1px 32px rgba(176,107,255,.2) !important}
+    html.night-edition footer{background:#130230 !important}
+    html.night-edition .promo-bar{background:#220545 !important}
+    html.night-edition .theme-toggle{background:rgba(176,107,255,.18) !important;border-color:rgba(176,107,255,.4) !important;color:var(--text) !important}
+    html.night-edition .theme-toggle:hover{background:rgba(176,107,255,.30) !important}
+    html.night-edition .fav-sec,html.night-edition .vibe-sec{background:var(--bg) !important}
+    html.night-edition .fav-arrow{background:#1a0535 !important;border-color:var(--border) !important;color:var(--text) !important;box-shadow:0 4px 18px rgba(168,85,247,.12) !important}
+    html.night-edition .proof-sec{background:linear-gradient(160deg,#0d0220 0%,#120223 45%,#07081e 100%) !important}
+    html.night-edition .proof-stats{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition .age-box,html.night-edition .sample-modal{background:var(--bg2) !important}
+    html.night-edition .toolbar-wrap{background:#130230 !important}
+    html.night-edition .rc,
+    html.night-edition .summary-card,
+    html.night-edition .cart-item,
+    html.night-edition .form-block,
+    html.night-edition .delivery-opt-inner,
+    html.night-edition .pay-method,
+    html.night-edition .form-note,
+    html.night-edition .soc,
+    html.night-edition .cb-label,
+    html.night-edition .pk-card,
+    html.night-edition .vg-cta,
+    html.night-edition .why-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
+    html.night-edition textarea,
+    html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
+    html.night-edition .page-title{color:#2d0652 !important;-webkit-text-fill-color:#2d0652 !important}
+    html.night-edition .page-title span{background:linear-gradient(120deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .page-sub{color:rgba(45,6,82,.72) !important}
+    html.night-edition .breadcrumb,html.night-edition .breadcrumb a{color:rgba(45,6,82,.55) !important}
+  </style>
+  <script>
+  (function(){
+    function syncBtn(){
+      var n=document.documentElement.classList.contains('night-edition');
+      document.querySelectorAll('.theme-toggle').forEach(function(b){
+        b.textContent=n?'☀️ Summer Edition':'🌙 Night Edition';
+      });
+      document.querySelectorAll('[data-summer]').forEach(function(el){
+        el.textContent=n?el.dataset.night:el.dataset.summer;
+      });
+      document.querySelectorAll('[data-summer-html]').forEach(function(el){
+        el.innerHTML=n?el.dataset.nightHtml:el.dataset.summerHtml;
+      });
+    }
+    if(localStorage.getItem('rns-theme')==='night')document.documentElement.classList.add('night-edition');
+    document.addEventListener('DOMContentLoaded',function(){
+      syncBtn();
+      document.querySelectorAll('.theme-toggle').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var on=document.documentElement.classList.toggle('night-edition');
+          localStorage.setItem('rns-theme',on?'night':'summer');
+          syncBtn();
+        });
+      });
+    });
+  })();
+  </script>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-bar" id="promoBanner">
+  <p>☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
+  <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="summer.html" class="nav-logo">Chill Sip</a>
+    <div class="nav-links">
+      <a href="summer.html">Home</a>
+      <a href="summer-shop.html">Shop</a>
+      <a href="summer-cocktails.html">Our Cocktails</a>
+      <a href="summer-companies.html">For Companies</a>
+      <a href="summer-virgin.html">Virgin Collection</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#" class="theme-toggle">🌙 Night Edition</a>
+      <a href="summer-cart.html" class="cart-btn-nav">🛒 Cart</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="breadcrumb"><a href="summer.html">Home</a> › Contact</div>
+    <div class="page-label">☀️ Summer Edition · Get in Touch</div>
+    <h1 class="page-title">Let's <span>Talk</span></h1>
+    <p class="page-sub">Questions, wholesale orders, collabs or just want to talk cocktails — we're here for it.</p>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Info -->
+      <div class="info-card">
+        <div>
+          <div class="info-title">Email</div>
+          <div class="info-value"><a href="mailto:hello@ripandsip.com">hello@ripandsip.com</a></div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Wholesale & Bulk Orders</div>
+          <div class="info-value"><a href="mailto:trade@ripandsip.com">trade@ripandsip.com</a><br>For clubs, bars, and event organisers ordering 5L+</div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Location</div>
+          <div class="info-value">123 Vinyl Row<br>Downtown · EC1A 1BB<br>United Kingdom</div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Opening Hours</div>
+          <div class="info-value">Mon – Fri · 9am to 6pm<br>Sat · 10am to 4pm<br>Sun · Closed</div>
+        </div>
+        <div class="info-divider"></div>
+        <div>
+          <div class="info-title">Follow Us</div>
+          <div class="social-row">
+            <a class="soc" href="#">𝕏</a>
+            <a class="soc" href="#">📷</a>
+            <a class="soc" href="#">▶</a>
+            <a class="soc" href="#">🎵</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="form-card">
+        <div class="form-title">Send Us a Message</div>
+        <div class="form-sub">We reply within 24 hours on weekdays. For urgent orders, email trade@ripandsip.com directly.</div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" placeholder="Alex" />
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Kim" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" placeholder="alex@email.com" />
+        </div>
+
+        <div class="field">
+          <label>Enquiry Type</label>
+          <select>
+            <option value="">Select a topic…</option>
+            <option>General Enquiry</option>
+            <option>Wholesale / Bulk Order</option>
+            <option>Event Partnership</option>
+            <option>Cocktail Testing Day</option>
+            <option>Site Visit</option>
+            <option>Press & Media</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Message</label>
+          <textarea placeholder="Tell us what's on your mind…"></textarea>
+        </div>
+
+        <button class="submit-btn" onclick="sendForm(this)">Send Message →</button>
+        <div class="form-note">We never share your details with third parties.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <div class="f-logo">Chill Sip</div>
+    <div class="f-links">
+      <a href="summer.html" class="f-link">Home</a>
+      <a href="summer-shop.html" class="f-link">Shop</a>
+      <a href="summer-cocktails.html" class="f-link">Our Cocktails</a>
+      <a href="#" class="f-link">Privacy</a>
+    </div>
+    <div class="f-copy">© 2026 Chill Sip · Drink Responsibly · 18+</div>
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="summer-contact.html" class="contact-btn" title="Contact us">
+  <span>✉</span>
+  <span class="cb-label">Contact Us</span>
+</a>
+
+<script>
+  function sendForm(btn) {
+    btn.textContent = '✓ Message Sent!';
+    btn.classList.add('sent');
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.classList.remove('sent');
+    }, 3000);
+  }
+</script>
+</body>
+</html>

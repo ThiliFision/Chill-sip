@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — Chill Sip Summer Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #ffffff;
+      --bg2:    #f8f8ff;
+      --text:   #2e1664;
+      --brand:  #3a0ba5;
+      --purple: #6c2bff;
+      --pink:   #ff2d95;
+      --green:  #2ae500;
+      --yellow: #efb609;
+      --orange: #ef7c09;
+      --cyan:   #00dbe9;
+      --red:    #f12807;
+      --muted:  rgba(46,22,100,0.5);
+      --dim:    rgba(46,22,100,0.35);
+      --border: rgba(46,22,100,0.12);
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 140px; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── PROMO BANNER ── */
+    .promo-bar {
+      background: var(--purple);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 8px 48px; position: relative;
+    }
+    .promo-bar p { font-size: 13px; font-weight: 500; color: #fff; }
+    .promo-bar .promo-code { font-weight: 700; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; }
+    .promo-close {
+      position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.7; line-height: 1;
+    }
+    .promo-close:hover { opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 16px rgba(46,22,100,0.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px; max-width: 1296px; margin: 0 auto;
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; font-size: 26px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--purple); }
+    .nav-links a.active { font-weight: 700; }
+    .nav-icons { display: flex; align-items: center; gap: 20px; }
+    .nav-icon-btn {
+      background: none; border: none; cursor: pointer; color: var(--text);
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s;
+    }
+    .nav-icon-btn:hover { color: var(--purple); }
+    .nav-icon-btn svg { width: 22px; height: 22px; }
+    .cart-btn-nav {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 10px; padding: 8px 16px;
+      font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cart-btn-nav:hover { background: var(--brand); }
+    .cart-count-badge {
+      background: var(--pink); color: #fff; border-radius: 50%;
+      width: 18px; height: 18px; font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .theme-toggle {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 12px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: #eee; }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ── SHOP BANNER ── */
+    .shop-banner {
+      background: linear-gradient(135deg, #e8f5ff 0%, #fff4e8 50%, #fff0f7 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 0 48px;
+      position: relative; overflow: hidden;
+    }
+    .shop-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 75% 50%, rgba(255,45,149,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 60%, rgba(108,43,255,0.12) 0%, transparent 55%);
+    }
+    .banner-inner { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .page-eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); margin-bottom: 12px; }
+    .banner-title { font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; color: var(--text); line-height: 1; }
+    .banner-title span {
+      background: linear-gradient(120deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .banner-sub { font-size: 15px; color: var(--muted); margin-top: 12px; font-weight: 500; }
+    .banner-promo {
+      background: rgba(255,255,255,0.8); border: 1.5px solid rgba(108,43,255,0.25);
+      border-radius: 16px; padding: 20px 28px; text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .promo-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--purple); margin-bottom: 4px; }
+    .promo-code-big { font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: 2px; }
+    .promo-detail { font-size: 12px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+
+    /* ── TOOLBAR ── */
+    .toolbar-wrap { border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 64px; z-index: 90; box-shadow: 0 4px 16px rgba(46,22,100,0.06); }
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px; padding: 16px 0;
+    }
+    .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .ftab {
+      padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--border);
+      font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--muted); cursor: pointer; background: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .ftab:hover { color: var(--text); border-color: var(--purple); }
+    .ftab.active { color: var(--purple); background: rgba(108,43,255,0.08); border-color: var(--purple); }
+    .sort-row { display: flex; align-items: center; gap: 10px; }
+    .sort-label { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .sort-select {
+      background: var(--bg2); border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; outline: none;
+    }
+    .sort-select:focus { border-color: var(--purple); }
+    .prod-count-label { font-size: 12px; color: var(--dim); font-weight: 500; }
+
+    /* ── VIRGIN MODE BANNER ── */
+    .virgin-mode-banner {
+      display: none; background: linear-gradient(112deg, #edfce7 0%, #f4fff0 100%);
+      border-bottom: 2px solid rgba(42,229,0,0.25);
+      padding: 14px 48px; align-items: center; gap: 14px;
+    }
+    .virgin-mode-banner.show { display: flex; }
+    .vmb-icon { font-size: 22px; flex-shrink: 0; }
+    .vmb-text { font-size: 14px; font-weight: 600; color: #18a800; flex: 1; line-height: 1.4; }
+    .vmb-text strong { font-weight: 800; }
+    .vmb-switch {
+      font-size: 12px; font-weight: 700; color: var(--purple);
+      background: rgba(108,43,255,0.08); border: 1px solid rgba(108,43,255,0.2);
+      border-radius: 8px; padding: 6px 14px; cursor: pointer; white-space: nowrap;
+      transition: background 0.15s; text-decoration: none;
+    }
+    .vmb-switch:hover { background: rgba(108,43,255,0.15); }
+
+    /* ── SHOP SECTION ── */
+    .shop-section { padding: 32px 0 100px; scroll-margin-top: 140px; }
+    .prod-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+    }
+    @media (max-width: 900px) { .prod-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 540px) { .prod-grid { grid-template-columns: 1fr; } }
+
+    /* ── UNIFIED PRODUCT CARD ── */
+    .uni-card {
+      border-radius: 24px; border: 2.5px solid transparent;
+      display: flex; flex-direction: column;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      overflow: hidden;
+    }
+    .uni-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(0,0,0,0.14); }
+    .uni-card.hidden { display: none; }
+    .uni-card.uni-cyan   { background: rgba(186,253,255,0.45); border-color: var(--cyan); }
+    .uni-card.uni-orange { background: #f5ede0; border-color: var(--orange); }
+    .uni-card.uni-pink   { background: #ffe8f2; border-color: var(--pink); }
+    .uni-card.uni-green  { background: #edfce7; border-color: var(--green); }
+    .uni-card.uni-yellow { background: #fffbe8; border-color: var(--yellow); }
+    .uni-card.uni-blue   { background: #eef0ff; border-color: #5b6cf0; }
+    .uni-card.uni-purple { background: #f5f0ff; border-color: var(--purple); }
+
+    .uni-img {
+      position: relative; width: 100%; height: 260px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 28px 20px 0;
+    }
+    .uni-img img { width: 60%; height: 100%; object-fit: contain; }
+    .uni-img-emoji { font-size: 80px; line-height: 1; }
+
+    .uni-badge {
+      position: absolute; top: 16px; left: 16px; z-index: 2;
+      padding: 6px 16px; border-radius: 40px; border: 1.5px solid;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .uni-badge.uni-cyan   { color: #009faa;       border-color: var(--cyan);   }
+    .uni-badge.uni-orange { color: var(--orange); border-color: var(--orange); }
+    .uni-badge.uni-pink   { color: var(--pink);   border-color: var(--pink);   }
+    .uni-badge.uni-green  { color: #18a800;        border-color: var(--green);  }
+    .uni-badge.uni-yellow { color: #a07400;        border-color: var(--yellow); }
+    .uni-badge.uni-purple { color: var(--purple); border-color: var(--purple); }
+
+    .uni-cat-tag {
+      position: absolute; bottom: 10px; right: 14px;
+      padding: 3px 10px; border-radius: 6px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      background: rgba(255,255,255,0.85); color: var(--muted); border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    .uni-body { padding: 20px 22px; display: flex; flex-direction: column; flex: 1; gap: 8px; }
+    .uni-name { font-size: 18px; font-weight: 800; color: var(--text); text-transform: uppercase; letter-spacing: -0.3px; line-height: 1.2; }
+    .uni-desc { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.6); line-height: 1.65; flex: 1; }
+    .uni-rating { display: flex; align-items: center; gap: 6px; }
+    .uni-stars  { color: var(--orange); font-size: 13px; letter-spacing: 1px; }
+    .uni-rnum   { font-size: 12px; color: rgba(46,22,100,0.4); font-weight: 500; }
+
+    .uni-sizes { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ss-opt {
+      padding: 5px 12px; border-radius: 8px; border: 1.5px solid var(--border);
+      font-size: 11px; font-weight: 700; color: var(--muted); cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; background: rgba(255,255,255,0.6);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .ss-opt:hover  { border-color: var(--purple); color: var(--text); }
+    .ss-opt.active { border-color: var(--purple); color: var(--purple); background: rgba(108,43,255,0.07); }
+
+    .uni-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding-top: 14px; border-top: 1px solid rgba(46,22,100,0.1);
+      margin-top: auto;
+    }
+    .uni-price { font-size: 22px; font-weight: 800; color: var(--text); }
+    .uni-price span { font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 2px; }
+    .uni-btn {
+      padding: 10px 18px; border-radius: 10px; border: none;
+      background: var(--green); color: #000;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s; white-space: nowrap;
+    }
+    .uni-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+    .uni-btn.added { background: var(--purple); color: #fff; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { text-align: center; padding: 80px 0; display: none; }
+    .empty-state.show { display: block; }
+    .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .empty-sub { font-size: 14px; color: var(--muted); }
+
+    /* ── TOAST ── */
+    #sumToast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--text); color: #fff; padding: 14px 28px; border-radius: 50px;
+      font-size: 14px; font-weight: 600; z-index: 9999; pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0; white-space: nowrap;
+    }
+    #sumToast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff; border-top: 4px solid;
+      border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1;
+      padding: 56px 0 32px;
+    }
+    .footer-inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.8fr; gap: 48px; max-width: 1200px; margin: 0 auto; padding: 0 48px 40px; }
+    .footer-logo { font-size: 28px; font-weight: 600; color: var(--brand); letter-spacing: -1px; margin-bottom: 16px; }
+    .footer-socials { display: flex; gap: 14px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--text); font-size: 15px; transition: background 0.2s, color 0.2s; }
+    .footer-social:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .footer-col h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.65; transition: opacity 0.2s; }
+    .footer-col ul li a:hover { opacity: 1; color: var(--purple); }
+    .footer-newsletter p { font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.65; margin-bottom: 16px; line-height: 1.5; }
+    .newsletter-row { display: flex; gap: 10px; }
+    .newsletter-row input {
+      flex: 1; background: #f8f8ff; border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 10px 14px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text);
+      outline: none;
+    }
+    .newsletter-row input:focus { border-color: var(--purple); }
+    .newsletter-row button {
+      background: none; border: 1.5px solid var(--purple); border-radius: 12px; padding: 10px 20px;
+      font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s, color 0.2s;
+    }
+    .newsletter-row button:hover { background: var(--purple); color: #fff; }
+    .footer-bottom { text-align: center; font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.4; padding: 0 48px; }
+
+    /* Contact float */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 800;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; border-radius: 50px; padding: 14px 0;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(108,43,255,0.4);
+      overflow: hidden; width: 52px; transition: width 0.3s ease, padding 0.3s ease;
+      justify-content: center;
+    }
+    .contact-btn:hover { width: 160px; padding: 14px 20px; }
+    .contact-btn .cb-label { white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0; transition: opacity 0.2s 0.1s, max-width 0.3s; }
+    .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
+
+    @media (max-width: 900px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .footer-inner { grid-template-columns: 1fr; }
+      .container { padding: 0 24px; }
+    }
+    /* ── NIGHT EDITION ── */
+    html.night-edition{--bg:#1d0536;--bg2:#27084a;--text:#ffffff;--brand:#c084fc;--purple:#b06bff;--pink:#ff6eb8;--green:#4ade80;--yellow:#fbbf24;--orange:#fb923c;--cyan:#22d3ee;--red:#f87171;--muted:rgba(255,255,255,.82);--dim:rgba(255,255,255,.58);--border:rgba(176,107,255,.25)}
+    html.night-edition body{background:linear-gradient(160deg,#1d0536 0%,#2a0850 28%,#200636 55%,#2a0848 80%,#1d0536 100%) fixed !important;min-height:100vh;color-scheme:dark}
+    html.night-edition nav{background:#130230 !important;box-shadow:0 1px 32px rgba(176,107,255,.2) !important}
+    html.night-edition footer{background:#130230 !important}
+    html.night-edition .promo-bar{background:#220545 !important}
+    html.night-edition .theme-toggle{background:rgba(176,107,255,.18) !important;border-color:rgba(176,107,255,.4) !important;color:var(--text) !important}
+    html.night-edition .theme-toggle:hover{background:rgba(176,107,255,.30) !important}
+    html.night-edition .fav-sec,html.night-edition .vibe-sec{background:var(--bg) !important}
+    html.night-edition .fav-arrow{background:#1a0535 !important;border-color:var(--border) !important;color:var(--text) !important;box-shadow:0 4px 18px rgba(168,85,247,.12) !important}
+    html.night-edition .proof-sec{background:linear-gradient(160deg,#0d0220 0%,#120223 45%,#07081e 100%) !important}
+    html.night-edition .proof-stats{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition .age-box,html.night-edition .sample-modal{background:var(--bg2) !important}
+    html.night-edition .toolbar-wrap{background:#130230 !important}
+    html.night-edition .rc,
+    html.night-edition .summary-card,
+    html.night-edition .cart-item,
+    html.night-edition .form-block,
+    html.night-edition .delivery-opt-inner,
+    html.night-edition .pay-method,
+    html.night-edition .form-note,
+    html.night-edition .soc,
+    html.night-edition .cb-label,
+    html.night-edition .pk-card,
+    html.night-edition .vg-cta,
+    html.night-edition .why-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
+    html.night-edition textarea,
+    html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
+    html.night-edition .banner-title{color:#2d0652 !important;-webkit-text-fill-color:#2d0652 !important}
+    html.night-edition .page-eyebrow{background:linear-gradient(135deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .banner-sub{color:rgba(45,6,82,.72) !important}
+    html.night-edition .banner-promo{background:rgba(255,255,255,.75) !important}
+    html.night-edition .toolbar-wrap{background:var(--bg) !important;border-bottom-color:var(--border) !important;box-shadow:0 4px 20px rgba(0,0,0,0.3) !important}
+    html.night-edition .promo-code-big{color:#2d0652 !important}
+  </style>
+  <script>
+  (function(){
+    function syncBtn(){
+      var n=document.documentElement.classList.contains('night-edition');
+      document.querySelectorAll('.theme-toggle').forEach(function(b){
+        b.textContent=n?'☀️ Summer Edition':'🌙 Night Edition';
+      });
+      document.querySelectorAll('[data-summer]').forEach(function(el){
+        el.textContent=n?el.dataset.night:el.dataset.summer;
+      });
+      document.querySelectorAll('[data-summer-html]').forEach(function(el){
+        el.innerHTML=n?el.dataset.nightHtml:el.dataset.summerHtml;
+      });
+    }
+    if(localStorage.getItem('rns-theme')==='night')document.documentElement.classList.add('night-edition');
+    document.addEventListener('DOMContentLoaded',function(){
+      syncBtn();
+      document.querySelectorAll('.theme-toggle').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var on=document.documentElement.classList.toggle('night-edition');
+          localStorage.setItem('rns-theme',on?'night':'summer');
+          syncBtn();
+        });
+      });
+    });
+  })();
+  </script>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-bar" id="promoBanner">
+  <p>☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
+  <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="summer.html" class="nav-logo">Chill Sip</a>
+    <div class="nav-links">
+      <a href="summer.html">Home</a>
+      <a href="summer-shop.html" class="active">Shop</a>
+      <a href="summer-cocktails.html">Our Cocktails</a>
+      <a href="summer-companies.html">For Companies</a>
+      <a href="summer-virgin.html">Virgin Collection</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
+      <button class="nav-icon-btn" onclick="window.location='summer-membership.html'" title="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <a href="summer-cart.html" class="cart-btn-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Cart <span class="cart-count-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- SHOP BANNER -->
+<div class="shop-banner">
+  <div class="container">
+    <div class="banner-inner">
+      <div class="banner-left">
+        <div class="page-eyebrow" data-summer="☀️ Chill Sip Store" data-night="🍸 Cocktail &amp; Mocktail Collection">☀️ Chill Sip Store</div>
+        <h1 class="banner-title" data-summer-html="CHILL SIP<br>Own the Day" data-night-html="CHILL SIP<br>Own the Night">CHILL SIP<br>Own the Day</h1>
+        <p class="banner-sub">Cocktail syrups, premium glassware &amp; bar accessories. Delivered to your door.</p>
+      </div>
+      <div class="banner-promo">
+        <div class="promo-label">First Order Discount</div>
+        <div class="promo-code-big">SUMMER20</div>
+        <div class="promo-detail">20% off at checkout</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar-wrap">
+  <div class="container">
+    <div class="toolbar">
+      <div class="filter-tabs">
+        <button class="ftab active" data-cat="all">All Products</button>
+        <button class="ftab" data-cat="syrup">Cocktail Syrups</button>
+        <button class="ftab" data-cat="glasses">Glasses</button>
+        <button class="ftab" data-cat="accessories">Accessories</button>
+      </div>
+      <div class="sort-row">
+        <span class="sort-label">Sort</span>
+        <select class="sort-select" id="sortSel" onchange="sortProducts()">
+          <option value="default">Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+        </select>
+        <span class="prod-count-label" id="prodCount"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIRGIN MODE BANNER -->
+<div class="virgin-mode-banner" id="virginBanner">
+  <span class="vmb-icon">🌿</span>
+  <div class="vmb-text"><strong>Virgin Cocktails Only</strong> — You're browsing our alcohol-free range. Same great Chill Sip flavours, zero alcohol.</div>
+  <a href="summer.html" class="vmb-switch" onclick="localStorage.removeItem('ripSipAgeGroup'); return true;">Not under 18? Update age</a>
+</div>
+
+<!-- PRODUCTS -->
+<section class="shop-section">
+  <div class="container">
+    <div class="prod-grid" id="shopGrid">
+
+      <!-- SYRUP 1 -->
+      <div class="uni-card uni-yellow" data-category="syrup" data-price="1.99" data-rating="4.8" data-alcohol="true">
+        <div class="uni-img">
+          <span class="uni-badge uni-yellow">Best Seller</span>
+          <img src="images/Pick-your-vide/Pineapple.png" alt="Pineapple &amp; Pisco" />
+          <span class="uni-cat-tag">Cocktail Syrup</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Pineapple &amp; Pisco Concentrate</div>
+          <div class="uni-desc">Sharp Peruvian Pisco meets cold-pressed golden pineapple. Mix with soda or take it straight from the packet.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.8 (124 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="1.99" onclick="selectSize(this)">30 ml — £1.99</button>
+            <button class="ss-opt" data-price="2.99" onclick="selectSize(this)">50 ml — £2.99</button>
+            <button class="ss-opt" data-price="4.99" onclick="selectSize(this)">100 ml — £4.99</button>
+            <button class="ss-opt" data-price="9.99" onclick="selectSize(this)">250 ml — £9.99</button>
+            <button class="ss-opt" data-price="129.99" onclick="selectSize(this)">5 L Bulk — £129.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£1.99 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Pineapple & Pisco','syrup','images/Pick-your-vide/Pineapple.png')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SYRUP 2 -->
+      <div class="uni-card uni-pink" data-category="syrup" data-price="2.49" data-rating="4.7" data-alcohol="true">
+        <div class="uni-img">
+          <span class="uni-badge uni-pink">Fan Favourite</span>
+          <img src="images/Pick-your-vide/strawberry.png" alt="Strawberry, Lemon &amp; Mint" />
+          <span class="uni-cat-tag">Cocktail Syrup</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Strawberry, Lemon &amp; Mint</div>
+          <div class="uni-desc">Tangy lemon meets fresh strawberry with a cool mint finish. Festival-ready and endlessly refreshing.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.7 (98 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="2.49" onclick="selectSize(this)">30 ml — £2.49</button>
+            <button class="ss-opt" data-price="3.49" onclick="selectSize(this)">50 ml — £3.49</button>
+            <button class="ss-opt" data-price="5.99" onclick="selectSize(this)">100 ml — £5.99</button>
+            <button class="ss-opt" data-price="149.99" onclick="selectSize(this)">5 L Bulk — £149.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£2.49 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Strawberry Lemon & Mint','syrup','images/Pick-your-vide/strawberry.png')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SYRUP 3 -->
+      <div class="uni-card uni-orange" data-category="syrup" data-price="2.99" data-rating="4.9" data-alcohol="true">
+        <div class="uni-img">
+          <span class="uni-badge uni-orange">New Drop</span>
+          <img src="images/Pick-your-vide/Passion.png" alt="Passion Fruit Fusion" />
+          <span class="uni-cat-tag">Cocktail Syrup</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Passion Fruit Fusion</div>
+          <div class="uni-desc">Tropical passion fruit blended with citrus zest. Vibrant, exotic and made for the day ahead.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.9 (67 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="2.99" onclick="selectSize(this)">30 ml — £2.99</button>
+            <button class="ss-opt" data-price="3.99" onclick="selectSize(this)">50 ml — £3.99</button>
+            <button class="ss-opt" data-price="6.49" onclick="selectSize(this)">100 ml — £6.49</button>
+            <button class="ss-opt" data-price="159.99" onclick="selectSize(this)">5 L Bulk — £159.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£2.99 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Passion Fruit Fusion','syrup','images/Pick-your-vide/Passion.png')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SYRUP 4 -->
+      <div class="uni-card uni-cyan" data-category="syrup" data-price="1.99" data-rating="4.6" data-alcohol="true">
+        <div class="uni-img">
+          <span class="uni-badge uni-cyan">Limited</span>
+          <img src="images/other%20images/lemon%20crash.png" alt="Lemon Crash" />
+          <span class="uni-cat-tag">Cocktail Syrup</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Lemon Crash</div>
+          <div class="uni-desc">A citrus bomb for those who like it sharp. High-intensity lemon concentrate for bold cocktails.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★☆</span>
+            <span class="uni-rnum">4.6 (52 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="1.99" onclick="selectSize(this)">30 ml — £1.99</button>
+            <button class="ss-opt" data-price="2.99" onclick="selectSize(this)">50 ml — £2.99</button>
+            <button class="ss-opt" data-price="119.99" onclick="selectSize(this)">5 L Bulk — £119.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£1.99 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Lemon Crash','syrup','images/other%20images/lemon%20crash.png')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GLASSES 1 -->
+      <div class="uni-card uni-blue" data-category="glasses" data-price="12.99" data-rating="4.8">
+        <div class="uni-img">
+          <span class="uni-img-emoji">🥃</span>
+          <span class="uni-cat-tag">Glassware</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Highball Glass — Set of 2</div>
+          <div class="uni-desc">Crystal-clear 350ml highball. Dishwasher safe and weighted for that satisfying cocktail feel.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.8 (43 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="12.99" onclick="selectSize(this)">Set of 2 — £12.99</button>
+            <button class="ss-opt" data-price="22.99" onclick="selectSize(this)">Set of 4 — £22.99</button>
+            <button class="ss-opt" data-price="39.99" onclick="selectSize(this)">Set of 8 — £39.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£12.99 <span>/ set</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Highball Glass','glasses','')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GLASSES 2 -->
+      <div class="uni-card uni-pink" data-category="glasses" data-price="14.99" data-rating="4.9">
+        <div class="uni-img">
+          <span class="uni-img-emoji">🍸</span>
+          <span class="uni-cat-tag">Glassware</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Coupe Glass — Set of 2</div>
+          <div class="uni-desc">Elegant 220ml coupe with a long stem. Perfect for martinis, daiquiris and Chill Sip specials.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.9 (31 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="14.99" onclick="selectSize(this)">Set of 2 — £14.99</button>
+            <button class="ss-opt" data-price="26.99" onclick="selectSize(this)">Set of 4 — £26.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£14.99 <span>/ set</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Coupe Glass','glasses','')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GLASSES 3 -->
+      <div class="uni-card uni-green" data-category="glasses" data-price="11.99" data-rating="4.7">
+        <div class="uni-img">
+          <span class="uni-img-emoji">🪨</span>
+          <span class="uni-cat-tag">Glassware</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Rocks Glass — Set of 2</div>
+          <div class="uni-desc">Heavy-based 300ml rocks glass. The go-to for spirit-forward cocktails served over a single large ice cube.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.7 (28 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="11.99" onclick="selectSize(this)">Set of 2 — £11.99</button>
+            <button class="ss-opt" data-price="20.99" onclick="selectSize(this)">Set of 4 — £20.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£11.99 <span>/ set</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Rocks Glass','glasses','')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCESSORIES 1 -->
+      <div class="uni-card uni-yellow" data-category="accessories" data-price="24.99" data-rating="4.8">
+        <div class="uni-img">
+          <span class="uni-img-emoji">🍹</span>
+          <span class="uni-cat-tag">Accessories</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Boston Shaker — Pro Series</div>
+          <div class="uni-desc">550ml stainless steel Boston shaker. Tight seal, easy open, built to shake thousands of rounds.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.8 (19 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="24.99" onclick="selectSize(this)">Single — £24.99</button>
+            <button class="ss-opt" data-price="44.99" onclick="selectSize(this)">Twin Pack — £44.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£24.99 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Boston Shaker','accessories','')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCESSORIES 2 -->
+      <div class="uni-card uni-purple" data-category="accessories" data-price="34.99" data-rating="4.9">
+        <div class="uni-img">
+          <span class="uni-img-emoji">🧑‍🍳</span>
+          <span class="uni-cat-tag">Accessories</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Bar Tool Set — 6 Piece</div>
+          <div class="uni-desc">Everything you need: jigger, muddler, bar spoon, strainer, ice tongs &amp; opener in a brushed steel stand.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.9 (37 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="34.99" onclick="selectSize(this)">Standard — £34.99</button>
+            <button class="ss-opt" data-price="54.99" onclick="selectSize(this)">Pro Edition — £54.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£34.99 <span>/ set</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Bar Tool Set','accessories','')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCESSORIES 3 -->
+      <div class="uni-card uni-green" data-category="accessories" data-price="6.99" data-rating="4.5">
+        <div class="uni-img">
+          <span class="uni-img-emoji">🌿</span>
+          <span class="uni-cat-tag">Accessories</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Eco Straws — Pack of 50</div>
+          <div class="uni-desc">Reusable stainless steel straws with cleaning brush. Sustainable and perfect for any cocktail day out.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★☆</span>
+            <span class="uni-rnum">4.5 (88 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="6.99" onclick="selectSize(this)">50 Pack — £6.99</button>
+            <button class="ss-opt" data-price="11.99" onclick="selectSize(this)">100 Pack — £11.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£6.99 <span>/ pack</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Eco Straws','accessories','')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIRGIN 1 -->
+      <div class="uni-card uni-yellow" data-category="syrup" data-price="1.79" data-rating="4.7" data-alcohol="false">
+        <div class="uni-img">
+          <span class="uni-badge uni-green">Virgin</span>
+          <img src="images/Pick-your-vide/Pineapple.png" alt="Virgin Pineapple" />
+          <span class="uni-cat-tag">Virgin Cocktail</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Virgin Pineapple Tropical</div>
+          <div class="uni-desc">All the tropical pineapple flavour of our signature recipe — crafted without any alcohol. Just as refreshing, zero spirits.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.7 (38 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="1.79" onclick="selectSize(this)">30 ml — £1.79</button>
+            <button class="ss-opt" data-price="2.79" onclick="selectSize(this)">50 ml — £2.79</button>
+            <button class="ss-opt" data-price="4.49" onclick="selectSize(this)">100 ml — £4.49</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£1.79 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Pineapple Tropical','syrup','images/Pick-your-vide/Pineapple.png')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIRGIN 2 -->
+      <div class="uni-card uni-pink" data-category="syrup" data-price="2.29" data-rating="4.6" data-alcohol="false">
+        <div class="uni-img">
+          <span class="uni-badge uni-green">Virgin</span>
+          <img src="images/Pick-your-vide/strawberry.png" alt="Virgin Strawberry" />
+          <span class="uni-cat-tag">Virgin Cocktail</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Virgin Strawberry &amp; Mint</div>
+          <div class="uni-desc">Fresh strawberry, tangy lemon and cool mint — the full flavour experience with absolutely no alcohol.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.6 (29 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="2.29" onclick="selectSize(this)">30 ml — £2.29</button>
+            <button class="ss-opt" data-price="3.29" onclick="selectSize(this)">50 ml — £3.29</button>
+            <button class="ss-opt" data-price="5.49" onclick="selectSize(this)">100 ml — £5.49</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£2.29 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Strawberry & Mint','syrup','images/Pick-your-vide/strawberry.png')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIRGIN 3 -->
+      <div class="uni-card uni-orange" data-category="syrup" data-price="2.79" data-rating="4.8" data-alcohol="false">
+        <div class="uni-img">
+          <span class="uni-badge uni-green">Virgin</span>
+          <img src="images/Pick-your-vide/Passion.png" alt="Virgin Passion Fruit" />
+          <span class="uni-cat-tag">Virgin Cocktail</span>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Virgin Passion Fruit Fusion</div>
+          <div class="uni-desc">Vibrant tropical passion fruit and citrus zest — every bit as exotic and satisfying, with no alcohol at all.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.8 (44 reviews)</span>
+          </div>
+          <div class="uni-sizes">
+            <button class="ss-opt active" data-price="2.79" onclick="selectSize(this)">30 ml — £2.79</button>
+            <button class="ss-opt" data-price="3.79" onclick="selectSize(this)">50 ml — £3.79</button>
+            <button class="ss-opt" data-price="5.99" onclick="selectSize(this)">100 ml — £5.99</button>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£2.79 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Passion Fruit Fusion','syrup','images/Pick-your-vide/Passion.png')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">☀️</div>
+      <div class="empty-title">No products found</div>
+      <div class="empty-sub">Try selecting a different category.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Chill Sip</div>
+      <p style="font-size:14px;font-weight:500;color:var(--text);opacity:0.55;margin-bottom:20px;line-height:1.5;">Ready-to-rip cocktail packets.<br>Engineered for the day you'll remember.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social">f</a>
+        <a href="#" class="footer-social">in</a>
+        <a href="#" class="footer-social">tw</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="summer-contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;">Stay Updated</h4>
+      <p>Join our newsletter for exclusive summer offers and new drop alerts.</p>
+      <div class="newsletter-row">
+        <input type="email" placeholder="Email address" />
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="summer-contact.html" class="contact-btn" title="Contact us">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span class="cb-label">Contact Us</span>
+</a>
+
+<div id="sumToast">Added to cart!</div>
+
+<script>
+  // ── CART COUNT ──
+  function updateCartCount() {
+    const items = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+    const total = items.reduce((s, i) => s + (i.qty || 1), 0);
+    document.getElementById('cartCount').textContent = total;
+  }
+  updateCartCount();
+
+  // ── SIZE SELECT ──
+  function selectSize(btn) {
+    const card = btn.closest('.uni-card');
+    card.querySelectorAll('.ss-opt').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const priceEl = card.querySelector('.uni-price');
+    const price = parseFloat(btn.dataset.price);
+    const unit = priceEl.querySelector('span').textContent;
+    priceEl.innerHTML = `£${price.toFixed(2)} <span>${unit}</span>`;
+  }
+
+  // ── ADD TO CART ──
+  function shopAddToCart(btn, name, category, image) {
+    const card = btn.closest('.uni-card');
+    const activeOpt = card.querySelector('.ss-opt.active');
+    const size = activeOpt ? activeOpt.textContent.split('—')[0].trim() : '';
+    const price = activeOpt ? parseFloat(activeOpt.dataset.price) : 0;
+
+    const items = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+    const key = name + '|shop|' + size;
+    const exist = items.find(i => i.key === key);
+    if (exist) { exist.qty++; } else { items.push({ key, name, category, type: 'shop', size, price, qty: 1, image }); }
+    localStorage.setItem('ripSipCartItems', JSON.stringify(items));
+
+    const legacyTotal = items.reduce((s, i) => s + (i.qty || 1), 0);
+    localStorage.setItem('ripSipCart', legacyTotal);
+
+    updateCartCount();
+
+    btn.textContent = '✓ Added!';
+    btn.classList.add('added');
+    showToast(name + ' added to cart!');
+
+    setTimeout(() => {
+      btn.textContent = 'Add to Cart';
+      btn.classList.remove('added');
+    }, 2500);
+  }
+
+  // ── TOAST ──
+  function showToast(msg) {
+    const t = document.getElementById('sumToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ── FILTER & SORT ──
+  const tabs = document.querySelectorAll('.ftab');
+  const cards = document.querySelectorAll('.uni-card');
+
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    filterAndSort();
+  }));
+
+  function sortProducts() { filterAndSort(); }
+
+  // ── VIRGIN MODE ──
+  const isMinor = localStorage.getItem('ripSipAgeGroup') === 'minor';
+  if (isMinor) document.getElementById('virginBanner').classList.add('show');
+
+  function filterAndSort() {
+    const cat = document.querySelector('.ftab.active').dataset.cat;
+    const sort = document.getElementById('sortSel').value;
+
+    let visible = Array.from(cards).filter(c => {
+      const catMatch = cat === 'all' || c.dataset.category === cat;
+      // minors: hide alcohol products; adults: hide virgin-only products
+      const ageMatch = isMinor
+        ? c.dataset.alcohol !== 'true'
+        : c.dataset.alcohol !== 'false';
+      return catMatch && ageMatch;
+    });
+    cards.forEach(c => c.classList.add('hidden'));
+
+    if (sort === 'price-asc') visible.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+    else if (sort === 'price-desc') visible.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+    else if (sort === 'rating') visible.sort((a, b) => parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating));
+
+    const grid = document.getElementById('shopGrid');
+    visible.forEach(c => { c.classList.remove('hidden'); grid.appendChild(c); });
+
+    document.getElementById('emptyState').classList.toggle('show', visible.length === 0);
+    document.getElementById('prodCount').textContent = `${visible.length} item${visible.length !== 1 ? 's' : ''}`;
+  }
+
+  filterAndSort();
+</script>
+
+</body>
+</html>

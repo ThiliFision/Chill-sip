@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Members — Chill Sip Summer Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #ffffff;
+      --bg2:    #f8f8ff;
+      --text:   #2e1664;
+      --brand:  #3a0ba5;
+      --purple: #6c2bff;
+      --pink:   #ff2d95;
+      --green:  #2ae500;
+      --yellow: #efb609;
+      --border: rgba(46,22,100,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── PROMO BANNER ── */
+    .promo-bar { background: var(--purple); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 48px; position: relative; }
+    .promo-bar p { font-size: 13px; font-weight: 500; color: #fff; }
+    .promo-bar .promo-code { font-weight: 700; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; }
+    .promo-close { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.7; }
+    .promo-close:hover { opacity: 1; }
+
+    /* ── NAV ── */
+    nav { position: sticky; top: 0; z-index: 999; background: #fff; border-bottom: 1px solid var(--border); box-shadow: 0 1px 16px rgba(46,22,100,0.06); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; max-width: 1296px; margin: 0 auto; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; font-size: 26px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--purple); }
+    .nav-icons { display: flex; align-items: center; gap: 16px; }
+    .cart-btn-nav { display: flex; align-items: center; gap: 6px; background: var(--purple); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .cart-btn-nav:hover { background: var(--brand); }
+    .theme-toggle { display: flex; align-items: center; gap: 6px; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; text-decoration: none; white-space: nowrap; }
+    .theme-toggle:hover { background: #eee; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 72px 0 56px; text-align: center;
+      background: linear-gradient(135deg, #f4f2ff 0%, #fff5fb 55%, #f0faff 100%);
+      border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 80%, rgba(108,43,255,0.08) 0%, transparent 60%); pointer-events: none; }
+    .page-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); background: rgba(108,43,255,0.08); border: 1px solid rgba(108,43,255,0.2); border-radius: 50px; padding: 6px 16px; margin-bottom: 20px; }
+    .page-title { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; letter-spacing: -2px; color: var(--text); line-height: 1.05; margin-bottom: 14px; }
+    .page-title span { background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .page-sub { font-size: 16px; font-weight: 500; color: rgba(46,22,100,0.55); max-width: 480px; margin: 0 auto; line-height: 1.6; }
+
+    /* ── MAIN ── */
+    .main-section { padding: 56px 0 100px; }
+
+    /* ── AUTH SCREEN ── */
+    .auth-options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 680px; margin: 0 auto 40px; }
+    @media (max-width: 600px) { .auth-options { grid-template-columns: 1fr; } }
+    .auth-option-card { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 20px; padding: 36px 28px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
+    .auth-option-card:hover { transform: translateY(-3px); }
+    .auth-option-card.join-card:hover { border-color: var(--purple); background: rgba(108,43,255,0.04); }
+    .auth-option-card.login-card:hover { border-color: var(--pink); background: rgba(255,45,149,0.04); }
+    .auth-option-icon { font-size: 40px; margin-bottom: 14px; }
+    .auth-option-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.3px; }
+    .auth-option-sub { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); line-height: 1.55; }
+
+    /* ── FORM PANEL ── */
+    .form-panel { max-width: 480px; margin: 0 auto; background: var(--bg2); border: 1.5px solid var(--border); border-radius: 24px; padding: 40px; }
+    .form-panel-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 6px; letter-spacing: -0.5px; }
+    .form-panel-sub { font-size: 14px; font-weight: 500; color: rgba(46,22,100,0.5); margin-bottom: 28px; line-height: 1.55; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+    .form-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(46,22,100,0.45); }
+    .form-input { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--text); outline: none; transition: border-color 0.2s; }
+    .form-input::placeholder { color: rgba(46,22,100,0.28); }
+    .form-input:focus { border-color: var(--purple); }
+    .submit-btn { width: 100%; padding: 15px; border-radius: 14px; border: none; outline: none; background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.15s; box-shadow: 0 8px 24px rgba(108,43,255,0.25); margin-top: 8px; }
+    .submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .back-link { display: block; text-align: center; margin-top: 16px; font-size: 13px; font-weight: 600; color: rgba(46,22,100,0.4); cursor: pointer; transition: color 0.15s; }
+    .back-link:hover { color: var(--purple); }
+    .form-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .switch-mode { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); text-align: center; }
+    .switch-mode a { color: var(--purple); text-decoration: none; cursor: pointer; font-weight: 700; }
+    .switch-mode a:hover { color: var(--pink); }
+
+    /* ── DASHBOARD ── */
+    .dashboard { max-width: 900px; margin: 0 auto; }
+
+    /* Member card */
+    .member-card {
+      background: linear-gradient(135deg, var(--purple) 0%, #4a0090 50%, var(--pink) 100%);
+      border-radius: 24px; padding: 32px; margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(108,43,255,0.28);
+    }
+    .member-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%); pointer-events: none; }
+    .member-card::after  { content: ''; position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%); pointer-events: none; }
+    .member-avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .member-details { flex: 1; }
+    .member-greeting { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.65); margin-bottom: 4px; }
+    .member-email { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: -0.3px; }
+    .member-phone { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .member-meta { text-align: right; }
+    .member-id-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+    .member-id { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 1px; margin-bottom: 10px; }
+    .member-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--yellow); background: rgba(239,182,9,0.15); border: 1px solid rgba(239,182,9,0.35); border-radius: 50px; padding: 5px 14px; }
+    .logout-link { display: block; font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; text-decoration: none; cursor: pointer; margin-top: 8px; transition: color 0.15s; text-align: right; }
+    .logout-link:hover { color: #fff; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+    .stat-card { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 18px; padding: 24px 20px; }
+    .stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(46,22,100,0.45); margin-bottom: 10px; }
+    .stat-value { font-size: 36px; font-weight: 800; letter-spacing: -2px; color: var(--text); line-height: 1; }
+    .stat-value.purple { background: linear-gradient(135deg, var(--purple), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-value.green { color: #18a800; }
+    .stat-sub { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.38); margin-top: 6px; }
+
+    /* Progress */
+    .progress-block { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 24px; }
+    .progress-block-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(46,22,100,0.45); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+    .progress-bar-track { background: rgba(108,43,255,0.08); border-radius: 50px; height: 12px; overflow: hidden; margin-bottom: 12px; }
+    .progress-bar-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--purple), var(--pink)); transition: width 0.8s cubic-bezier(0.4,0,0.2,1); position: relative; }
+    .progress-bar-fill::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 4px; border-radius: 50px; background: rgba(255,255,255,0.6); animation: shimmer 1.5s ease-in-out infinite; }
+    @keyframes shimmer { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    .progress-labels { display: flex; justify-content: space-between; align-items: center; }
+    .progress-label-text { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); }
+    .progress-label-pts { font-size: 14px; font-weight: 700; color: var(--purple); }
+    .progress-milestone { display: flex; gap: 16px; margin-top: 18px; flex-wrap: wrap; }
+    .milestone { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: rgba(46,22,100,0.45); }
+    .milestone-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    .milestone-dot.reached { background: var(--purple); box-shadow: 0 0 8px rgba(108,43,255,0.5); }
+
+    /* Reward */
+    .reward-block { border-radius: 20px; overflow: hidden; margin-bottom: 24px; }
+    .reward-locked { background: var(--bg2); border: 1.5px dashed rgba(46,22,100,0.15); border-radius: 20px; padding: 40px 28px; text-align: center; }
+    .reward-locked-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+    .reward-locked-title { font-size: 16px; font-weight: 800; color: rgba(46,22,100,0.45); margin-bottom: 8px; letter-spacing: -0.3px; }
+    .reward-locked-sub { font-size: 14px; font-weight: 500; color: rgba(46,22,100,0.38); line-height: 1.6; }
+    .reward-locked-pts { display: inline-block; margin-top: 14px; font-size: 22px; font-weight: 800; color: var(--text); }
+    .reward-locked-pts span { color: var(--purple); }
+
+    .reward-earned { background: linear-gradient(135deg, #edfce7 0%, #f4fff0 100%); border: 1.5px solid rgba(42,229,0,0.3); border-radius: 20px; padding: 36px 28px; text-align: center; }
+    .reward-earned-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #18a800; background: rgba(42,229,0,0.1); border: 1px solid rgba(42,229,0,0.25); border-radius: 50px; padding: 6px 18px; margin-bottom: 20px; }
+    .reward-earned-title { font-size: 22px; font-weight: 800; letter-spacing: -1px; color: var(--text); margin-bottom: 8px; }
+    .reward-earned-sub { font-size: 14px; font-weight: 500; color: rgba(46,22,100,0.55); margin-bottom: 28px; line-height: 1.6; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .barcode-wrapper { background: #fff; border-radius: 14px; padding: 20px 28px 16px; display: inline-block; margin-bottom: 20px; border: 1.5px solid rgba(46,22,100,0.1); }
+    .barcode-wrapper svg { display: block; max-width: 100%; }
+    .barcode-code { font-size: 13px; font-weight: 700; letter-spacing: 3px; color: var(--text); text-align: center; margin-top: 8px; font-family: monospace; }
+    .reward-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+    .reward-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 10px; border: 1.5px solid rgba(42,229,0,0.3); background: rgba(42,229,0,0.08); color: #18a800; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: background 0.2s; outline: none; }
+    .reward-btn:hover { background: rgba(42,229,0,0.16); }
+    .reward-redeem-btn { border-color: rgba(108,43,255,0.3); background: rgba(108,43,255,0.06); color: var(--purple); }
+    .reward-redeem-btn:hover { background: rgba(108,43,255,0.14); }
+    .voucher-expiry { margin: 0 0 24px; text-align: left; }
+    .voucher-expiry-label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(46,22,100,0.45); margin-bottom: 8px; }
+    .voucher-expiry-label span { font-size: 14px; font-weight: 800; color: var(--text); text-transform: none; letter-spacing: 0; }
+    .voucher-expiry-track { background: rgba(46,22,100,0.08); border-radius: 50px; height: 10px; overflow: hidden; }
+    .voucher-expiry-fill { height: 100%; border-radius: 50px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+    .voucher-expiry-fill.healthy { background: linear-gradient(90deg, #2ae500, #7cfc00); }
+    .voucher-expiry-fill.warning { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .voucher-expiry-fill.urgent { background: linear-gradient(90deg, #ef4444, #f97316); }
+    .voucher-expiry-sub { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.45); margin-top: 6px; }
+    .cooldown-block { margin-top: 20px; padding: 18px 20px; background: rgba(108,43,255,0.04); border: 1.5px solid rgba(108,43,255,0.12); border-radius: 14px; text-align: left; }
+    .cooldown-label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(46,22,100,0.45); margin-bottom: 8px; }
+    .cooldown-label span { font-size: 13px; font-weight: 800; color: var(--purple); text-transform: none; letter-spacing: 0; }
+    .cooldown-track { background: rgba(108,43,255,0.1); border-radius: 50px; height: 9px; overflow: hidden; }
+    .cooldown-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--purple), var(--pink)); transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+    .cooldown-sub { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.4); margin-top: 6px; }
+
+    /* History */
+    .history-block { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 20px; padding: 28px; }
+    .history-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(46,22,100,0.45); margin-bottom: 20px; }
+    .history-empty { font-size: 14px; font-weight: 500; color: rgba(46,22,100,0.4); text-align: center; padding: 24px 0; }
+    .history-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .history-item:last-child { border-bottom: none; }
+    .history-date { font-size: 12px; font-weight: 600; color: rgba(46,22,100,0.38); text-transform: uppercase; letter-spacing: 0.8px; }
+    .history-desc { font-size: 14px; font-weight: 600; color: var(--text); }
+    .history-pts { font-size: 14px; font-weight: 800; color: var(--purple); }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text); border-radius: 50px; padding: 14px 28px; font-size: 14px; font-weight: 600; color: #fff; box-shadow: 0 8px 32px rgba(46,22,100,0.25); z-index: 9999; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s; opacity: 0; white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* Floating contact */
+    .contact-btn { position: fixed; bottom: 32px; right: 32px; z-index: 800; background: linear-gradient(135deg, var(--purple), var(--pink)); color: #fff; border-radius: 50px; padding: 14px 0; display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 14px; font-weight: 600; box-shadow: 0 4px 20px rgba(108,43,255,0.4); overflow: hidden; width: 52px; transition: width 0.3s ease, padding 0.3s ease; justify-content: center; }
+    .contact-btn:hover { width: 160px; padding: 14px 20px; }
+    .contact-btn .cb-label { white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0; transition: opacity 0.2s 0.1s, max-width 0.3s; }
+    .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
+
+    /* Footer */
+    footer { background: #fff; border-top: 4px solid; border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1; padding: 40px 0 28px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .f-logo { font-size: 22px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .f-links { display: flex; gap: 24px; }
+    .f-link { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); text-decoration: none; transition: color 0.2s; }
+    .f-link:hover { color: var(--purple); }
+    .f-copy { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.35); }
+
+    @media (max-width: 900px) { .container { padding: 0 24px; } .nav-inner { padding: 16px 24px; } }
+    /* ── NIGHT EDITION ── */
+    html.night-edition{--bg:#1d0536;--bg2:#27084a;--text:#ffffff;--brand:#c084fc;--purple:#b06bff;--pink:#ff6eb8;--green:#4ade80;--yellow:#fbbf24;--orange:#fb923c;--cyan:#22d3ee;--red:#f87171;--muted:rgba(255,255,255,.82);--dim:rgba(255,255,255,.58);--border:rgba(176,107,255,.25)}
+    html.night-edition body{background:linear-gradient(160deg,#1d0536 0%,#2a0850 28%,#200636 55%,#2a0848 80%,#1d0536 100%) fixed !important;min-height:100vh;color-scheme:dark}
+    html.night-edition nav{background:#130230 !important;box-shadow:0 1px 32px rgba(176,107,255,.2) !important}
+    html.night-edition footer{background:#130230 !important}
+    html.night-edition .promo-bar{background:#220545 !important}
+    html.night-edition .theme-toggle{background:rgba(176,107,255,.18) !important;border-color:rgba(176,107,255,.4) !important;color:var(--text) !important}
+    html.night-edition .theme-toggle:hover{background:rgba(176,107,255,.30) !important}
+    html.night-edition .fav-sec,html.night-edition .vibe-sec{background:var(--bg) !important}
+    html.night-edition .fav-arrow{background:#1a0535 !important;border-color:var(--border) !important;color:var(--text) !important;box-shadow:0 4px 18px rgba(168,85,247,.12) !important}
+    html.night-edition .proof-sec{background:linear-gradient(160deg,#0d0220 0%,#120223 45%,#07081e 100%) !important}
+    html.night-edition .proof-stats{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition .age-box,html.night-edition .sample-modal{background:var(--bg2) !important}
+    html.night-edition .toolbar-wrap{background:#130230 !important}
+    html.night-edition .rc,
+    html.night-edition .summary-card,
+    html.night-edition .cart-item,
+    html.night-edition .form-block,
+    html.night-edition .delivery-opt-inner,
+    html.night-edition .pay-method,
+    html.night-edition .form-note,
+    html.night-edition .soc,
+    html.night-edition .cb-label,
+    html.night-edition .pk-card,
+    html.night-edition .vg-cta,
+    html.night-edition .why-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
+    html.night-edition textarea,
+    html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
+    html.night-edition .page-title{color:#2d0652 !important;-webkit-text-fill-color:#2d0652 !important}
+    html.night-edition .page-title span{background:linear-gradient(120deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .page-sub{color:rgba(45,6,82,.72) !important}
+  </style>
+  <script>
+  (function(){
+    function syncBtn(){
+      var n=document.documentElement.classList.contains('night-edition');
+      document.querySelectorAll('.theme-toggle').forEach(function(b){
+        b.textContent=n?'☀️ Summer Edition':'🌙 Night Edition';
+      });
+      document.querySelectorAll('[data-summer]').forEach(function(el){
+        el.textContent=n?el.dataset.night:el.dataset.summer;
+      });
+      document.querySelectorAll('[data-summer-html]').forEach(function(el){
+        el.innerHTML=n?el.dataset.nightHtml:el.dataset.summerHtml;
+      });
+    }
+    if(localStorage.getItem('rns-theme')==='night')document.documentElement.classList.add('night-edition');
+    document.addEventListener('DOMContentLoaded',function(){
+      syncBtn();
+      document.querySelectorAll('.theme-toggle').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var on=document.documentElement.classList.toggle('night-edition');
+          localStorage.setItem('rns-theme',on?'night':'summer');
+          syncBtn();
+        });
+      });
+    });
+  })();
+  </script>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-bar" id="promoBanner">
+  <p>☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
+  <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="summer.html" class="nav-logo">Chill Sip</a>
+    <div class="nav-links">
+      <a href="summer.html">Home</a>
+      <a href="summer-shop.html">Shop</a>
+      <a href="summer-cocktails.html">Our Cocktails</a>
+      <a href="summer-companies.html">For Companies</a>
+      <a href="summer-virgin.html">Virgin Collection</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#" class="theme-toggle">🌙 Night Edition</a>
+      <a href="summer-cart.html" class="cart-btn-nav">🛒 Cart</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="page-tag">⭐ Loyalty Programme</div>
+    <h1 class="page-title">Chill Sip <span>Members</span></h1>
+    <p class="page-sub">Earn points with every order. Collect 10 points and get a free packet — delivered straight to your inbox or phone.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<section class="main-section">
+  <div class="container">
+
+    <!-- AUTH SCREEN -->
+    <div id="authScreen">
+      <div class="auth-options">
+        <div class="auth-option-card join-card" onclick="showJoin()">
+          <div class="auth-option-icon">🌟</div>
+          <div class="auth-option-title">Join Free</div>
+          <div class="auth-option-sub">Create your membership with just your email and phone. Start earning points today.</div>
+        </div>
+        <div class="auth-option-card login-card" onclick="showLogin()">
+          <div class="auth-option-icon">🔑</div>
+          <div class="auth-option-title">Member Login</div>
+          <div class="auth-option-sub">Already a member? Log in to check your points and rewards.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOIN FORM -->
+    <div id="joinScreen" style="display:none;">
+      <div class="form-panel">
+        <div class="form-panel-title">Create Membership</div>
+        <div class="form-panel-sub">Free to join. No password needed — we identify you by your email and phone number.</div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="joinEmail" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" type="tel" id="joinPhone" placeholder="+44 7700 900000" autocomplete="tel" />
+        </div>
+        <button class="submit-btn" onclick="doJoin()">Create My Membership →</button>
+        <div class="form-divider"></div>
+        <div class="switch-mode">Already a member? <a onclick="showLogin()">Log in here</a></div>
+        <span class="back-link" onclick="showAuth()">← Back</span>
+      </div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginScreen" style="display:none;">
+      <div class="form-panel">
+        <div class="form-panel-title">Member Login</div>
+        <div class="form-panel-sub">Enter your registered email address to access your membership dashboard.</div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <button class="submit-btn" onclick="doLogin()">Access My Account →</button>
+        <div class="form-divider"></div>
+        <div class="switch-mode">Not a member yet? <a onclick="showJoin()">Join for free</a></div>
+        <span class="back-link" onclick="showAuth()">← Back</span>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" style="display:none;">
+      <div class="dashboard">
+
+        <!-- Member card -->
+        <div class="member-card">
+          <div class="member-avatar" id="memberAvatar">?</div>
+          <div class="member-details">
+            <div class="member-greeting">Welcome back</div>
+            <div class="member-email" id="memberEmail">—</div>
+            <div class="member-phone" id="memberPhone">—</div>
+          </div>
+          <div class="member-meta">
+            <div class="member-id-label">Member ID</div>
+            <div class="member-id" id="memberId">—</div>
+            <div class="member-badge">⭐ Gold Member</div>
+            <span class="logout-link" onclick="doLogout()">Log out</span>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Points Balance</div>
+            <div class="stat-value purple" id="statPoints">0</div>
+            <div class="stat-sub">1 pt = £1 value</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Products Bought</div>
+            <div class="stat-value" id="statPurchases">0</div>
+            <div class="stat-sub">10 products = 1 pt</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Free Packets Earned</div>
+            <div class="stat-value green" id="statRewards">0</div>
+            <div class="stat-sub">Lifetime total</div>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-block">
+          <div class="progress-block-title">
+            <span>Progress to Free Packet</span>
+            <span id="progressText" style="color:var(--purple);">0 / 10 pts</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressBar" style="width:0%;"></div>
+          </div>
+          <div class="progress-labels">
+            <span class="progress-label-text" id="progressSubText">Collect 10 points to earn a free packet</span>
+            <span class="progress-label-pts" id="progressPct">0%</span>
+          </div>
+          <div class="progress-milestone" id="milestones"></div>
+        </div>
+
+        <!-- Reward / Barcode -->
+        <div class="reward-block" id="rewardBlock"></div>
+
+        <!-- History -->
+        <div class="history-block">
+          <div class="history-title">Points History</div>
+          <div id="historyList"><div class="history-empty">No purchases yet. <a href="summer-shop.html" style="color:var(--purple);text-decoration:none;font-weight:700;">Start shopping →</a></div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <div class="f-logo">Chill Sip</div>
+    <div class="f-links">
+      <a href="summer.html" class="f-link">Home</a>
+      <a href="summer-shop.html" class="f-link">Shop</a>
+      <a href="summer-cocktails.html" class="f-link">Our Cocktails</a>
+      <a href="summer-contact.html" class="f-link">Contact</a>
+      <a href="#" class="f-link">Privacy</a>
+    </div>
+    <div class="f-copy">© 2026 Chill Sip · Drink Responsibly · 18+</div>
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT -->
+<a href="summer-contact.html" class="contact-btn" title="Contact us">
+  <span>✉</span>
+  <span class="cb-label">Contact Us</span>
+</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const PRODUCTS_PER_POINT = 10;
+  const FREE_PACKET_POINTS = 10;
+  const MEMBERS_KEY = 'ripSipMembers';
+  const SESSION_KEY = 'ripSipMemberSession';
+
+  function getMembers() { return JSON.parse(localStorage.getItem(MEMBERS_KEY) || '{}'); }
+  function saveMembers(m) { localStorage.setItem(MEMBERS_KEY, JSON.stringify(m)); }
+  function getSession() { return sessionStorage.getItem(SESSION_KEY) || null; }
+  function setSession(email) { sessionStorage.setItem(SESSION_KEY, email); }
+  function clearSession() { sessionStorage.removeItem(SESSION_KEY); }
+  function generateId() { return 'RSM-' + Math.random().toString(36).substr(2, 6).toUpperCase(); }
+  function generateBarcodeCode(memberId) {
+    return 'RSFREE-' + memberId.replace('RSM-', '') + '-' + Date.now().toString(36).toUpperCase().slice(-4);
+  }
+
+  function show(id) {
+    ['authScreen','joinScreen','loginScreen','dashboard'].forEach(s => {
+      document.getElementById(s).style.display = s === id ? '' : 'none';
+    });
+  }
+  function showAuth() { show('authScreen'); }
+  function showJoin()  { show('joinScreen'); }
+  function showLogin() { show('loginScreen'); }
+
+  function doJoin() {
+    const email = document.getElementById('joinEmail').value.trim().toLowerCase();
+    const phone = document.getElementById('joinPhone').value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showToast('Please enter a valid email address.');
+    if (!phone || phone.length < 7) return showToast('Please enter a valid phone number.');
+    const members = getMembers();
+    if (members[email]) {
+      showToast('Email already registered. Logging you in…');
+      setSession(email); renderDashboard(email); return;
+    }
+    members[email] = { email, phone, memberId: generateId(), joinDate: new Date().toLocaleDateString('en-GB'), points: 0, totalPurchases: 0, totalRewards: 0, history: [], codes: [] };
+    saveMembers(members);
+    setSession(email);
+    showToast('🌟 Welcome to Chill Sip Members!');
+    renderDashboard(email);
+  }
+
+  function doLogin() {
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    if (!email) return showToast('Please enter your email address.');
+    const members = getMembers();
+    if (!members[email]) return showToast('No account found. Please join first.');
+    setSession(email);
+    showToast('Welcome back! 🎉');
+    renderDashboard(email);
+  }
+
+  function doLogout() { clearSession(); showAuth(); showToast('Logged out.'); }
+
+  function renderDashboard(email) {
+    const members = getMembers();
+    const m = members[email];
+    if (!m) { showAuth(); return; }
+    show('dashboard');
+    document.getElementById('memberAvatar').textContent = email.charAt(0).toUpperCase();
+    document.getElementById('memberEmail').textContent = m.email;
+    document.getElementById('memberPhone').textContent = m.phone;
+    document.getElementById('memberId').textContent = m.memberId;
+    document.getElementById('statPoints').textContent = m.points;
+    document.getElementById('statPurchases').textContent = m.totalPurchases;
+    document.getElementById('statRewards').textContent = m.totalRewards || 0;
+    const pct = Math.min(100, Math.round((m.points / FREE_PACKET_POINTS) * 100));
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${m.points} / ${FREE_PACKET_POINTS} pts`;
+    document.getElementById('progressPct').textContent = pct + '%';
+    const remaining = Math.max(0, FREE_PACKET_POINTS - m.points);
+    document.getElementById('progressSubText').textContent = remaining > 0
+      ? `${remaining} more point${remaining !== 1 ? 's' : ''} to earn your free packet`
+      : '🎉 You have a free packet waiting!';
+    const milestones = [2, 5, 8, 10];
+    document.getElementById('milestones').innerHTML = milestones.map(pt => `
+      <div class="milestone">
+        <div class="milestone-dot ${m.points >= pt ? 'reached' : ''}"></div>
+        <span style="color:${m.points >= pt ? 'var(--purple)' : 'rgba(46,22,100,0.4)'};">${pt} pts</span>
+      </div>`).join('');
+    renderReward(m, email);
+    renderHistory(m);
+  }
+
+  function renderReward(m, email) {
+    const block = document.getElementById('rewardBlock');
+    if (m.points >= FREE_PACKET_POINTS) {
+      const members = getMembers();
+      const EXPIRY_DAYS = 30;
+      if (!members[email].pendingCode) {
+        members[email].pendingCode = generateBarcodeCode(m.memberId);
+        members[email].pendingCodeGeneratedAt = Date.now();
+        saveMembers(members);
+      }
+      const code = members[email].pendingCode;
+      const generatedAt = members[email].pendingCodeGeneratedAt || Date.now();
+      const msElapsed = Date.now() - generatedAt;
+      const daysElapsed = msElapsed / (1000 * 60 * 60 * 24);
+      const daysLeft = Math.max(0, Math.ceil(EXPIRY_DAYS - daysElapsed));
+      const pct = Math.max(0, Math.min(100, Math.round((daysLeft / EXPIRY_DAYS) * 100)));
+      const fillClass = pct > 50 ? 'healthy' : pct > 20 ? 'warning' : 'urgent';
+      const expiryBar = `
+        <div class="voucher-expiry">
+          <div class="voucher-expiry-label">Voucher validity <span>${daysLeft} day${daysLeft !== 1 ? 's' : ''} left</span></div>
+          <div class="voucher-expiry-track"><div class="voucher-expiry-fill ${fillClass}" style="width:${pct}%"></div></div>
+          <div class="voucher-expiry-sub">Valid for ${EXPIRY_DAYS} days from when it was generated${daysLeft === 0 ? ' — <strong style="color:#ef4444">expired</strong>' : ''}</div>
+        </div>`;
+      block.innerHTML = `
+        <div class="reward-earned">
+          <div class="reward-earned-badge">🎁 Reward Ready</div>
+          <div class="reward-earned-title">Your Free Packet Is Ready!</div>
+          <div class="reward-earned-sub">Show this barcode at checkout or click below to send it to your email or phone. Valid for one free packet of your choice.</div>
+          ${expiryBar}
+          <div class="barcode-wrapper"><svg id="barcodeEl"></svg><div class="barcode-code">${code}</div></div>
+          <div class="reward-actions">
+            <button class="reward-btn" onclick="sendToEmail('${m.email}','${code}')">✉ Send to Email</button>
+            <button class="reward-btn" onclick="sendToPhone('${m.phone}','${code}')">📱 Send to Phone</button>
+            <button class="reward-btn reward-redeem-btn" onclick="redeemCode('${email}','${code}')">✓ Mark as Redeemed</button>
+          </div>
+        </div>`;
+      setTimeout(() => {
+        if (typeof JsBarcode !== 'undefined') {
+          JsBarcode('#barcodeEl', code, { format: 'CODE128', width: 2.2, height: 70, displayValue: false, margin: 0, lineColor: '#2e1664', background: '#ffffff' });
+        }
+      }, 50);
+    } else {
+      const need = FREE_PACKET_POINTS - m.points;
+      const COOLDOWN_DAYS = 30;
+      const members2 = getMembers();
+      const lastRedeemed = members2[email] && members2[email].lastRedeemedAt;
+      let cooldownHtml = '';
+      if (lastRedeemed) {
+        const msElapsed = Date.now() - lastRedeemed;
+        const daysElapsed = msElapsed / (1000 * 60 * 60 * 24);
+        const daysLeft = Math.max(0, Math.ceil(COOLDOWN_DAYS - daysElapsed));
+        const pct = Math.min(100, Math.round((daysElapsed / COOLDOWN_DAYS) * 100));
+        const availDate = new Date(lastRedeemed + COOLDOWN_DAYS * 24 * 60 * 60 * 1000)
+          .toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        cooldownHtml = daysLeft > 0 ? `
+          <div class="cooldown-block">
+            <div class="cooldown-label">Next voucher available <span>${daysLeft} day${daysLeft !== 1 ? 's' : ''} to go</span></div>
+            <div class="cooldown-track"><div class="cooldown-fill" style="width:${pct}%"></div></div>
+            <div class="cooldown-sub">Unlocks on ${availDate} — keep earning points in the meantime</div>
+          </div>` : `
+          <div class="cooldown-block">
+            <div class="cooldown-label">Next voucher <span style="color:#18a800">🎉 Ready to earn!</span></div>
+            <div class="cooldown-track"><div class="cooldown-fill" style="width:100%"></div></div>
+            <div class="cooldown-sub">Cooldown complete — collect ${need} more point${need !== 1 ? 's' : ''} to unlock your next free packet</div>
+          </div>`;
+      }
+      block.innerHTML = `
+        <div class="reward-locked">
+          <div class="reward-locked-icon">🔒</div>
+          <div class="reward-locked-title">Free Packet Locked</div>
+          <div class="reward-locked-sub">Keep shopping to earn points. Each 10 products you buy earns 1 point. Reach 10 points and we'll send you a free packet barcode by email or SMS.</div>
+          <div class="reward-locked-pts">Need <span>${need}</span> more point${need !== 1 ? 's' : ''}</div>
+          ${cooldownHtml}
+        </div>`;
+    }
+  }
+
+  function renderHistory(m) {
+    const list = document.getElementById('historyList');
+    if (!m.history || m.history.length === 0) {
+      list.innerHTML = '<div class="history-empty">No purchases yet. <a href="summer-shop.html" style="color:var(--purple);text-decoration:none;font-weight:700;">Start shopping →</a></div>';
+      return;
+    }
+    list.innerHTML = m.history.map(h => `
+      <div class="history-item">
+        <div><div class="history-date">${h.date}</div><div class="history-desc">${h.desc || `Purchased ${h.items} item${h.items !== 1 ? 's' : ''}`}</div></div>
+        <div class="history-pts">+${h.points} pt${h.points !== 1 ? 's' : ''}</div>
+      </div>`).join('');
+  }
+
+  function sendToEmail(email, code) { showToast(`✉ Barcode ${code} sent to ${email}`); }
+  function sendToPhone(phone, code) { showToast(`📱 Barcode ${code} sent to ${phone}`); }
+  function redeemCode(email, code) {
+    const members = getMembers();
+    const m = members[email];
+    m.points = Math.max(0, m.points - FREE_PACKET_POINTS);
+    m.totalRewards = (m.totalRewards || 0) + 1;
+    m.codes = m.codes || [];
+    m.codes.push({ code, redeemedAt: new Date().toLocaleDateString('en-GB') });
+    m.lastRedeemedAt = Date.now();
+    m.history = m.history || [];
+    m.history.unshift({ date: new Date().toLocaleDateString('en-GB'), desc: 'Free packet redeemed', points: -FREE_PACKET_POINTS });
+    delete m.pendingCode;
+    saveMembers(members);
+    showToast('✓ Code redeemed! Enjoy your free packet 🎉');
+    renderDashboard(email);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  const sessionEmail = getSession();
+  if (sessionEmail && getMembers()[sessionEmail]) { renderDashboard(sessionEmail); } else { showAuth(); }
+</script>
+</body>
+</html>

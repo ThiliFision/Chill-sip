@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rip &amp; Sip — Summer Edition</title>
+  <title>Chill Sip — Summer Edition</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -58,8 +58,12 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 48px; max-width: 1296px; margin: 0 auto;
     }
-    .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-logo img { height: 100px; width: auto; }
+    .nav-logo {
+      text-decoration: none; display: flex; align-items: center;
+      font-size: 26px; font-weight: 800; letter-spacing: -0.8px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
     .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-links a {
       text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text);
@@ -100,57 +104,208 @@
 
     /* ── HERO ── */
     .hero-wrap {
-      position: relative; width: 100%; height: 92vh; min-height: 620px;
-      overflow: hidden; display: flex; flex-direction: column;
+      position: relative; width: 100%; height: 90vh; min-height: 640px;
+      display: flex; flex-direction: column; overflow: hidden;
+      background: url('images/image-hero/image-hero.png') center/cover no-repeat;
     }
-    .hero-bg {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; object-position: center top; display: block;
+    .hero-split {
+      display: flex; flex: 1; min-height: 0; position: relative; z-index: 2;
     }
-    .hero-mist {
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to bottom, rgba(255,255,255,0) 25%, rgba(255,255,255,0.55) 60%, rgba(255,255,255,0.92) 85%, #fff 100%);
+
+    /* Full-width gradient overlay — vignette both edges, clear window in the center-right */
+    .hero-gradient-overlay {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(to right,
+        rgba(255,255,255,0.98) 0%,
+        rgba(255,255,255,0.95) 26%,
+        rgba(255,255,255,0.75) 42%,
+        rgba(255,255,255,0.10) 58%,
+        rgba(255,255,255,0.00) 68%,
+        rgba(255,255,255,0.00) 80%,
+        rgba(255,255,255,0.35) 92%,
+        rgba(255,255,255,0.75) 100%
+      );
     }
-    .hero-content {
-      position: relative; z-index: 3;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      flex: 1; padding-bottom: 100px;
+    .hero-left {
+      width: 55%; background: transparent;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 2;
     }
-    .hero-wave {
-      position: absolute; bottom: 0; left: 0; z-index: 4;
-      width: 100%; height: 90px; display: block;
+    /* Cocktail identity badge — top-right of the right panel */
+    .hero-cocktail-badge {
+      position: absolute; top: 28px; right: 20px; z-index: 10;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(108,43,255,0.18);
+      border-radius: 18px; padding: 13px 20px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 8px 32px rgba(108,43,255,0.14);
     }
-    .hero-top-row { display: flex; gap: 48px; align-items: flex-end; margin-bottom: 40px; }
+    .hero-badge-icon { font-size: 30px; line-height: 1; }
+    .hero-badge-title { font-size: 14px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .hero-badge-sub {
+      font-size: 10px; font-weight: 700; color: var(--purple);
+      text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;
+    }
+    .hero-text-stack { display: flex; flex-direction: column; padding: 48px 64px 24px 108px; position: relative; z-index: 2; }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 2.5px; color: var(--purple); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 28px; height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      border-radius: 2px; flex-shrink: 0;
+    }
     .hero-headline {
-      flex: 0 0 auto; width: 55%;
-      font-size: 88px; font-weight: 700; line-height: 1; letter-spacing: -2px; color: var(--text);
+      font-size: 72px; font-weight: 700; line-height: 1.05;
+      letter-spacing: -2.5px; color: var(--text); margin-bottom: 20px;
     }
     .hero-headline .own { display: block; }
-    .hero-right { flex: 1; }
     .hero-sub {
-      font-size: 26px; font-weight: 500; color: var(--purple);
-      line-height: 1.35; letter-spacing: -0.5px;
+      font-size: 17px; font-weight: 500; color: rgba(46,22,100,0.60);
+      line-height: 1.65; margin-bottom: 28px; max-width: 400px;
     }
-    .hero-ctas { display: flex; gap: 24px; flex-wrap: nowrap; justify-content: center; width: 100%; }
-    .btn-summer-primary {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+    .hero-flavour-pills {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .flavour-pill {
+      padding: 9px 22px; border-radius: 40px;
+      border: 2px solid rgba(108,43,255,0.22);
+      background: #f4f2ff; color: var(--text);
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s; white-space: nowrap;
+      outline: none; text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .flavour-pill:hover, .flavour-pill.active {
       background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
-      color: #fff; border: none; border-radius: 16px; padding: 20px 48px;
-      font-size: 24px; font-weight: 600; letter-spacing: -0.5px; cursor: pointer;
+      color: #fff; border: none; padding: 11px 24px;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(108,43,255,0.28);
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+    .hero-trust {
+      font-size: 13px; font-weight: 600; color: rgba(46,22,100,0.42);
+      letter-spacing: 0.1px;
+    }
+
+    /* Right panel: z-index 3 so packets float above gradient overlay and left panel */
+    .hero-right {
+      width: 45%; position: relative; z-index: 3;
+    }
+    /* Bubbles in right panel */
+    .hero-bubbles { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+    .hb {
+      position: absolute; bottom: -80px; border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle at 30% 30%,
+        rgba(255,255,255,0.75) 0%,
+        rgba(108,43,255,0.18) 45%,
+        rgba(255,45,149,0.08) 75%,
+        transparent 100%
+      );
+      border: 1.5px solid rgba(108,43,255,0.45);
+      box-shadow: 0 0 6px rgba(108,43,255,0.15), inset 0 0 8px rgba(255,255,255,0.35);
+      animation: hbRise linear infinite;
+    }
+    @keyframes hbRise {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      8%   { opacity: 1; }
+      75%  { opacity: 0.65; }
+      100% { transform: translateY(-100vh) translateX(var(--drift,10px)); opacity: 0; }
+    }
+    .packet-stack { position: absolute; inset: 0; z-index: 2; }
+    .pkt {
+      position: absolute; object-fit: contain; width: auto;
+      filter: drop-shadow(0 16px 36px rgba(0,0,0,0.28));
+      transition: filter 0.3s;
+    }
+    /* Height-based sizing — portrait packets sized to the right panel */
+    .pkt-center {
+      height: 82%; bottom: 0; left: 50%; z-index: 4;
+      animation: floatCenter 4.2s ease-in-out infinite;
+    }
+    .pkt-left {
+      height: 56%; bottom: 3%; left: -2%; z-index: 2;
+      animation: floatLeft 5s ease-in-out infinite;
+    }
+    .pkt-right {
+      height: 56%; bottom: 1%; right: -2%; z-index: 3;
+      animation: floatRight 5.5s ease-in-out infinite;
+    }
+    .pkt.featured {
+      z-index: 10 !important;
+      filter: drop-shadow(0 28px 56px rgba(0,0,0,0.35)) !important;
+    }
+    /* translateX(-50%) baked into keyframe so it centres without conflicting transform */
+    @keyframes floatCenter {
+      0%, 100% { transform: translateX(-50%) translateY(0px) rotate(-1deg); }
+      50%       { transform: translateX(-50%) translateY(-22px) rotate(1deg); }
+    }
+    @keyframes floatLeft {
+      0%, 100% { transform: translateY(0px) rotate(-15deg); }
+      50%       { transform: translateY(-14px) rotate(-12deg); }
+    }
+    @keyframes floatRight {
+      0%, 100% { transform: translateY(-8px) rotate(12deg); }
+      50%       { transform: translateY(8px) rotate(15deg); }
+    }
+
+    /* Buttons */
+    .btn-summer-primary,
+    .btn-summer-outline {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      border-radius: 14px; padding: 15px 36px; border: none; outline: none;
+      font-size: 17px; font-weight: 600; letter-spacing: -0.3px; cursor: pointer;
       text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+      position: relative; overflow: hidden;
+    }
+    .btn-summer-primary {
+      background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff;
+    }
+    .btn-summer-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%);
+      transform: translateX(-100%);
+      animation: shimmerSweep 3.2s ease-in-out infinite;
+    }
+    @keyframes shimmerSweep {
+      0%   { transform: translateX(-120%); }
+      50%  { transform: translateX(120%); }
+      100% { transform: translateX(120%); }
     }
     .btn-summer-primary:hover { opacity: 0.92; transform: translateY(-2px); }
     .btn-summer-outline {
-      display: flex; align-items: center; justify-content: center;
-      background: #fff; color: var(--text);
-      border: 2.5px solid var(--purple); border-radius: 16px; padding: 20px 48px;
-      font-size: 24px; font-weight: 600; letter-spacing: -0.5px; cursor: pointer;
-      text-decoration: none; transition: background 0.2s, transform 0.15s;
+      background: rgba(108,43,255,0.06); color: var(--purple);
+      border: 2px solid rgba(108,43,255,0.40); outline: none;
     }
-    .btn-summer-outline:hover { background: var(--bg2); transform: translateY(-2px); }
+    .btn-summer-outline:hover { background: rgba(108,43,255,0.12); border-color: var(--purple); transform: translateY(-2px); }
+
+    /* Scroll-down hint — on right side */
+    .hero-scroll-hint {
+      position: absolute; bottom: 60px; left: 75%; transform: translateX(-50%);
+      z-index: 4; pointer-events: none;
+    }
+    .scroll-arrow {
+      font-size: 20px; color: rgba(255,255,255,0.7);
+      animation: scrollBounce 1.6s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
 
     /* ── MOST FAVOURITE ── */
-    .fav-sec { padding: 64px 0 80px; background: #fff; }
+    .fav-sec {
+      padding: 56px 0 80px; background: #fff;
+      position: relative; z-index: 2;
+      margin-top: -100px;
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 -8px 40px rgba(46,22,100,0.08);
+      overflow: hidden;
+    }
     .fav-section-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--purple); margin-bottom: 8px; }
     .fav-h2 {
       font-size: 48px; font-weight: 700; letter-spacing: -1px;
@@ -158,45 +313,90 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 8px;
     }
-    .fav-desc-header { font-size: 18px; font-weight: 500; color: var(--text); opacity: 0.6; margin-bottom: 40px; }
-    .fav-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; align-items: stretch; }
+    .fav-desc-header { font-size: 18px; font-weight: 500; color: var(--text); opacity: 0.6; margin-bottom: 0; }
 
-    .sum-card {
-      border-radius: 24px; border: 1.5px solid transparent;
-      display: flex; flex-direction: column; padding: 32px 28px;
+    /* ── CAROUSEL ── */
+    .fav-carousel-outer {
+      position: relative; margin-top: 40px;
+    }
+    .fav-carousel {
+      display: flex; gap: 20px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+      padding: 12px 48px 24px;
+      scrollbar-width: none;
+    }
+    .fav-carousel::-webkit-scrollbar { display: none; }
+
+    /* Cards inside carousel — fixed equal size */
+    .fav-carousel .uni-card {
+      flex: 0 0 300px; width: 300px;
+      scroll-snap-align: start;
+      height: 520px; /* fixed equal height for all cards */
+    }
+    .fav-carousel .uni-img {
+      height: 220px; flex-shrink: 0; overflow: hidden;
+    }
+    .fav-carousel .uni-body {
+      flex: 1; overflow: hidden;
+    }
+
+    /* Arrow buttons */
+    .fav-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 10; width: 48px; height: 48px; border-radius: 50%;
+      background: #fff; border: 2px solid var(--border);
+      box-shadow: 0 4px 18px rgba(46,22,100,0.14);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer; transition: background 0.18s, border-color 0.18s, transform 0.15s;
+      color: var(--text); user-select: none;
+    }
+    .fav-arrow:hover { background: var(--purple); border-color: var(--purple); color: #fff; transform: translateY(-50%) scale(1.08); }
+    .fav-arrow.left  { left: 8px; }
+    .fav-arrow.right { right: 8px; }
+    .fav-arrow:disabled { opacity: 0.3; pointer-events: none; }
+
+    /* ── UNIFIED PRODUCT CARD ── */
+    .uni-card {
+      border-radius: 24px; border: 2.5px solid transparent;
+      display: flex; flex-direction: column;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
       transition: transform 0.25s, box-shadow 0.25s;
+      overflow: hidden;
     }
-    .sum-card .card-desc { flex: 1; }
-    .sum-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
-    .sum-card.card-cyan  { background: rgba(186,253,255,0.2); border-color: var(--cyan); }
-    .sum-card.card-orange { background: #f7f1e9; border-color: var(--orange); }
-    .sum-card.card-pink  { background: #fff4f7; border-color: var(--pink); }
-    .sum-card.card-green { background: #f7fff4; border-color: var(--green); }
+    .uni-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(0,0,0,0.14); }
+    .uni-card.hidden { display: none; }
+    .uni-card.uni-cyan   { background: rgba(186,253,255,0.45); border-color: var(--cyan); }
+    .uni-card.uni-orange { background: #f5ede0; border-color: var(--orange); }
+    .uni-card.uni-pink   { background: #ffe8f2; border-color: var(--pink); }
+    .uni-card.uni-green  { background: #edfce7; border-color: var(--green); }
 
-    .card-badge {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 8px 20px; border-radius: 40px; border: 1px solid rgba(228,212,212,0.6);
-      font-size: 14px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
-      margin-bottom: 24px; width: fit-content;
-      background: rgba(255,255,255,0.15);
+    .uni-img {
+      position: relative; width: 100%; height: 280px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 28px 20px 0;
     }
-    .card-badge.cyan   { color: var(--cyan); }
-    .card-badge.orange { color: var(--orange); }
-    .card-badge.pink   { color: var(--pink); }
-    .card-badge.green  { color: var(--green); }
+    .uni-img img { width: 68%; height: 100%; object-fit: contain; }
+    .uni-img-emoji { font-size: 88px; line-height: 1; }
 
-    .card-img-area {
-      width: 100%; height: 300px; display: flex; align-items: center; justify-content: center;
-      margin-bottom: 28px; position: relative;
+    .uni-badge {
+      position: absolute; top: 16px; left: 16px; z-index: 2;
+      padding: 6px 16px; border-radius: 40px; border: 1.5px solid;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
-    .card-img-area img { width: 80%; height: 100%; object-fit: contain; }
+    .uni-badge.uni-cyan   { color: #009faa;       border-color: var(--cyan);   }
+    .uni-badge.uni-orange { color: var(--orange); border-color: var(--orange); }
+    .uni-badge.uni-pink   { color: var(--pink);   border-color: var(--pink);   }
+    .uni-badge.uni-green  { color: #18a800;        border-color: var(--green);  }
 
     /* Bundle card fanned images */
-    .bundle-fan { position: relative; width: 100%; height: 300px; }
-    .bundle-fan img { position: absolute; width: 42%; object-fit: contain; }
-    .bundle-fan img:nth-child(1) { left: 0; top: 40px; transform: rotate(-14deg); z-index: 1; }
-    .bundle-fan img:nth-child(2) { left: 50%; top: 0; transform: translateX(-50%) rotate(0deg); z-index: 3; }
-    .bundle-fan img:nth-child(3) { right: 0; top: 40px; transform: rotate(14deg); z-index: 1; }
+    .bundle-fan { position: relative; width: 100%; height: 100%; }
+    .bundle-fan img { position: absolute; width: 30%; max-height: 190px; object-fit: contain; }
+    .bundle-fan img:nth-child(1) { left: 4%; top: 44px; transform: rotate(-12deg); z-index: 1; }
+    .bundle-fan img:nth-child(2) { left: 50%; top: 28px; transform: translateX(-50%) rotate(0deg); z-index: 3; }
+    .bundle-fan img:nth-child(3) { right: 4%; top: 44px; transform: rotate(12deg); z-index: 1; }
     .bundle-disc {
       position: absolute; top: 8px; right: 8px; z-index: 5;
       background: var(--yellow); border-radius: 50%; width: 64px; height: 64px;
@@ -206,22 +406,28 @@
     .bundle-disc .pct { font-size: 18px; }
     .bundle-disc .off { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    .card-name { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 10px; text-transform: uppercase; letter-spacing: -0.3px; }
-    .card-desc { font-size: 15px; font-weight: 500; color: rgba(0,0,0,0.7); line-height: 1.6; margin-bottom: 16px; flex: 1; }
-    .card-price { font-size: 18px; font-weight: 700; color: #000; margin-bottom: 4px; }
-    .card-price-old { font-size: 15px; color: #999; text-decoration: line-through; }
-    .card-price-new { font-size: 22px; font-weight: 700; color: var(--text); }
-    .card-save { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
-    .card-stars { color: var(--orange); font-size: 14px; }
-    .card-reviews { font-size: 14px; color: rgba(0,0,0,0.5); }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
-    .btn-add-cart {
-      background: var(--green); color: #000; border: none; border-radius: 12px;
-      padding: 12px 20px; font-size: 15px; font-weight: 600; cursor: pointer;
-      display: flex; align-items: center; gap: 6px; transition: opacity 0.2s, transform 0.15s;
-      white-space: nowrap;
+    .uni-body { padding: 22px 24px; display: flex; flex-direction: column; flex: 1; }
+    .uni-name { font-size: 21px; font-weight: 800; color: var(--text); text-transform: uppercase; letter-spacing: -0.3px; line-height: 1.2; margin-bottom: 10px; }
+    .uni-desc { font-size: 14px; font-weight: 500; color: rgba(0,0,0,0.65); line-height: 1.65; flex: 1; margin-bottom: 14px; }
+    .uni-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
+    .uni-stars { color: var(--orange); font-size: 14px; }
+    .uni-rnum  { font-size: 13px; color: rgba(0,0,0,0.45); font-weight: 500; }
+    .uni-price-old { font-size: 14px; color: #999; text-decoration: line-through; }
+    .uni-price-new { font-size: 22px; font-weight: 800; color: var(--text); }
+    .uni-save { font-size: 12px; font-weight: 700; color: var(--green); }
+    .uni-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.08);
     }
-    .btn-add-cart:hover { opacity: 0.88; transform: translateY(-1px); }
+    .uni-price { font-size: 22px; font-weight: 800; color: var(--text); }
+    .uni-price span { font-size: 12px; font-weight: 500; color: rgba(0,0,0,0.45); margin-left: 2px; }
+    .uni-btn {
+      background: var(--green); color: #000; border: none; border-radius: 12px;
+      padding: 12px 20px; font-size: 13px; font-weight: 700; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.15s; white-space: nowrap;
+    }
+    .uni-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
     .view-all-wrap { text-align: center; margin-top: 48px; }
     .btn-view-all {
@@ -236,7 +442,7 @@
     /* ── HOW IT WORKS ── */
     .how-sec {
       padding: 64px 0;
-      background: linear-gradient(210deg, #8cd2b5 24%, #f4aa5e 54%, #eed1cb 89%);
+      background: linear-gradient(210deg, #f0ebff 0%, #ffe4f5 50%, #fff4ec 100%);
     }
     .how-label {
       font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
@@ -352,22 +558,392 @@
     .contact-btn .cb-label { white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0; transition: opacity 0.2s 0.1s, max-width 0.3s; }
     .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
 
+    /* ── SOCIAL PROOF ── */
+    .proof-sec {
+      padding: 88px 0;
+      background: linear-gradient(160deg, #fffef0 0%, #fff5f9 45%, #f0f9ff 100%);
+      border-top: 1px solid rgba(46,22,100,0.07);
+    }
+
+    .proof-stats {
+      display: flex; align-items: stretch;
+      background: #fff; border-radius: 20px;
+      border: 1.5px solid rgba(46,22,100,0.09);
+      box-shadow: 0 4px 28px rgba(46,22,100,0.07);
+      overflow: hidden; margin-bottom: 72px;
+    }
+    .proof-stat { flex: 1; text-align: center; padding: 36px 20px; }
+    .proof-stat-div { width: 1px; background: rgba(46,22,100,0.08); flex-shrink: 0; }
+    .proof-stat-num {
+      font-size: 48px; font-weight: 800; letter-spacing: -2px; line-height: 1;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .proof-stat-label { font-size: 13px; font-weight: 600; color: rgba(46,22,100,0.45); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .proof-header { text-align: center; margin-bottom: 48px; }
+    .proof-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--pink); margin-bottom: 12px; }
+    .proof-h2 { font-size: 48px; font-weight: 700; letter-spacing: -1px; color: var(--text); margin-bottom: 16px; line-height: 1.1; }
+    .proof-sub { font-size: 18px; font-weight: 500; color: rgba(46,22,100,0.5); max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+    .proof-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .proof-card {
+      border-radius: 24px; padding: 32px 28px; border: 2px solid transparent;
+      display: flex; flex-direction: column; gap: 18px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .proof-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.10); }
+    .proof-card-orange { background: #f5ede0; border-color: var(--orange); }
+    .proof-card-cyan   { background: rgba(186,253,255,0.45); border-color: var(--cyan); }
+    .proof-card-pink   { background: #ffe8f2; border-color: var(--pink); }
+
+    .proof-stars { color: var(--orange); font-size: 20px; letter-spacing: 2px; }
+    .proof-quote { font-size: 15px; font-weight: 500; color: rgba(46,22,100,0.78); line-height: 1.75; flex: 1; font-style: italic; }
+    .proof-author { display: flex; align-items: center; gap: 14px; }
+    .proof-avatar {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700;
+    }
+    .proof-av-orange { background: var(--orange); color: #fff; }
+    .proof-av-cyan   { background: var(--cyan); color: #005f66; }
+    .proof-av-pink   { background: var(--pink); color: #fff; }
+    .proof-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .proof-role { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.45); margin-top: 2px; }
+
+    /* ── TASTING & SITE VISIT ── */
+    .tasting-sec {
+      padding: 88px 0;
+      background: linear-gradient(145deg, #160938 0%, #2e1664 45%, #0c1e48 100%);
+    }
+
+    .tasting-header { text-align: center; margin-bottom: 56px; }
+    .tasting-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--cyan); margin-bottom: 12px; }
+    .tasting-h2 { font-size: 52px; font-weight: 700; letter-spacing: -1.5px; color: #fff; margin-bottom: 16px; line-height: 1.1; }
+    .tasting-sub { font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.55); max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+    .tasting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 48px; }
+
+    .tasting-card {
+      background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.13);
+      border-radius: 28px; padding: 40px 36px;
+      display: flex; flex-direction: column; gap: 20px;
+      position: relative; overflow: hidden;
+      transition: transform 0.25s, background 0.25s;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    }
+    .tasting-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--pink) 0%, var(--purple) 100%);
+    }
+    .tasting-card-alt::before { background: linear-gradient(90deg, var(--cyan) 0%, var(--green) 100%); }
+    .tasting-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.11); }
+
+    .tasting-icon { font-size: 52px; line-height: 1; }
+    .tasting-card-tag {
+      position: absolute; top: 24px; right: 24px;
+      background: var(--pink); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      padding: 5px 14px; border-radius: 40px;
+    }
+    .tasting-card-title { font-size: 26px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .tasting-card-desc { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.60); line-height: 1.65; }
+
+    .tasting-perks { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .tasting-perks li { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.82); display: flex; align-items: center; gap: 8px; }
+    .tasting-perks li::before { content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; }
+    .tasting-perks-alt li { color: rgba(255,255,255,0.72); }
+
+    .tasting-btn {
+      display: block; text-align: center; border-radius: 14px; border: none;
+      padding: 16px 24px; font-size: 15px; font-weight: 700; text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .tasting-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+    .tasting-btn-primary { background: linear-gradient(120deg, var(--pink) 0%, var(--purple) 100%); color: #fff; }
+    .tasting-btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.35); }
+    .tasting-btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    .tasting-note { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.35); text-align: center; }
+
+    .tasting-trust {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      flex: 1; text-align: center; padding: 0 24px;
+      font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.55);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      min-width: 160px;
+    }
+    .trust-item:last-child { border-right: none; }
+    .trust-item span { display: block; font-size: 22px; margin-bottom: 6px; }
+
+    /* ── HERO TICKER ── */
+    .hero-ticker {
+      width: 100%; overflow: hidden; cursor: pointer;
+      background: linear-gradient(90deg, rgba(108,43,255,0.28) 0%, rgba(255,45,149,0.22) 100%);
+      border-top: 1.5px solid rgba(108,43,255,0.30);
+      border-bottom: 1.5px solid rgba(108,43,255,0.30);
+      padding: 13px 0; position: relative; z-index: 3;
+      transition: background 0.2s;
+      /* fade the text into the screen edges on both sides */
+      -webkit-mask-image: linear-gradient(to right, transparent 0px, black 120px, black calc(100% - 120px), transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0px, black 120px, black calc(100% - 120px), transparent 100%);
+    }
+    .hero-ticker:hover { background: linear-gradient(90deg, rgba(108,43,255,0.38) 0%, rgba(255,45,149,0.30) 100%); }
+    .hero-ticker-track {
+      display: inline-flex; white-space: nowrap;
+      animation: tickerScroll 32s linear infinite;
+    }
+    .hero-ticker:hover .hero-ticker-track { animation-play-state: paused; }
+    .hero-ticker-track span {
+      font-size: 14px; font-weight: 700; color: #fff;
+      padding: 0 56px; letter-spacing: 0.2px;
+    }
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── AGE GATE ── */
+    .age-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      background: rgba(14,5,40,0.68);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 1; pointer-events: all;
+      transition: opacity 0.4s ease;
+    }
+    .age-overlay.hidden { opacity: 0; pointer-events: none; }
+    .age-box {
+      background: #fff; border-radius: 22px;
+      padding: 32px 28px 28px;
+      max-width: 380px; width: 92%; text-align: center;
+      box-shadow: 0 24px 72px rgba(46,22,100,0.28);
+      animation: ageBoxIn 0.35s cubic-bezier(0.34,1.46,0.64,1) both;
+    }
+    @keyframes ageBoxIn {
+      from { transform: translateY(20px) scale(0.97); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .age-logo {
+      font-size: 20px; font-weight: 800; letter-spacing: -0.6px;
+      background: linear-gradient(135deg, var(--brand), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 16px; display: block;
+    }
+    .age-icon { font-size: 36px; margin-bottom: 10px; display: block; }
+    .age-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 8px; }
+    .age-sub { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.55); line-height: 1.6; margin-bottom: 22px; }
+    .age-btns { display: flex; gap: 10px; }
+    .age-btn-yes {
+      flex: 1; padding: 12px 10px; border-radius: 12px; border: none; cursor: pointer; outline: none;
+      background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-weight: 800;
+      box-shadow: 0 6px 20px rgba(108,43,255,0.32);
+      transition: transform 0.15s;
+    }
+    .age-btn-yes:hover { transform: translateY(-2px); }
+    .age-btn-no {
+      flex: 1; padding: 12px 10px; border-radius: 12px; cursor: pointer; outline: none;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      color: rgba(46,22,100,0.6); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-weight: 700; transition: background 0.15s;
+    }
+    .age-btn-no:hover { background: #eee; }
+    .age-minor-msg {
+      margin-top: 16px; padding: 12px 14px;
+      background: rgba(42,229,0,0.06); border: 1px solid rgba(42,229,0,0.25); border-radius: 10px;
+      font-size: 12px; font-weight: 600; color: #18a800; display: none; line-height: 1.5;
+    }
+    .age-legal { margin-top: 16px; font-size: 11px; color: rgba(46,22,100,0.3); line-height: 1.5; }
+
+    /* ── SAMPLE MODAL ── */
+    .sample-overlay {
+      position: fixed; inset: 0; z-index: 9500;
+      background: rgba(14, 5, 40, 0.72);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.28s;
+    }
+    .sample-overlay.active { opacity: 1; pointer-events: all; }
+    .sample-modal {
+      background: #fff; border-radius: 28px; padding: 48px 44px;
+      max-width: 480px; width: 92%; position: relative;
+      box-shadow: 0 32px 96px rgba(46,22,100,0.28);
+      transform: translateY(24px) scale(0.98);
+      transition: transform 0.3s;
+    }
+    .sample-overlay.active .sample-modal { transform: translateY(0) scale(1); }
+    .sample-close {
+      position: absolute; top: 18px; right: 20px;
+      background: none; border: none; font-size: 22px; cursor: pointer;
+      color: rgba(46,22,100,0.35); line-height: 1; transition: color 0.15s;
+    }
+    .sample-close:hover { color: var(--purple); }
+    .sample-icon { font-size: 48px; line-height: 1; margin-bottom: 16px; }
+    .sample-h3 { font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.2; }
+    .sample-desc { font-size: 15px; font-weight: 500; color: rgba(46,22,100,0.55); line-height: 1.6; margin-bottom: 28px; }
+    .sample-form { display: flex; flex-direction: column; gap: 14px; }
+    .sample-form input, .sample-form textarea {
+      width: 100%; padding: 14px 18px;
+      border: 1.5px solid rgba(46,22,100,0.14); border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px;
+      font-weight: 500; color: var(--text); background: #f9f8ff; outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .sample-form input:focus, .sample-form textarea:focus { border-color: var(--purple); background: #fff; }
+    .sample-form textarea { resize: none; height: 80px; }
+    .sample-submit {
+      background: linear-gradient(112deg, var(--purple) 10%, var(--pink) 100%);
+      color: #fff; border: none; border-radius: 14px;
+      padding: 16px 24px; font-size: 16px; font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; width: 100%;
+      transition: opacity 0.2s, transform 0.15s; margin-top: 4px;
+    }
+    .sample-submit:hover { opacity: 0.9; transform: translateY(-2px); }
+    .sample-note { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.38); text-align: center; margin-top: 14px; }
+    .sample-thanks { display: none; text-align: center; padding: 16px 0; }
+    .sample-thanks.show { display: block; }
+    .sample-thanks-icon { font-size: 56px; margin-bottom: 16px; }
+    .sample-thanks h3 { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .sample-thanks p { font-size: 15px; color: rgba(46,22,100,0.55); line-height: 1.6; }
+    .sample-form-wrap.hide { display: none; }
+
     @media (max-width: 900px) {
-      .hero-text .container { flex-direction: column; }
-      .hero-headline { width: 100%; font-size: 60px; }
-      .fav-grid, .vibe-grid { grid-template-columns: repeat(2,1fr); }
+      .hero-wrap { height: auto; min-height: 0; }
+      .hero-split { flex-direction: column; }
+      .hero-left { width: 100%; }
+      .hero-text-stack { padding: 40px 32px 28px; }
+      .hero-right { width: 100%; min-height: 340px; }
+      .hero-headline { font-size: 52px; letter-spacing: -1.5px; }
+      .hero-scroll-hint { display: none; }
+      .vibe-grid { grid-template-columns: repeat(2,1fr); }
       .how-steps { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
+      .proof-grid { grid-template-columns: 1fr; }
+      .tasting-grid { grid-template-columns: 1fr; }
+      .proof-stats { flex-wrap: wrap; }
+      .proof-stat { min-width: 50%; }
+      .proof-stat-div { display: none; }
     }
     @media (max-width: 600px) {
-      .fav-grid, .vibe-grid { grid-template-columns: 1fr; }
-      .hero-headline { font-size: 42px; }
+      .hero-text-stack { padding: 28px 20px 20px; }
+      .hero-right { min-height: 280px; }
+      .hero-headline { font-size: 38px; letter-spacing: -1px; }
       .hero-ctas { flex-direction: column; }
+      .vibe-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr; }
+      .proof-h2, .tasting-h2 { font-size: 36px; }
+      .proof-stat-num { font-size: 36px; }
+      .tasting-card { padding: 28px 22px; }
+      .trust-item { min-width: 120px; padding: 0 12px; font-size: 12px; }
     }
+    /* ── NIGHT EDITION ── */
+    html.night-edition{--bg:#1d0536;--bg2:#27084a;--text:#ffffff;--brand:#c084fc;--purple:#b06bff;--pink:#ff6eb8;--green:#4ade80;--yellow:#fbbf24;--orange:#fb923c;--cyan:#22d3ee;--red:#f87171;--muted:rgba(255,255,255,.82);--dim:rgba(255,255,255,.58);--border:rgba(176,107,255,.25)}
+    html.night-edition body{background:linear-gradient(160deg,#1d0536 0%,#2a0850 28%,#200636 55%,#2a0848 80%,#1d0536 100%) fixed !important;min-height:100vh;color-scheme:dark}
+    html.night-edition nav{background:#130230 !important;box-shadow:0 1px 32px rgba(176,107,255,.2) !important}
+    html.night-edition footer{background:#130230 !important}
+    html.night-edition .promo-bar{background:#220545 !important}
+    html.night-edition .theme-toggle{background:rgba(176,107,255,.18) !important;border-color:rgba(176,107,255,.4) !important;color:var(--text) !important}
+    html.night-edition .theme-toggle:hover{background:rgba(176,107,255,.30) !important}
+    /* ── section rooms ── */
+    html.night-edition .fav-sec{background:linear-gradient(135deg,#250745 0%,#300a55 100%) !important}
+    html.night-edition .how-sec{background:linear-gradient(135deg,#1e0640 0%,#330835 100%) !important}
+    html.night-edition .vibe-sec{background:linear-gradient(135deg,#2e0848 0%,#1e0635 100%) !important}
+    html.night-edition .proof-sec{background:linear-gradient(135deg,#101a42 0%,#1a0c42 100%) !important}
+    /* ── cards ── */
+    html.night-edition .fav-arrow{background:#220545 !important;border-color:var(--border) !important;color:var(--text) !important;box-shadow:0 4px 18px rgba(176,107,255,.15) !important}
+    html.night-edition .proof-stats{background:rgba(255,255,255,.05) !important;border-color:var(--border) !important}
+    html.night-edition .age-box,html.night-edition .sample-modal{background:var(--bg2) !important}
+    html.night-edition .toolbar-wrap{background:#130230 !important}
+    html.night-edition .vibe-card{background:linear-gradient(180deg,#220645 0%,#2c0852 100%) !important;border-color:rgba(176,107,255,.25) !important}
+    html.night-edition .how-step{background:rgba(255,255,255,.06) !important;border:1px solid rgba(176,107,255,.2) !important}
+    html.night-edition .uni-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition .uni-card.uni-cyan{background:rgba(34,211,238,.10) !important;border-color:var(--cyan) !important}
+    html.night-edition .uni-card.uni-orange{background:rgba(251,146,60,.10) !important;border-color:var(--orange) !important}
+    html.night-edition .uni-card.uni-pink{background:rgba(255,110,184,.10) !important;border-color:var(--pink) !important}
+    html.night-edition .uni-card.uni-green{background:rgba(74,222,128,.08) !important;border-color:var(--green) !important}
+    html.night-edition .rc,
+    html.night-edition .summary-card,
+    html.night-edition .cart-item,
+    html.night-edition .form-block,
+    html.night-edition .delivery-opt-inner,
+    html.night-edition .pay-method,
+    html.night-edition .form-note,
+    html.night-edition .soc,
+    html.night-edition .cb-label,
+    html.night-edition .pk-card,
+    html.night-edition .vg-cta,
+    html.night-edition .why-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    /* ── text visibility ── */
+    html.night-edition .vibe-card-vibe{color:rgba(255,255,255,.82) !important;opacity:1 !important}
+    html.night-edition .vibe-card-desc{color:rgba(255,255,255,.72) !important}
+    html.night-edition .how-sub{color:rgba(255,255,255,.78) !important;opacity:1 !important}
+    html.night-edition .tasting-sub{color:rgba(255,255,255,.72) !important}
+    html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
+    html.night-edition textarea,
+    html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
+    /* ── hero — keep unchanged ── */
+    html.night-edition .hero-gradient-overlay{background:linear-gradient(to right,rgba(7,1,14,.97) 0%,rgba(7,1,14,.93) 26%,rgba(7,1,14,.72) 42%,rgba(7,1,14,.18) 58%,rgba(7,1,14,.00) 68%,rgba(7,1,14,.00) 80%,rgba(7,1,14,.28) 92%,rgba(7,1,14,.65) 100%) !important}
+    html.night-edition .hero-headline{color:#ffffff !important;text-shadow:0 0 40px rgba(168,85,247,.35)}
+    html.night-edition .hero-sub{color:rgba(237,232,255,.78) !important}
+    html.night-edition .hero-eyebrow{color:var(--purple) !important;opacity:1 !important}
+    html.night-edition .flavour-pill{background:rgba(176,107,255,.12) !important;border-color:rgba(176,107,255,.35) !important;color:#fff !important}
+    html.night-edition .flavour-pill.active{background:var(--purple) !important;border-color:var(--purple) !important;color:#fff !important}
   </style>
+  <script>
+  (function(){
+    function syncBtn(){
+      var n=document.documentElement.classList.contains('night-edition');
+      document.querySelectorAll('.theme-toggle').forEach(function(b){
+        b.textContent=n?'☀️ Summer Edition':'🌙 Night Edition';
+      });
+      document.querySelectorAll('[data-summer]').forEach(function(el){
+        el.textContent=n?el.dataset.night:el.dataset.summer;
+      });
+      document.querySelectorAll('[data-summer-html]').forEach(function(el){
+        el.innerHTML=n?el.dataset.nightHtml:el.dataset.summerHtml;
+      });
+    }
+    if(localStorage.getItem('rns-theme')==='night')document.documentElement.classList.add('night-edition');
+    document.addEventListener('DOMContentLoaded',function(){
+      syncBtn();
+      document.querySelectorAll('.theme-toggle').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var on=document.documentElement.classList.toggle('night-edition');
+          localStorage.setItem('rns-theme',on?'night':'summer');
+          syncBtn();
+        });
+      });
+    });
+  })();
+  </script>
 </head>
 <body>
+
+<!-- AGE GATE -->
+<div class="age-overlay" id="ageOverlay" style="display:none;">
+  <div class="age-box">
+    <span class="age-logo">Chill Sip</span>
+    <span class="age-icon">🍹</span>
+    <div class="age-title">How old are you?</div>
+    <p class="age-sub">Some of our cocktails contain alcohol. Tell us your age so we can show you the right range for you.</p>
+    <div class="age-btns">
+      <button class="age-btn-yes" onclick="ageVerify(true)">I'm 18 or over</button>
+      <button class="age-btn-no"  onclick="ageVerify(false)">I'm under 18</button>
+    </div>
+    <p class="age-minor-msg" id="ageMinorMsg">No problem! You can still enjoy our full range of <strong>Virgin Cocktails</strong> — same great taste, zero alcohol. Redirecting to your menu…</p>
+    <p class="age-legal">By entering you confirm your age is accurate. Please drink responsibly. 18+</p>
+  </div>
+</div>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
@@ -378,25 +954,25 @@
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="summer.html" class="nav-logo">
-      <img src="images/Logo/logo.png" alt="Rip &amp; Sip" />
-    </a>
+    <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
       <a href="summer.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="cocktails.html">Our Cocktails</a>
+      <a href="summer-shop.html">Shop</a>
+      <a href="summer-cocktails.html">Our Cocktails</a>
+      <a href="summer-companies.html">For Companies</a>
+      <a href="summer-virgin.html">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="index.html" class="theme-toggle" title="Switch to Night Mode">🌙 Night Mode</a>
+      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
       <!-- Account icon -->
-      <button class="nav-icon-btn" onclick="window.location='membership.html'" title="Account">
+      <button class="nav-icon-btn" onclick="window.location='summer-membership.html'" title="Account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
           <circle cx="12" cy="7" r="4"/>
         </svg>
       </button>
       <!-- Cart icon -->
-      <a href="cart.html" class="cart-btn-nav">
+      <a href="summer-cart.html" class="cart-btn-nav">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
@@ -409,28 +985,104 @@
 
 <!-- HERO -->
 <div class="hero-wrap">
-  <img class="hero-bg" src="https://www.figma.com/api/mcp/asset/e3937254-6dc5-470b-aad9-1720cb6a263a" alt="Summer cocktails" />
-  <div class="hero-mist"></div>
-  <div class="hero-content">
-    <div class="container">
-      <div class="hero-top-row">
+
+  <!-- Full-width gradient: eliminates the hard div-edge separator -->
+  <div class="hero-gradient-overlay"></div>
+
+  <!-- Ticker at the very top of the hero — full width, end to end -->
+  <div class="hero-ticker" onclick="openSampleModal()" role="button" aria-label="Order a free sample set">
+    <div class="hero-ticker-track">
+      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
+    </div>
+  </div>
+
+  <div class="hero-split">
+
+    <!-- LEFT: Text panel -->
+    <div class="hero-left">
+      <!-- Bubbles in left panel — same style as right, float behind text -->
+      <div class="hero-bubbles" aria-hidden="true">
+        <div class="hb" style="left:8%;  width:14px; height:14px; animation-duration:9s;   animation-delay:1s;    --drift:8px;"></div>
+        <div class="hb" style="left:20%; width:8px;  height:8px;  animation-duration:7s;   animation-delay:4.5s;  --drift:-6px;"></div>
+        <div class="hb" style="left:35%; width:20px; height:20px; animation-duration:11s;  animation-delay:0.5s;  --drift:12px;"></div>
+        <div class="hb" style="left:50%; width:10px; height:10px; animation-duration:8.5s; animation-delay:3s;    --drift:-8px;"></div>
+        <div class="hb" style="left:62%; width:24px; height:24px; animation-duration:13s;  animation-delay:2s;    --drift:16px;"></div>
+        <div class="hb" style="left:75%; width:7px;  height:7px;  animation-duration:6.5s; animation-delay:5.5s;  --drift:-5px;"></div>
+        <div class="hb" style="left:88%; width:16px; height:16px; animation-duration:10s;  animation-delay:1.5s;  --drift:10px;"></div>
+        <div class="hb" style="left:15%; width:12px; height:12px; animation-duration:8s;   animation-delay:7s;    --drift:-9px;"></div>
+        <div class="hb" style="left:55%; width:18px; height:18px; animation-duration:12s;  animation-delay:0s;    --drift:14px;"></div>
+        <div class="hb" style="left:42%; width:9px;  height:9px;  animation-duration:7.5s; animation-delay:6s;    --drift:-7px;"></div>
+      </div>
+      <div class="hero-text-stack">
+        <div class="hero-eyebrow">🍹 Premium Cocktail Pouches · Summer 2026</div>
         <div class="hero-headline">
           Rip it. Drink it.<br>
           <span class="own grad-text">Own the Day.</span>
         </div>
-        <div class="hero-right">
-          <p class="hero-sub">Ready to drink cocktail packets with easy grip — made for the sunniest days of your life.</p>
+        <p class="hero-sub">Ready-to-drink cocktail packets with easy grip — made for the sunniest days of your life.</p>
+        <div class="hero-flavour-pills">
+          <a href="summer-cocktails.html#tropical" class="flavour-pill active">🍍 Pineapple</a>
+          <a href="summer-cocktails.html#citrus"   class="flavour-pill">Passion Fruit</a>
+          <a href="summer-cocktails.html#festival" class="flavour-pill">🍓 Strawberry</a>
         </div>
-      </div>
-      <div class="hero-ctas">
-        <a href="shop.html" class="btn-summer-primary">SHOP NEW ↗</a>
-        <a href="shop.html" class="btn-summer-outline">COCKTAILS</a>
+        <div class="hero-ctas">
+          <a href="summer-shop.html" class="btn-summer-primary">VIEW FULL SHOP ↗</a>
+          <a href="summer-cocktails.html" class="btn-summer-outline">OUR COCKTAILS</a>
+        </div>
+        <div class="hero-trust">⭐ 4.9 rated &nbsp;·&nbsp; 🚚 Free UK delivery &nbsp;·&nbsp; No subscription</div>
       </div>
     </div>
+
+    <!-- RIGHT: Animated product panel -->
+    <div class="hero-right">
+      <!-- Cocktail identity badge -->
+      <div class="hero-cocktail-badge">
+        <div class="hero-badge-icon">🍹</div>
+        <div>
+          <div class="hero-badge-title">Ready-to-Drink</div>
+          <div class="hero-badge-sub">Premium Cocktails</div>
+        </div>
+      </div>
+      <div class="hero-bubbles" aria-hidden="true">
+        <div class="hb" style="left:4%;  width:11px; height:11px; animation-duration:8s;   animation-delay:0s;    --drift:10px;"></div>
+        <div class="hb" style="left:12%; width:20px; height:20px; animation-duration:11s;  animation-delay:3s;    --drift:-14px;"></div>
+        <div class="hb" style="left:22%; width:8px;  height:8px;  animation-duration:6.5s; animation-delay:1s;    --drift:7px;"></div>
+        <div class="hb" style="left:33%; width:16px; height:16px; animation-duration:10s;  animation-delay:4.5s;  --drift:16px;"></div>
+        <div class="hb" style="left:44%; width:9px;  height:9px;  animation-duration:7.5s; animation-delay:0.5s;  --drift:-9px;"></div>
+        <div class="hb" style="left:55%; width:26px; height:26px; animation-duration:13s;  animation-delay:2s;    --drift:20px;"></div>
+        <div class="hb" style="left:65%; width:10px; height:10px; animation-duration:8s;   animation-delay:6s;    --drift:-8px;"></div>
+        <div class="hb" style="left:75%; width:15px; height:15px; animation-duration:9.5s; animation-delay:1.5s;  --drift:12px;"></div>
+        <div class="hb" style="left:85%; width:8px;  height:8px;  animation-duration:7s;   animation-delay:3.8s;  --drift:-6px;"></div>
+        <div class="hb" style="left:92%; width:22px; height:22px; animation-duration:12s;  animation-delay:0.8s;  --drift:18px;"></div>
+        <div class="hb" style="left:18%; width:12px; height:12px; animation-duration:8.5s; animation-delay:5s;    --drift:-10px;"></div>
+        <div class="hb" style="left:50%; width:18px; height:18px; animation-duration:11s;  animation-delay:2.5s;  --drift:14px;"></div>
+        <div class="hb" style="left:38%; width:28px; height:28px; animation-duration:14s;  animation-delay:5.5s;  --drift:22px;"></div>
+        <div class="hb" style="left:70%; width:9px;  height:9px;  animation-duration:7.5s; animation-delay:8s;    --drift:-8px;"></div>
+      </div>
+      <div class="packet-stack">
+        <img class="pkt pkt-left"   id="pktStrawberry" src="images/product-packet/Refreshing.png"     alt="Strawberry &amp; Mint" />
+        <img class="pkt pkt-right"  id="pktPassion"    src="images/product-packet/Exotic Passion.png" alt="Exotic Passion" />
+        <img class="pkt pkt-center featured" id="pktPineapple"  src="images/product-packet/Container.png"      alt="Pineapple &amp; Pisco" />
+      </div>
+    </div>
+
+  </div><!-- end hero-split -->
+
+  <!-- Scroll-down hint on the right side -->
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <div class="scroll-arrow">↓</div>
   </div>
-  <svg class="hero-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 90" preserveAspectRatio="none">
-    <path d="M0,90 Q720,0 1440,90 L1440,90 L0,90 Z" fill="#ffffff"/>
-  </svg>
+
+
 </div>
 
 <!-- MOST FAVOURITE -->
@@ -439,57 +1091,78 @@
     <div class="fav-section-label">⭐ Community Picks</div>
     <h2 class="fav-h2">MOST FAVOURITE</h2>
     <p class="fav-desc-header">The packets our community can't stop ordering</p>
-    <div class="fav-grid">
+  </div>
+
+  <!-- Wall-to-wall carousel -->
+  <div class="fav-carousel-outer">
+    <button class="fav-arrow left"  id="favPrev" onclick="favScroll(-1)" aria-label="Previous">&#8592;</button>
+    <button class="fav-arrow right" id="favNext" onclick="favScroll(1)"  aria-label="Next">&#8594;</button>
+    <div class="fav-carousel" id="favCarousel">
 
       <!-- Card 1 — Pineapple -->
-      <div class="sum-card card-cyan">
-        <div class="card-badge cyan">Best Seller</div>
-        <div class="card-img-area">
+      <div class="uni-card uni-cyan">
+        <div class="uni-img">
+          <span class="uni-badge uni-cyan">Best Seller</span>
           <img src="images/product-packet/Container.png" alt="Pineapple &amp; Pisco" />
         </div>
-        <div class="card-name">Pineapple &amp; Pisco</div>
-        <div class="card-desc">Sharp Peruvian Pisco meets cold-pressed golden pineapple. Tear it. Mix it. Go.</div>
-        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.8 (124 reviews)</span></div>
-        <div class="card-footer">
-          <div class="card-price">£1.99 <span style="font-weight:500;font-size:14px;color:#666;">/ unit</span></div>
-          <button class="btn-add-cart" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')">🛒 Add to Cart</button>
+        <div class="uni-body">
+          <div class="uni-name">Pineapple &amp; Pisco</div>
+          <div class="uni-desc">Sharp Peruvian Pisco meets cold-pressed golden pineapple. Tear it. Mix it. Go.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.8 (124 reviews)</span>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£1.99 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')">🛒 Add to Cart</button>
+          </div>
         </div>
       </div>
 
       <!-- Card 2 — Exotic Passion -->
-      <div class="sum-card card-orange">
-        <div class="card-badge orange">Fan Favourite</div>
-        <div class="card-img-area">
+      <div class="uni-card uni-orange">
+        <div class="uni-img">
+          <span class="uni-badge uni-orange">Fan Favourite</span>
           <img src="images/product-packet/Exotic%20Passion.png" alt="Exotic Passion" />
         </div>
-        <div class="card-name">Exotic Passion</div>
-        <div class="card-desc">Tropical passion fruit with a citrus edge. The one that always runs out first.</div>
-        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.9 (98 reviews)</span></div>
-        <div class="card-footer">
-          <div class="card-price">£2.49 <span style="font-weight:500;font-size:14px;color:#666;">/ unit</span></div>
-          <button class="btn-add-cart" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')">🛒 Add to Cart</button>
+        <div class="uni-body">
+          <div class="uni-name">Exotic Passion</div>
+          <div class="uni-desc">Tropical passion fruit with a citrus edge. The one that always runs out first.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.9 (98 reviews)</span>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£2.49 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')">🛒 Add to Cart</button>
+          </div>
         </div>
       </div>
 
       <!-- Card 3 — Strawberry & Mint -->
-      <div class="sum-card card-pink">
-        <div class="card-badge pink">Top Rated</div>
-        <div class="card-img-area">
+      <div class="uni-card uni-pink">
+        <div class="uni-img">
+          <span class="uni-badge uni-pink">Top Rated</span>
           <img src="images/product-packet/Refreshing.png" alt="Strawberry &amp; Mint" />
         </div>
-        <div class="card-name">Strawberry &amp; Mint</div>
-        <div class="card-desc">Fresh strawberry with a cool mint finish. Summer in a packet — any time of year.</div>
-        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.8 (87 reviews)</span></div>
-        <div class="card-footer">
-          <div class="card-price">£2.49 <span style="font-weight:500;font-size:14px;color:#666;">/ unit</span></div>
-          <button class="btn-add-cart" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')">🛒 Add to Cart</button>
+        <div class="uni-body">
+          <div class="uni-name">Strawberry &amp; Mint</div>
+          <div class="uni-desc">Fresh strawberry with a cool mint finish. Summer in a packet — any time of year.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.8 (87 reviews)</span>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price">£2.49 <span>/ unit</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')">🛒 Add to Cart</button>
+          </div>
         </div>
       </div>
 
       <!-- Card 4 — Bundle -->
-      <div class="sum-card card-green" style="position:relative;">
-        <div class="card-badge green">Bundle Deal</div>
-        <div style="position:relative; margin-bottom:28px;">
+      <div class="uni-card uni-green">
+        <div class="uni-img" style="padding:0;">
+          <span class="uni-badge uni-green">Bundle Deal</span>
           <div class="bundle-fan">
             <img src="images/product-packet/Refreshing.png" alt="Strawberry" />
             <img src="images/product-packet/Container.png" alt="Pineapple" />
@@ -497,20 +1170,30 @@
           </div>
           <div class="bundle-disc"><span class="pct">20%</span><span class="off">OFF</span></div>
         </div>
-        <div class="card-name">Triple Pack Bundle</div>
-        <div class="card-desc">Buy 3 packets and get 20% off the total price. Mix any flavours.</div>
-        <div style="margin-bottom:10px;"><span class="card-stars">★★★★★</span> <span class="card-reviews">4.9 (211 reviews)</span></div>
-        <div style="margin-bottom:16px;">
-          <div class="card-price-old">£7.47</div>
-          <div class="card-price-new">£5.97</div>
-          <div class="card-save">You save £1.50 (20% off)</div>
+        <div class="uni-body">
+          <div class="uni-name">Triple Pack Bundle</div>
+          <div class="uni-desc">Buy 3 packets and get 20% off the total price. Mix any flavours.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.9 (211 reviews)</span>
+          </div>
+          <div class="uni-footer" style="flex-direction:column; align-items:flex-start;">
+            <div>
+              <div class="uni-price-old">£7.47</div>
+              <div class="uni-price-new">£5.97</div>
+              <div class="uni-save">You save £1.50 (20% off)</div>
+            </div>
+            <button class="uni-btn" onclick="sumAddToCart('Triple Pack Bundle','5.97','images/product-packet/Three%20wonders.png')" style="width:100%;justify-content:center;">🛒 Get Bundle</button>
+          </div>
         </div>
-        <button class="btn-add-cart" onclick="sumAddToCart('Triple Pack Bundle','5.97','images/product-packet/Three%20wonders.png')" style="width:100%;justify-content:center;">🛒 Get Bundle</button>
       </div>
 
-    </div>
+    </div><!-- end fav-carousel -->
+  </div><!-- end fav-carousel-outer -->
+
+  <div class="container">
     <div class="view-all-wrap">
-      <a href="shop.html" class="btn-view-all">VIEW FULL SHOP →</a>
+      <a href="summer-shop.html" class="btn-view-all">VIEW FULL SHOP →</a>
     </div>
   </div>
 </section>
@@ -594,6 +1277,141 @@
   </div>
 </section>
 
+<!-- SOCIAL PROOF -->
+<section class="proof-sec" id="reviews">
+  <div class="container">
+
+    <!-- Stats bar -->
+    <div class="proof-stats">
+      <div class="proof-stat">
+        <div class="proof-stat-num">12,500+</div>
+        <div class="proof-stat-label">Happy Customers</div>
+      </div>
+      <div class="proof-stat-div"></div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">47</div>
+        <div class="proof-stat-label">Events &amp; Festivals</div>
+      </div>
+      <div class="proof-stat-div"></div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">4.9★</div>
+        <div class="proof-stat-label">Average Rating</div>
+      </div>
+      <div class="proof-stat-div"></div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">3</div>
+        <div class="proof-stat-label">Countries Served</div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="proof-header">
+      <div class="proof-label">Real Reviews</div>
+      <h2 class="proof-h2">What Our Customers Say</h2>
+      <p class="proof-sub">From festival grounds to garden parties — here's what people are sipping and saying.</p>
+    </div>
+
+    <!-- Testimonial cards -->
+    <div class="proof-grid">
+
+      <div class="proof-card proof-card-orange">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-quote">"Brought these to a music festival and everyone went wild. We ran out in two hours flat — had to order more on the spot. Absolute game changer for outdoor events."</p>
+        <div class="proof-author">
+          <div class="proof-avatar proof-av-orange">JM</div>
+          <div>
+            <div class="proof-name">Jamie M.</div>
+            <div class="proof-role">Festival Goer · London</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card proof-card-cyan">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-quote">"We used Chill Sip for our corporate summer party and the feedback was incredible. Professional setup, amazing flavours, and zero mess. Will be back for every event."</p>
+        <div class="proof-author">
+          <div class="proof-avatar proof-av-cyan">SR</div>
+          <div>
+            <div class="proof-name">Sarah R.</div>
+            <div class="proof-role">Events Manager · Manchester</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card proof-card-pink">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-quote">"The Exotic Passion flavour is just unreal. I've been ordering every month since I tried it at a pop-up. The packets are so convenient — perfect for picnics and beach days."</p>
+        <div class="proof-author">
+          <div class="proof-avatar proof-av-pink">AL</div>
+          <div>
+            <div class="proof-name">Aisha L.</div>
+            <div class="proof-role">Loyal Customer · Birmingham</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COCKTAIL TASTING & SITE VISIT -->
+<section class="tasting-sec" id="tasting">
+  <div class="container">
+
+    <div class="tasting-header">
+      <div class="tasting-label">Experience First</div>
+      <h2 class="tasting-h2">Taste Before You Commit</h2>
+      <p class="tasting-sub">Not sure which flavours are right for your event? Come taste them yourself — completely free.</p>
+    </div>
+
+    <div class="tasting-grid">
+
+      <!-- Tasting Session -->
+      <div class="tasting-card">
+        <div class="tasting-icon">🍹</div>
+        <span class="tasting-card-tag">Most Popular</span>
+        <h3 class="tasting-card-title">Cocktail Tasting Session</h3>
+        <p class="tasting-card-desc">Book a private 45-minute tasting session with our mixologist. Try every flavour, get pairing suggestions, and find your perfect match before placing a bulk order.</p>
+        <ul class="tasting-perks">
+          <li>Try all current flavours</li>
+          <li>Guided by our head mixologist</li>
+          <li>100% free — no commitment needed</li>
+          <li>Available weekdays &amp; weekends</li>
+          <li>Groups of up to 8 people welcome</li>
+        </ul>
+        <a href="summer-contact.html" class="tasting-btn tasting-btn-primary">Book a Free Tasting →</a>
+        <div class="tasting-note">No credit card required · Confirm in 24 hrs</div>
+      </div>
+
+      <!-- Site Visit -->
+      <div class="tasting-card tasting-card-alt">
+        <div class="tasting-icon">🏭</div>
+        <h3 class="tasting-card-title">Production Site Visit</h3>
+        <p class="tasting-card-desc">See exactly how our cocktail packets are crafted. Tour our production facility, meet the team, and understand the quality behind every sip before you sign.</p>
+        <ul class="tasting-perks tasting-perks-alt">
+          <li>Full facility tour (approx. 60 mins)</li>
+          <li>Meet the production &amp; quality team</li>
+          <li>Exclusive behind-the-scenes access</li>
+          <li>Sample pack included to take home</li>
+          <li>Open to trade &amp; retail buyers</li>
+        </ul>
+        <a href="summer-contact.html" class="tasting-btn tasting-btn-outline">Request a Site Visit →</a>
+        <div class="tasting-note">For business partners &amp; events teams</div>
+      </div>
+
+    </div>
+
+    <!-- Trust bar -->
+    <div class="tasting-trust">
+      <div class="trust-item"><span>🔒</span>No payment required</div>
+      <div class="trust-item"><span>📅</span>Flexible scheduling</div>
+      <div class="trust-item"><span>🤝</span>Zero sales pressure</div>
+      <div class="trust-item"><span>⭐</span>4.9-star experience</div>
+    </div>
+
+  </div>
+</section>
+
 <!-- BOLD TAGLINE -->
 <section class="tagline-sec">
   <div class="container">
@@ -605,7 +1423,7 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-logo">Rip &amp; Sip</div>
+      <div class="footer-logo">Chill Sip</div>
       <p style="font-size:14px;font-weight:500;color:var(--text);opacity:0.55;margin-bottom:20px;line-height:1.5;">Ready-to-rip cocktail packets.<br>Engineered for the day you'll remember.</p>
       <div class="footer-socials">
         <a href="#" class="footer-social">f</a>
@@ -620,7 +1438,7 @@
         <li><a href="#">Careers</a></li>
         <li><a href="#">Press</a></li>
         <li><a href="#">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="summer-contact.html">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -643,12 +1461,42 @@
     </div>
   </div>
   <div class="footer-bottom">
-    © 2026 Rip &amp; Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
+    © 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
   </div>
 </footer>
 
+<!-- FREE SAMPLE MODAL -->
+<div class="sample-overlay" id="sampleOverlay" onclick="closeSampleModal(event)">
+  <div class="sample-modal">
+    <button class="sample-close" onclick="closeSampleModal()">✕</button>
+
+    <!-- Form view -->
+    <div class="sample-form-wrap" id="sampleFormWrap">
+      <div class="sample-icon">🎁</div>
+      <h3 class="sample-h3">Get Your Free Sample Set</h3>
+      <p class="sample-desc">Fill in your details and we'll send a curated set of our best cocktail packets straight to your door — completely free.</p>
+      <form class="sample-form" id="sampleForm" onsubmit="submitSampleForm(event)">
+        <input type="email"  id="sf-email"   placeholder="Email address *"        required autocomplete="email" />
+        <input type="tel"    id="sf-phone"   placeholder="Phone number *"         required autocomplete="tel" />
+        <input type="text"   id="sf-address" placeholder="Delivery address *"     required autocomplete="street-address" />
+        <input type="text"   id="sf-city"    placeholder="City &amp; postcode *"  required autocomplete="postal-code" />
+        <textarea            id="sf-note"    placeholder="Any flavour preferences? (optional)"></textarea>
+        <button type="submit" class="sample-submit">Send My Free Sample Set →</button>
+      </form>
+      <p class="sample-note">🔒 No credit card &nbsp;·&nbsp; UK delivery only &nbsp;·&nbsp; One set per address</p>
+    </div>
+
+    <!-- Thank you view -->
+    <div class="sample-thanks" id="sampleThanks">
+      <div class="sample-thanks-icon">🥳</div>
+      <h3>You're on the list!</h3>
+      <p>We've got your details. Your free sample set will be packed and on its way within 2–3 working days. Keep an eye on your inbox for tracking info.</p>
+    </div>
+  </div>
+</div>
+
 <!-- FLOATING CONTACT BUTTON -->
-<a href="contact.html" class="contact-btn" title="Contact us">
+<a href="summer-contact.html" class="contact-btn" title="Contact us">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
   </svg>
@@ -658,6 +1506,26 @@
 <div id="sumToast">Added to cart!</div>
 
 <script>
+  // ── FREE SAMPLE MODAL ──
+  function openSampleModal() {
+    document.getElementById('sampleOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSampleModal(e) {
+    if (!e || e.target === document.getElementById('sampleOverlay')) {
+      document.getElementById('sampleOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+  function submitSampleForm(e) {
+    e.preventDefault();
+    document.getElementById('sampleFormWrap').classList.add('hide');
+    document.getElementById('sampleThanks').classList.add('show');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSampleModal();
+  });
+
   // ── CART COUNT ──
   function updateCartCount() {
     const items = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
@@ -689,6 +1557,49 @@
     t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ── AGE GATE — shows immediately on first visit ──
+  (function() {
+    if (localStorage.getItem('ripSipAgeGroup')) return;
+    const overlay = document.getElementById('ageOverlay');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  })();
+
+  // ── CAROUSEL ARROWS ──
+  function favScroll(dir) {
+    const carousel = document.getElementById('favCarousel');
+    const cardWidth = 300 + 20; // card width + gap
+    carousel.scrollBy({ left: dir * cardWidth, behavior: 'smooth' });
+    setTimeout(updateFavArrows, 350);
+  }
+  function updateFavArrows() {
+    const c = document.getElementById('favCarousel');
+    document.getElementById('favPrev').disabled = c.scrollLeft <= 0;
+    document.getElementById('favNext').disabled = c.scrollLeft + c.clientWidth >= c.scrollWidth - 4;
+  }
+  document.getElementById('favCarousel').addEventListener('scroll', updateFavArrows);
+  updateFavArrows();
+
+  function ageVerify(isAdult) {
+    localStorage.setItem('ripSipAgeGroup', isAdult ? 'adult' : 'minor');
+    if (isAdult) {
+      const overlay = document.getElementById('ageOverlay');
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+      setTimeout(() => { overlay.style.display = 'none'; }, 420);
+    } else {
+      document.querySelector('.age-btns').style.opacity = '0.35';
+      document.querySelector('.age-btns').style.pointerEvents = 'none';
+      const msg = document.getElementById('ageMinorMsg');
+      msg.style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('ageOverlay').classList.add('hidden');
+        document.body.style.overflow = '';
+        setTimeout(() => { document.getElementById('ageOverlay').style.display = 'none'; }, 420);
+      }, 2200);
+    }
   }
 </script>
 

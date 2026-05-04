@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Cocktails — Chill Sip Summer Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #ffffff;
+      --bg2:    #f8f8ff;
+      --text:   #2e1664;
+      --brand:  #3a0ba5;
+      --purple: #6c2bff;
+      --pink:   #ff2d95;
+      --green:  #2ae500;
+      --yellow: #efb609;
+      --orange: #ef7c09;
+      --cyan:   #00dbe9;
+      --red:    #f12807;
+      --muted:  rgba(46,22,100,0.5);
+      --dim:    rgba(46,22,100,0.35);
+      --border: rgba(46,22,100,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── PROMO BANNER ── */
+    .promo-bar {
+      background: var(--purple);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 8px 48px; position: relative;
+    }
+    .promo-bar p { font-size: 13px; font-weight: 500; color: #fff; }
+    .promo-bar .promo-code { font-weight: 700; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; }
+    .promo-close { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.7; }
+    .promo-close:hover { opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: #fff; border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 16px rgba(46,22,100,0.06);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; max-width: 1296px; margin: 0 auto; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; font-size: 26px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-links a.active { color: var(--purple); font-weight: 700; }
+    .nav-icons { display: flex; align-items: center; gap: 20px; }
+    .nav-icon-btn { background: none; border: none; cursor: pointer; color: var(--text); display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
+    .nav-icon-btn:hover { color: var(--purple); }
+    .nav-icon-btn svg { width: 22px; height: 22px; }
+    .cart-btn-nav { display: flex; align-items: center; gap: 6px; background: var(--purple); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .cart-btn-nav:hover { background: var(--brand); }
+    .cart-count-badge { background: var(--pink); color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .theme-toggle { display: flex; align-items: center; gap: 6px; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+    .theme-toggle:hover { background: #eee; }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 80px 0 72px;
+      background: linear-gradient(135deg, #fff4e0 0%, #ffe8f5 50%, #f0eaff 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 60%, rgba(239,124,9,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 40%, rgba(255,45,149,0.12) 0%, transparent 55%);
+    }
+    .breadcrumb { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; position: relative; z-index: 1; }
+    .breadcrumb a { color: var(--dim); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--purple); }
+    .page-title-wrap { position: relative; z-index: 1; }
+    .page-eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); margin-bottom: 12px; }
+    .page-title { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 800; letter-spacing: -3px; text-transform: uppercase; color: var(--text); line-height: 0.95; margin-bottom: 20px; }
+    .page-title span {
+      background: linear-gradient(120deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-sub { font-size: 18px; font-weight: 500; color: var(--muted); max-width: 560px; line-height: 1.6; }
+
+    /* Collection nav tabs */
+    .col-tabs { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .col-tab {
+      padding: 9px 22px; border-radius: 999px; border: 1.5px solid var(--border);
+      font-size: 13px; font-weight: 600; text-decoration: none; color: var(--muted);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .col-tab:hover { color: var(--text); border-color: var(--purple); }
+    .col-tab.active { color: var(--purple); background: rgba(108,43,255,0.08); border-color: var(--purple); }
+
+    /* ── SECTION LABEL ── */
+    .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--purple); margin-bottom: 12px; }
+
+    /* ═══════════════════════════════════════
+       COLLECTION SECTIONS
+    ═══════════════════════════════════════ */
+    .col-tropical { padding: 100px 0; background: linear-gradient(135deg, #fffbf0 0%, #fff5dc 100%); border-bottom: 1px solid var(--border); }
+    .col-citrus   { padding: 100px 0; background: linear-gradient(135deg, #f5f0ff 0%, #ffe8f5 100%); border-bottom: 1px solid var(--border); }
+    .col-festival { padding: 100px 0; background: linear-gradient(135deg, #f0fff8 0%, #e8fff0 100%); border-bottom: 1px solid var(--border); }
+
+    /* ── VIRGIN COLLECTION ── */
+    .col-virgin {
+      padding: 96px 0 100px;
+      background: linear-gradient(135deg, #f0fff6 0%, #edfff8 50%, #f5fff0 100%);
+      position: relative; overflow: hidden;
+    }
+    .col-virgin::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 85% 20%, rgba(42,229,0,0.09) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 80%, rgba(0,219,233,0.07) 0%, transparent 45%);
+    }
+    .virgin-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px;
+      color: #18a800; background: rgba(42,229,0,0.08);
+      border: 1px solid rgba(42,229,0,0.25); border-radius: 50px; padding: 6px 16px;
+      margin-bottom: 20px;
+    }
+    .virgin-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px;
+    }
+    .virgin-card {
+      background: #fff; border: 2px solid rgba(42,229,0,0.2);
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 6px 28px rgba(42,229,0,0.08);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .virgin-card:hover { transform: translateY(-6px); box-shadow: 0 18px 48px rgba(42,229,0,0.15); }
+    .virgin-card-img {
+      position: relative; aspect-ratio: 4/3; overflow: hidden;
+      background: linear-gradient(135deg, #edfce7, #f4fff0);
+    }
+    .virgin-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+    .virgin-card:hover .virgin-card-img img { transform: scale(1.05); }
+    .virgin-card-tag {
+      position: absolute; top: 14px; left: 14px;
+      background: #18a800; color: #fff;
+      font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 5px 12px; border-radius: 50px;
+    }
+    .virgin-card-body { padding: 24px 22px 26px; }
+    .virgin-card-name { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 8px; }
+    .virgin-card-desc { font-size: 13px; font-weight: 500; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .virgin-card-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 20px; }
+    .vtag {
+      font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 50px;
+      background: rgba(42,229,0,0.08); border: 1px solid rgba(42,229,0,0.25); color: #18a800;
+    }
+    .virgin-card-cta {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .virgin-card-price { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+    .virgin-card-price span { font-size: 12px; font-weight: 500; color: var(--muted); }
+    .virgin-shop-btn {
+      padding: 10px 18px; border-radius: 10px; border: none; cursor: pointer; outline: none;
+      background: linear-gradient(112deg, #2ae500 0%, #00c87a 100%);
+      color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: opacity 0.15s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(42,229,0,0.3);
+    }
+    .virgin-shop-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+    .virgin-note {
+      margin-top: 48px; text-align: center; padding: 24px 32px;
+      background: rgba(42,229,0,0.05); border: 1px solid rgba(42,229,0,0.18); border-radius: 16px;
+    }
+    .virgin-note-text {
+      font-size: 14px; font-weight: 600; color: #18a800; line-height: 1.6;
+    }
+    @media (max-width: 860px) { .virgin-cards { grid-template-columns: 1fr; } }
+
+    .col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .col-grid.reverse { direction: rtl; }
+    .col-grid.reverse > * { direction: ltr; }
+    @media (max-width: 860px) { .col-grid { grid-template-columns: 1fr; gap: 40px; } .col-grid.reverse { direction: ltr; } }
+
+    .col-number { font-size: clamp(6rem, 12vw, 10rem); font-weight: 800; letter-spacing: -6px; line-height: 1; color: rgba(46,22,100,0.05); margin-bottom: -20px; }
+    .col-title { font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; color: var(--text); line-height: 1.05; margin-bottom: 20px; }
+    .col-title .hl-yellow { color: var(--yellow); }
+    .col-title .hl-purple { color: var(--purple); }
+    .col-title .hl-green  { color: #18a800; }
+    .col-desc { font-size: 16px; font-weight: 500; color: var(--muted); line-height: 1.75; margin-bottom: 24px; }
+
+    .flavour-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+    .pill { padding: 7px 18px; border-radius: 999px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border: 1.5px solid; }
+    .pill-y  { background: rgba(239,182,9,0.1);  color: #a07400; border-color: rgba(239,182,9,0.35); }
+    .pill-o  { background: rgba(239,124,9,0.1);  color: var(--orange); border-color: rgba(239,124,9,0.3); }
+    .pill-p  { background: rgba(108,43,255,0.1); color: var(--purple); border-color: rgba(108,43,255,0.3); }
+    .pill-pk { background: rgba(255,45,149,0.1); color: var(--pink);   border-color: rgba(255,45,149,0.3); }
+    .pill-g  { background: rgba(42,229,0,0.1);   color: #18a800;       border-color: rgba(42,229,0,0.3); }
+
+    .stat-row { display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
+    .stat-val { font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -1px; }
+    .stat-lbl { font-size: 11px; font-weight: 600; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+    .col-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: 12px; text-decoration: none;
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      transition: transform 0.15s, opacity 0.2s; margin-top: 32px;
+    }
+    .cta-yellow { background: var(--yellow); color: #000; }
+    .cta-yellow:hover { opacity: 0.88; transform: translateY(-2px); }
+    .cta-purple { background: var(--purple); color: #fff; }
+    .cta-purple:hover { opacity: 0.88; transform: translateY(-2px); }
+    .cta-green  { background: var(--green); color: #000; }
+    .cta-green:hover  { opacity: 0.88; transform: translateY(-2px); }
+
+    .col-visual {
+      position: relative; border-radius: 28px; overflow: hidden;
+      aspect-ratio: 4/5; border: 2px solid var(--border);
+      box-shadow: 0 12px 48px rgba(46,22,100,0.1);
+    }
+    .col-visual img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+    .col-visual:hover img { transform: scale(1.04); }
+    .col-visual-tag {
+      position: absolute; bottom: 20px; left: 20px;
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: #fff; background: rgba(46,22,100,0.6); padding: 6px 14px; border-radius: 8px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ═══════════════════════════════════════
+       PISCO ORIGIN SECTION
+    ═══════════════════════════════════════ */
+    .pisco-section {
+      padding: 0;
+      position: relative; overflow: hidden;
+    }
+
+    /* Top strip — Peru & Pisco story (dark) */
+    .pisco-story {
+      background: linear-gradient(135deg, #0e0528 0%, #1e0850 45%, #2e1260 100%);
+      padding: 96px 0 80px; position: relative; overflow: hidden;
+    }
+    .pisco-story::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 10% 60%, rgba(108,43,255,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 20%, rgba(255,45,149,0.15) 0%, transparent 45%),
+        radial-gradient(ellipse at 60% 90%, rgba(42,229,0,0.06) 0%, transparent 40%);
+    }
+    .pisco-story-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .pisco-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px;
+      color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 50px; padding: 6px 16px;
+      margin-bottom: 24px;
+    }
+    .pisco-title {
+      font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; letter-spacing: -2px;
+      color: #fff; line-height: 1.05; margin-bottom: 20px;
+    }
+    .pisco-title .grad {
+      background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .pisco-body {
+      font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.58); line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .pisco-body strong { color: rgba(255,255,255,0.85); font-weight: 700; }
+    .pisco-facts { display: flex; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
+    .pisco-fact-val { font-size: 30px; font-weight: 800; color: #fff; letter-spacing: -1.5px; }
+    .pisco-fact-lbl { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 3px; }
+
+    .pisco-img-wrap {
+      border-radius: 28px; overflow: hidden; position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .pisco-img-placeholder {
+      width: 100%; aspect-ratio: 4/5;
+      background: linear-gradient(160deg, rgba(108,43,255,0.15) 0%, rgba(255,45,149,0.12) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      border: 2px dashed rgba(255,255,255,0.12); border-radius: 28px;
+    }
+    .pisco-img-placeholder .ph-icon { font-size: 56px; opacity: 0.35; }
+    .pisco-img-placeholder .ph-text { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); text-align: center; line-height: 1.6; }
+    .peru-flag-tag {
+      position: absolute; top: 20px; left: 20px;
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.18); border-radius: 10px;
+      padding: 8px 14px; font-size: 13px; font-weight: 700; color: #fff;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* Bottom strip — NOT Pisco Sour comparison (light) */
+    .pisco-difference {
+      background: linear-gradient(135deg, #fff4f0 0%, #fff8ed 50%, #f5f0ff 100%);
+      padding: 80px 0 96px;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .pisco-difference::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse at 80% 30%, rgba(255,45,149,0.06) 0%, transparent 55%);
+    }
+    .pisco-diff-header { text-align: center; margin-bottom: 56px; position: relative; z-index: 1; }
+    .pisco-diff-eyebrow {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px;
+      color: var(--pink); margin-bottom: 14px;
+    }
+    .pisco-diff-title {
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -1.5px;
+      color: var(--text); line-height: 1.1; margin-bottom: 14px;
+    }
+    .pisco-diff-title .cross { color: rgba(46,22,100,0.25); text-decoration: line-through; }
+    .pisco-diff-title .grad {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .pisco-diff-sub {
+      font-size: 16px; font-weight: 500; color: rgba(46,22,100,0.55); max-width: 560px;
+      margin: 0 auto; line-height: 1.65;
+    }
+
+    /* Side-by-side comparison cards */
+    .pisco-compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+    .compare-card {
+      border-radius: 24px; padding: 36px 32px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .compare-card.old {
+      background: rgba(46,22,100,0.04); border: 1.5px solid rgba(46,22,100,0.1);
+      opacity: 0.75;
+    }
+    .compare-card.new {
+      background: #fff; border: 2px solid rgba(108,43,255,0.3);
+      box-shadow: 0 12px 48px rgba(108,43,255,0.12);
+    }
+    .compare-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      border-radius: 50px; padding: 5px 14px; margin-bottom: 4px; width: fit-content;
+    }
+    .compare-badge.badge-old { background: rgba(46,22,100,0.07); color: rgba(46,22,100,0.4); }
+    .compare-badge.badge-new {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; box-shadow: 0 4px 14px rgba(108,43,255,0.35);
+    }
+    .compare-card-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 4px; }
+    .compare-card.old .compare-card-title { color: rgba(46,22,100,0.45); }
+    .compare-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 0; border-bottom: 1px solid rgba(46,22,100,0.07);
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-row-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .compare-row-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(46,22,100,0.38); margin-bottom: 3px; }
+    .compare-row-val { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.45; }
+    .compare-card.old .compare-row-val { color: rgba(46,22,100,0.45); }
+    .compare-divider {
+      display: flex; align-items: center; justify-content: center; padding: 0 20px;
+    }
+    .compare-vs {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      background: var(--text); color: #fff;
+      font-size: 14px; font-weight: 800; letter-spacing: -0.5px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Tropical highlight strip */
+    .pisco-tropical {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      border-radius: 20px; padding: 32px 36px; margin-top: 48px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      max-width: 860px; margin: 48px auto 0;
+    }
+    .pisco-tropical-text .pt-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      color: rgba(255,255,255,0.55); margin-bottom: 8px;
+    }
+    .pisco-tropical-text .pt-title {
+      font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.8px; line-height: 1.2;
+    }
+    .pisco-tropical-text .pt-sub {
+      font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.65); margin-top: 8px; line-height: 1.55;
+    }
+    .pisco-tropical-emoji { font-size: 56px; flex-shrink: 0; }
+
+    @media (max-width: 860px) {
+      .pisco-story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .pisco-compare { grid-template-columns: 1fr; }
+      .compare-divider { padding: 12px 0; }
+      .compare-vs { width: 40px; height: 40px; font-size: 12px; }
+      .pisco-tropical { flex-direction: column; text-align: center; }
+    }
+
+    /* ═══════════════════════════════════════
+       RECIPES SECTION
+    ═══════════════════════════════════════ */
+    .recipes-section { padding: 100px 0 120px; background: var(--bg2); border-top: 1px solid var(--border); }
+    .recipes-header { text-align: center; margin-bottom: 56px; }
+    .recipes-eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); margin-bottom: 10px; }
+    .recipes-title {
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 800; letter-spacing: -2px;
+      color: var(--text); margin-bottom: 12px;
+    }
+    .recipes-title span {
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .recipes-sub { font-size: 16px; font-weight: 500; color: var(--muted); }
+
+    .recipe-filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 48px; }
+    .rf {
+      padding: 8px 20px; border-radius: 999px; border: 1.5px solid var(--border);
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--muted); cursor: pointer; background: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .rf:hover { color: var(--text); border-color: var(--purple); }
+    .rf.active { color: var(--purple); background: rgba(108,43,255,0.08); border-color: var(--purple); }
+
+    .recipe-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    @media (max-width: 900px) { .recipe-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 560px) { .recipe-grid { grid-template-columns: 1fr; } }
+
+    /* Recipe card */
+    .rc {
+      background: #fff; border: 1.5px solid var(--border); border-radius: 20px;
+      overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 4px 20px rgba(46,22,100,0.06);
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .rc:hover { border-color: var(--purple); transform: translateY(-5px); box-shadow: 0 16px 48px rgba(108,43,255,0.12); }
+    .rc.hidden { display: none; }
+
+    .rc-img { position: relative; width: 100%; aspect-ratio: 3/2; overflow: hidden; }
+    .rc-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .rc:hover .rc-img img { transform: scale(1.06); }
+    .rc-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.45) 100%); }
+
+    .rc-syrup-tag {
+      position: absolute; top: 14px; left: 14px;
+      padding: 5px 12px; border-radius: 999px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      backdrop-filter: blur(8px);
+    }
+    .rc-diff { position: absolute; top: 14px; right: 14px; display: flex; gap: 3px; }
+    .diff-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .diff-filled { background: var(--green); }
+    .diff-empty { background: rgba(255,255,255,0.4); }
+    .rc-time { position: absolute; bottom: 14px; right: 14px; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+
+    .rc-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+    .rc-name { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .rc-tagline { font-size: 13px; font-weight: 500; color: var(--muted); line-height: 1.6; }
+
+    .rc-ingredients { display: flex; flex-direction: column; gap: 8px; }
+    .ing-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--dim); }
+    .ing-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .ing-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--text); }
+    .ing-list li::before { content: ''; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--pink); }
+    .ing-amt { color: var(--dim); font-size: 12px; margin-left: auto; white-space: nowrap; }
+
+    .rc-steps { display: flex; flex-direction: column; gap: 8px; }
+    .step-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--dim); }
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 6px; counter-reset: steps; }
+    .step-list li {
+      display: flex; gap: 12px; font-size: 13px; font-weight: 500; color: var(--muted); line-height: 1.5;
+      counter-increment: steps;
+    }
+    .step-list li::before {
+      content: counter(steps); flex-shrink: 0;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(108,43,255,0.08); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: var(--purple); margin-top: 2px;
+    }
+
+    .rc-footer {
+      padding: 16px 24px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .rc-syrup-lbl { font-size: 11px; font-weight: 500; color: var(--dim); }
+    .rc-syrup-lbl strong { color: var(--text); font-weight: 700; }
+    .rc-shop-link { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); text-decoration: none; transition: opacity 0.2s; }
+    .rc-shop-link:hover { opacity: 0.7; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      padding: 96px 0;
+      background: linear-gradient(135deg, #f0eaff 0%, #ffe8f5 50%, #fff4e0 100%);
+      border-top: 1px solid var(--border);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(108,43,255,0.1) 0%, transparent 65%);
+    }
+    .cta-banner-inner { position: relative; z-index: 1; }
+    .cta-banner-eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); margin-bottom: 12px; }
+    .cta-banner-title { font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 800; letter-spacing: -2px; color: var(--text); margin-bottom: 14px; }
+    .cta-banner-title span {
+      background: linear-gradient(120deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .cta-banner-sub { font-size: 17px; font-weight: 500; color: var(--muted); margin-bottom: 40px; }
+    .cta-banner-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 16px 36px; border-radius: 14px; text-decoration: none;
+      background: linear-gradient(120deg, var(--purple), var(--pink)); color: #fff;
+      font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-outline {
+      padding: 16px 36px; border-radius: 14px; text-decoration: none;
+      border: 2px solid var(--purple); color: var(--text);
+      font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { background: rgba(108,43,255,0.06); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff; border-top: 4px solid;
+      border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1;
+      padding: 56px 0 32px;
+    }
+    .footer-inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.8fr; gap: 48px; max-width: 1200px; margin: 0 auto; padding: 0 48px 40px; }
+    .footer-logo { font-size: 28px; font-weight: 600; color: var(--brand); letter-spacing: -1px; margin-bottom: 16px; }
+    .footer-socials { display: flex; gap: 14px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--text); font-size: 15px; transition: background 0.2s, color 0.2s; }
+    .footer-social:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .footer-col h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.65; transition: opacity 0.2s; }
+    .footer-col ul li a:hover { opacity: 1; color: var(--purple); }
+    .footer-newsletter p { font-size: 14px; font-weight: 500; color: var(--text); opacity: 0.65; margin-bottom: 16px; line-height: 1.5; }
+    .newsletter-row { display: flex; gap: 10px; }
+    .newsletter-row input { flex: 1; background: #f8f8ff; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); outline: none; }
+    .newsletter-row input:focus { border-color: var(--purple); }
+    .newsletter-row button { background: none; border: 1.5px solid var(--purple); border-radius: 12px; padding: 10px 20px; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s, color 0.2s; }
+    .newsletter-row button:hover { background: var(--purple); color: #fff; }
+    .footer-bottom { text-align: center; font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.4; padding: 0 48px; }
+
+    /* Contact float */
+    .contact-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 800;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; border-radius: 50px; padding: 14px 0;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(108,43,255,0.4);
+      overflow: hidden; width: 52px; transition: width 0.3s ease, padding 0.3s ease;
+      justify-content: center;
+    }
+    .contact-btn:hover { width: 160px; padding: 14px 20px; }
+    .contact-btn .cb-label { white-space: nowrap; overflow: hidden; opacity: 0; max-width: 0; transition: opacity 0.2s 0.1s, max-width 0.3s; }
+    .contact-btn:hover .cb-label { opacity: 1; max-width: 120px; }
+
+    @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } .container { padding: 0 24px; } }
+    /* ── NIGHT EDITION ── */
+    html.night-edition{--bg:#1d0536;--bg2:#27084a;--text:#ffffff;--brand:#c084fc;--purple:#b06bff;--pink:#ff6eb8;--green:#4ade80;--yellow:#fbbf24;--orange:#fb923c;--cyan:#22d3ee;--red:#f87171;--muted:rgba(255,255,255,.82);--dim:rgba(255,255,255,.58);--border:rgba(176,107,255,.25)}
+    html.night-edition body{background:linear-gradient(160deg,#1d0536 0%,#2a0850 28%,#200636 55%,#2a0848 80%,#1d0536 100%) fixed !important;min-height:100vh;color-scheme:dark}
+    html.night-edition nav{background:#130230 !important;box-shadow:0 1px 32px rgba(176,107,255,.2) !important}
+    html.night-edition footer{background:#130230 !important}
+    html.night-edition .promo-bar{background:#220545 !important}
+    html.night-edition .theme-toggle{background:rgba(176,107,255,.18) !important;border-color:rgba(176,107,255,.4) !important;color:var(--text) !important}
+    html.night-edition .theme-toggle:hover{background:rgba(176,107,255,.30) !important}
+    html.night-edition .fav-sec,html.night-edition .vibe-sec{background:var(--bg) !important}
+    html.night-edition .fav-arrow{background:#1a0535 !important;border-color:var(--border) !important;color:var(--text) !important;box-shadow:0 4px 18px rgba(168,85,247,.12) !important}
+    html.night-edition .proof-sec{background:linear-gradient(160deg,#0d0220 0%,#120223 45%,#07081e 100%) !important}
+    html.night-edition .proof-stats{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition .age-box,html.night-edition .sample-modal{background:var(--bg2) !important}
+    html.night-edition .toolbar-wrap{background:#130230 !important}
+    html.night-edition .rc,
+    html.night-edition .summary-card,
+    html.night-edition .cart-item,
+    html.night-edition .form-block,
+    html.night-edition .delivery-opt-inner,
+    html.night-edition .pay-method,
+    html.night-edition .form-note,
+    html.night-edition .soc,
+    html.night-edition .cb-label,
+    html.night-edition .pk-card,
+    html.night-edition .vg-cta,
+    html.night-edition .why-card{background:var(--bg2) !important;border-color:var(--border) !important}
+    html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
+    html.night-edition textarea,
+    html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
+    html.night-edition .page-title{color:#2d0652 !important;-webkit-text-fill-color:#2d0652 !important}
+    html.night-edition .page-title span{background:linear-gradient(120deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .page-eyebrow{background:linear-gradient(135deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .page-sub{color:rgba(45,6,82,.72) !important}
+    html.night-edition .breadcrumb,html.night-edition .breadcrumb a{color:rgba(45,6,82,.55) !important}
+  </style>
+  <script>
+  (function(){
+    function syncBtn(){
+      var n=document.documentElement.classList.contains('night-edition');
+      document.querySelectorAll('.theme-toggle').forEach(function(b){
+        b.textContent=n?'☀️ Summer Edition':'🌙 Night Edition';
+      });
+      document.querySelectorAll('[data-summer]').forEach(function(el){
+        el.textContent=n?el.dataset.night:el.dataset.summer;
+      });
+      document.querySelectorAll('[data-summer-html]').forEach(function(el){
+        el.innerHTML=n?el.dataset.nightHtml:el.dataset.summerHtml;
+      });
+    }
+    if(localStorage.getItem('rns-theme')==='night')document.documentElement.classList.add('night-edition');
+    document.addEventListener('DOMContentLoaded',function(){
+      syncBtn();
+      document.querySelectorAll('.theme-toggle').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var on=document.documentElement.classList.toggle('night-edition');
+          localStorage.setItem('rns-theme',on?'night':'summer');
+          syncBtn();
+        });
+      });
+    });
+  })();
+  </script>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-bar" id="promoBanner">
+  <p>☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
+  <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="summer.html" class="nav-logo">Chill Sip</a>
+    <div class="nav-links">
+      <a href="summer.html">Home</a>
+      <a href="summer-shop.html">Shop</a>
+      <a href="summer-cocktails.html" class="active">Our Cocktails</a>
+      <a href="summer-companies.html">For Companies</a>
+      <a href="summer-virgin.html">Virgin Collection</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
+      <button class="nav-icon-btn" onclick="window.location='summer-membership.html'" title="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <a href="summer-cart.html" class="cart-btn-nav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Cart <span class="cart-count-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="summer.html">Home</a> &rsaquo; Our Cocktails</div>
+    <div class="page-title-wrap">
+      <div class="page-eyebrow" data-summer="☀️ Summer Recipes" data-night="🍸 Our Cocktail &amp; Mocktail Collection">☀️ Summer Recipes</div>
+      <h1 class="page-title">Our<br><span>Cocktails</span></h1>
+      <p class="page-sub">Three sun-soaked collections. Endless combinations. Every drop designed to hit different — from tropical heat to citrus zing to all-day festival fuel.</p>
+      <div class="col-tabs">
+        <a href="#tropical" class="col-tab active">🍍 Tropical Days</a>
+        <a href="#citrus" class="col-tab">🍋 Citrus Crush</a>
+        <a href="#festival" class="col-tab">🎉 Festival Drops</a>
+        <a href="#virgin" class="col-tab" style="color:#18a800;border-color:rgba(42,229,0,0.4);background:rgba(42,229,0,0.06);">🌿 Virgin Collection</a>
+        <a href="#pisco-story" class="col-tab">🇵🇪 The Spirit</a>
+        <a href="#recipes" class="col-tab">📖 All Recipes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     COLLECTION 1: TROPICAL DAYS
+══════════════════════════════════════ -->
+<section class="col-tropical" id="tropical">
+  <div class="container">
+    <div class="col-grid">
+      <div>
+        <div class="section-label">Collection 01</div>
+        <div class="col-number">01</div>
+        <h2 class="col-title">Tropical<br><span class="hl-yellow">Days</span></h2>
+        <p class="col-desc">Born from the heat of South American days and the sweetness of sun-ripened fruit. Our Tropical Days collection blends Peruvian Pisco with cold-pressed pineapple, and passion fruit with a hit of citrus — cocktails that feel like the first warm day of summer.</p>
+        <p class="col-desc">Bold, fruity and dangerously easy to drink. These are the flavours that start conversations and end afternoons on a high.</p>
+        <div class="flavour-pills">
+          <span class="pill pill-y">Pineapple &amp; Pisco</span>
+          <span class="pill pill-o">Passion Fruit Fusion</span>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-val">2</div><div class="stat-lbl">Signature Syrups</div></div>
+          <div><div class="stat-val">6+</div><div class="stat-lbl">Cocktail Recipes</div></div>
+          <div><div class="stat-val">ABV 0–14%</div><div class="stat-lbl">Adjustable Strength</div></div>
+        </div>
+        <a href="#recipes" class="col-cta cta-yellow">See Tropical Recipes ↓</a>
+      </div>
+      <div class="col-visual">
+        <img src="images/other%20images/Pineapple%20%26%20Pisco.png" alt="Tropical Days" />
+        <div class="col-visual-tag">Tropical Days Collection</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     COLLECTION 2: CITRUS CRUSH
+══════════════════════════════════════ -->
+<section class="col-citrus" id="citrus">
+  <div class="container">
+    <div class="col-grid reverse">
+      <div>
+        <div class="section-label">Collection 02</div>
+        <div class="col-number">02</div>
+        <h2 class="col-title">Citrus<br><span class="hl-purple">Crush</span></h2>
+        <p class="col-desc">Sharp. Zingy. Refreshing. Our Citrus Crush collection is built for those who want their cocktail to wake them up, not slow them down. Lemon Crash delivers a high-intensity citrus hit, while Strawberry Lemon &amp; Mint brings a tangy, cool freshness.</p>
+        <p class="col-desc">Perfect over ice, mixed with soda, or ripped straight from the packet on the beach. These are cocktails you can feel.</p>
+        <div class="flavour-pills">
+          <span class="pill pill-p">Lemon Crash</span>
+          <span class="pill pill-pk">Strawberry Lemon &amp; Mint</span>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-val">2</div><div class="stat-lbl">Signature Syrups</div></div>
+          <div><div class="stat-val">6+</div><div class="stat-lbl">Cocktail Recipes</div></div>
+          <div><div class="stat-val">30 sec</div><div class="stat-lbl">Avg. Prep Time</div></div>
+        </div>
+        <a href="#recipes" class="col-cta cta-purple">See Citrus Recipes ↓</a>
+      </div>
+      <div class="col-visual">
+        <img src="images/Pick-your-vide/Passion.png" alt="Passion Fruit Cocktail" />
+        <div class="col-visual-tag">Citrus Crush Collection</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     COLLECTION 3: FESTIVAL DROPS
+══════════════════════════════════════ -->
+<section class="col-festival" id="festival">
+  <div class="container">
+    <div class="col-grid">
+      <div>
+        <div class="section-label">Collection 03</div>
+        <div class="col-number">03</div>
+        <h2 class="col-title">Festival<br><span class="hl-green">Drops</span></h2>
+        <p class="col-desc">Chill Sip was made for the crowd. The Festival Drops collection takes all four syrups and turns them into rapid-fire shots, punches and party mixes built for 50 people or five. No bar. No queue. No problem.</p>
+        <p class="col-desc">Mix a 5L batch for your event or crack a single packet mid-set — the Festival Drops series is how you keep the energy going from sunrise to last call.</p>
+        <div class="flavour-pills">
+          <span class="pill pill-y">Pineapple &amp; Pisco</span>
+          <span class="pill pill-o">Passion Fruit</span>
+          <span class="pill pill-p">Lemon Crash</span>
+          <span class="pill pill-pk">Strawberry &amp; Mint</span>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-val">All 4</div><div class="stat-lbl">Syrups Used</div></div>
+          <div><div class="stat-val">5L+</div><div class="stat-lbl">Bulk Batches</div></div>
+          <div><div class="stat-val">50+</div><div class="stat-lbl">Servings Per Batch</div></div>
+        </div>
+        <a href="#recipes" class="col-cta cta-green">See Party Recipes ↓</a>
+      </div>
+      <div class="col-visual">
+        <img src="images/other%20images/strawberry.png" alt="Festival Drops" />
+        <div class="col-visual-tag">Festival Drops Collection</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     VIRGIN COLLECTION
+══════════════════════════════════════ -->
+<section class="col-virgin" id="virgin">
+  <div class="container" style="position:relative;z-index:1;">
+
+    <div class="virgin-eyebrow">🌿 Alcohol-Free · All Ages Welcome</div>
+    <h2 class="col-title" style="font-size:clamp(2.2rem,4vw,3.2rem);">The <span class="hl-green">Virgin Collection</span></h2>
+    <p class="col-desc" style="max-width:600px;">All three of our signature flavours — now completely alcohol-free. Same real fruit concentrates, same vibrant taste, zero spirits. Made for under-18s, designated drivers, and anyone who simply prefers it without.</p>
+
+    <div class="virgin-cards">
+
+      <!-- VIRGIN 1 — Pineapple -->
+      <div class="virgin-card">
+        <div class="virgin-card-img">
+          <img src="images/Pick-your-vide/Pineapple.png" alt="Virgin Pineapple Tropical" />
+          <span class="virgin-card-tag">🌿 Virgin</span>
+        </div>
+        <div class="virgin-card-body">
+          <div class="virgin-card-name">Virgin Pineapple Tropical</div>
+          <div class="virgin-card-desc">Cold-pressed golden pineapple with a hint of citrus — all the tropical energy of the original, without any Pisco. Mix with soda water or coconut water for a sunshine sip.</div>
+          <div class="virgin-card-tags">
+            <span class="vtag">🍍 Pineapple</span>
+            <span class="vtag">No alcohol</span>
+            <span class="vtag">All ages</span>
+          </div>
+          <div class="virgin-card-cta">
+            <div class="virgin-card-price">£1.79 <span>/ unit</span></div>
+            <a href="summer-shop.html" class="virgin-shop-btn">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIRGIN 2 — Strawberry -->
+      <div class="virgin-card">
+        <div class="virgin-card-img">
+          <img src="images/Pick-your-vide/strawberry.png" alt="Virgin Strawberry Mint" />
+          <span class="virgin-card-tag">🌿 Virgin</span>
+        </div>
+        <div class="virgin-card-body">
+          <div class="virgin-card-name">Virgin Strawberry &amp; Mint</div>
+          <div class="virgin-card-desc">Fresh ripe strawberry, sharp lemon and a breath of cool mint — the most-loved flavour in the range, made alcohol-free without compromising a single note.</div>
+          <div class="virgin-card-tags">
+            <span class="vtag">🍓 Strawberry</span>
+            <span class="vtag">No alcohol</span>
+            <span class="vtag">All ages</span>
+          </div>
+          <div class="virgin-card-cta">
+            <div class="virgin-card-price">£2.29 <span>/ unit</span></div>
+            <a href="summer-shop.html" class="virgin-shop-btn">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIRGIN 3 — Passion Fruit -->
+      <div class="virgin-card">
+        <div class="virgin-card-img">
+          <img src="images/Pick-your-vide/Passion.png" alt="Virgin Passion Fruit Fusion" />
+          <span class="virgin-card-tag">🌿 Virgin</span>
+        </div>
+        <div class="virgin-card-body">
+          <div class="virgin-card-name">Virgin Passion Fruit Fusion</div>
+          <div class="virgin-card-desc">Vibrant tropical passion fruit and citrus zest — exotic, fragrant and naturally sweet. Pairs beautifully with sparkling water, ginger beer or a simple splash of juice.</div>
+          <div class="virgin-card-tags">
+            <span class="vtag">💜 Passion Fruit</span>
+            <span class="vtag">No alcohol</span>
+            <span class="vtag">All ages</span>
+          </div>
+          <div class="virgin-card-cta">
+            <div class="virgin-card-price">£2.79 <span>/ unit</span></div>
+            <a href="summer-shop.html" class="virgin-shop-btn">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="virgin-note">
+      <div class="virgin-note-text">
+        🌿 &nbsp;All virgin cocktails are made with the same real fruit concentrates as our alcoholic range — no artificial flavouring, no compromise on taste.<br>
+        <strong>Under 18? You'll see only these products when you shop.</strong>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PISCO ORIGIN & DIFFERENCE
+══════════════════════════════════════ -->
+<section class="pisco-section" id="pisco-story">
+
+  <!-- Part 1 — What is Pisco & Peru -->
+  <div class="pisco-story">
+    <div class="container">
+      <div class="pisco-story-grid">
+
+        <div>
+          <div class="pisco-eyebrow">🇵🇪 Origin Story · The Spirit Behind the Sip</div>
+          <h2 class="pisco-title">Born in the <span class="grad">Andes.<br>Made for today.</span></h2>
+          <p class="pisco-body">
+            <strong>Pisco is the soul of South America in a bottle.</strong> Distilled from freshly fermented grape juice in the sun-scorched valleys of Peru, it is one of the world's oldest and most complex grape spirits — produced without any added water, sugar, or artificial flavouring. The result is a naturally smooth, aromatic spirit with fruit-forward character that sits somewhere between a fine white rum and a premium brandy.
+          </p>
+          <p class="pisco-body">
+            <strong>Chill Sip was born in Peru</strong> — a country where pisco isn't just a drink, it's a national identity. Peru's coastal vineyards have been producing pisco since the 16th century, and the spirit is protected under strict denomination of origin rules. When we built Chill Sip, we knew pisco had to be at the heart of it. It carries the warmth of Lima, the colour of the Pacific coast, and the kind of depth that turns a cocktail into an experience.
+          </p>
+          <p class="pisco-body">
+            We source our pisco from <strong>small-batch Peruvian distilleries</strong> that work by hand, harvest by harvest. The grapes are pressed and fermented on-site, then pot-distilled in copper stills that have been in family hands for generations. That heritage is in every packet.
+          </p>
+          <div class="pisco-facts">
+            <div>
+              <div class="pisco-fact-val">400+</div>
+              <div class="pisco-fact-lbl">Years of tradition</div>
+            </div>
+            <div>
+              <div class="pisco-fact-val">8</div>
+              <div class="pisco-fact-lbl">Pisco grape varieties</div>
+            </div>
+            <div>
+              <div class="pisco-fact-val">100%</div>
+              <div class="pisco-fact-lbl">Natural — no additives</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pisco-img-wrap">
+          <div class="pisco-img-placeholder">
+            <div class="ph-icon">📸</div>
+            <div class="ph-text">Pisco / Peru image coming soon<br><span style="opacity:0.55">Vineyards · Distillery · Andes</span></div>
+          </div>
+          <div class="peru-flag-tag">🇵🇪 &nbsp;Made in Peru</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 2 — NOT a Pisco Sour -->
+  <div class="pisco-difference">
+    <div class="container">
+
+      <div class="pisco-diff-header">
+        <div class="pisco-diff-eyebrow">⚠️ Let's clear something up</div>
+        <h2 class="pisco-diff-title">
+          <span class="cross">Pisco Sour</span> &nbsp;≠&nbsp; <span class="grad">Chill Sip</span>
+        </h2>
+        <p class="pisco-diff-sub">
+          Yes, we use pisco. No, this is not a Pisco Sour. In Peru, the Pisco Sour is the national cocktail — beloved, iconic, and everywhere. We respect it deeply. But Chill Sip is a completely different drink, built for a different moment.
+        </p>
+      </div>
+
+      <!-- Comparison -->
+      <div class="pisco-compare">
+
+        <!-- Classic Pisco Sour -->
+        <div class="compare-card old">
+          <div class="compare-badge badge-old">🇵🇪 Classic Pisco Sour</div>
+          <div class="compare-card-title">The Peruvian Original</div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🍋</span>
+            <div>
+              <div class="compare-row-label">Citrus</div>
+              <div class="compare-row-val">Fresh lemon juice only — sharp and sour-forward</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🥚</span>
+            <div>
+              <div class="compare-row-label">Texture</div>
+              <div class="compare-row-val">Raw egg white — creates a thick, foamy head</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🌿</span>
+            <div>
+              <div class="compare-row-label">Garnish</div>
+              <div class="compare-row-val">Angostura bitters drops on the foam</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🍸</span>
+            <div>
+              <div class="compare-row-label">Serve style</div>
+              <div class="compare-row-val">Shaker + strainer + cocktail glass — requires skill</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🎨</span>
+            <div>
+              <div class="compare-row-label">Vibe</div>
+              <div class="compare-row-val">Classic, sophisticated, bar-room traditional</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VS divider -->
+        <div class="compare-divider">
+          <div class="compare-vs">VS</div>
+        </div>
+
+        <!-- Chill Sip -->
+        <div class="compare-card new">
+          <div class="compare-badge badge-new">✨ Chill Sip Pisco</div>
+          <div class="compare-card-title">A New Tropical Chapter</div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🍍</span>
+            <div>
+              <div class="compare-row-label">Citrus + Tropical</div>
+              <div class="compare-row-val">Fresh pineapple juice <em>and</em> lemon — sweeter, brighter, deeper</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🚫</span>
+            <div>
+              <div class="compare-row-label">No Egg White</div>
+              <div class="compare-row-val">Zero egg white — clean, light, and allergy-friendly</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">🌺</span>
+            <div>
+              <div class="compare-row-label">Tropical finish</div>
+              <div class="compare-row-val">Pineapple adds a fragrant, floral top note that lingers</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">📦</span>
+            <div>
+              <div class="compare-row-label">Serve style</div>
+              <div class="compare-row-val">Rip · pour · enjoy — no equipment, no bartender needed</div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-icon">☀️</span>
+            <div>
+              <div class="compare-row-label">Vibe</div>
+              <div class="compare-row-val">Tropical, social, sun-drenched — built for any crowd</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tropical highlight -->
+      <div class="pisco-tropical">
+        <div class="pisco-tropical-text">
+          <div class="pt-label">Why pineapple changes everything</div>
+          <div class="pt-title">The tropical twist that makes Chill Sip its own drink</div>
+          <div class="pt-sub">
+            Pineapple doesn't just add sweetness — it brings natural bromelain enzymes that soften the pisco's edge, creating a rounder mouthfeel without needing egg white. Combined with the brightness of fresh lemon, you get a cocktail that is simultaneously fruity, complex, and refreshing. The Pisco Sour is a classic. Chill Sip is a new chapter.
+          </div>
+        </div>
+        <div class="pisco-tropical-emoji">🍍</div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     RECIPES
+══════════════════════════════════════ -->
+<section class="recipes-section" id="recipes">
+  <div class="container">
+    <div class="recipes-header">
+      <div class="recipes-eyebrow">Make It At Home</div>
+      <h2 class="recipes-title">Cocktail <span>Recipes</span></h2>
+      <p class="recipes-sub">Each recipe uses one Chill Sip syrup. Rip the packet, follow the steps, own the day.</p>
+    </div>
+
+    <div class="recipe-filters">
+      <button class="rf active" data-filter="all">All Recipes</button>
+      <button class="rf" data-filter="tropical">Tropical Days</button>
+      <button class="rf" data-filter="citrus">Citrus Crush</button>
+      <button class="rf" data-filter="festival">Festival Drops</button>
+    </div>
+
+    <div class="recipe-grid" id="recipeGrid">
+
+      <!-- RECIPE 1 -->
+      <div class="rc" data-collection="tropical">
+        <div class="rc-img">
+          <img src="images/other%20images/Pineapple%20%26%20Pisco.png" alt="Pisco Sour Remix" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(239,182,9,0.2);color:#7a5500;border:1px solid rgba(239,182,9,0.4);">Pineapple &amp; Pisco</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 3 min</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Pisco Sour Remix</div>
+          <div class="rc-tagline">The classic Pisco Sour elevated with our tropical pineapple concentrate. Sharp, creamy and dangerously smooth.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients</div>
+            <ul class="ing-list">
+              <li>Pineapple &amp; Pisco Syrup <span class="ing-amt">1 packet (50ml)</span></li>
+              <li>Pisco <span class="ing-amt">60ml</span></li>
+              <li>Fresh lime juice <span class="ing-amt">25ml</span></li>
+              <li>Egg white <span class="ing-amt">1</span></li>
+              <li>Ice cubes <span class="ing-amt">handful</span></li>
+              <li>Angostura bitters <span class="ing-amt">2 dashes</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Dry shake egg white, syrup and lime juice for 20 seconds.</li>
+              <li>Add ice and pisco, shake hard for 15 seconds.</li>
+              <li>Double-strain into a coupe glass.</li>
+              <li>Drop 2 dashes of bitters on the foam and swirl.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>Pineapple &amp; Pisco</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Syrup →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 2 -->
+      <div class="rc" data-collection="tropical">
+        <div class="rc-img">
+          <img src="images/other%20images/passion.png" alt="Tropical Fizz" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(239,124,9,0.15);color:#b05000;border:1px solid rgba(239,124,9,0.35);">Passion Fruit</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 1 min</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Tropical Fizz</div>
+          <div class="rc-tagline">Zero effort, maximum tropical. Rip the packet into a glass of sparkling water and you're done. Beach perfect.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients</div>
+            <ul class="ing-list">
+              <li>Passion Fruit Syrup <span class="ing-amt">1 packet (30ml)</span></li>
+              <li>Sparkling water <span class="ing-amt">200ml</span></li>
+              <li>Fresh mint <span class="ing-amt">3–4 leaves</span></li>
+              <li>Ice <span class="ing-amt">lots</span></li>
+              <li>Lime slice <span class="ing-amt">to garnish</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Fill a highball glass to the top with ice.</li>
+              <li>Rip the packet and pour the syrup over the ice.</li>
+              <li>Top with sparkling water and stir gently.</li>
+              <li>Garnish with mint and a lime slice. Done.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>Passion Fruit Fusion</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Syrup →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 3 -->
+      <div class="rc" data-collection="tropical">
+        <div class="rc-img">
+          <img src="images/product/Exotic%20passion.png" alt="Exotic Daiquiri" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(239,124,9,0.15);color:#b05000;border:1px solid rgba(239,124,9,0.35);">Passion Fruit</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-filled"></span>
+          </div>
+          <div class="rc-time">⏱ 4 min</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Exotic Daiquiri</div>
+          <div class="rc-tagline">Passion fruit daiquiri with a velvet finish. White rum, citrus and our syrup — shaken and served straight up.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients</div>
+            <ul class="ing-list">
+              <li>Passion Fruit Syrup <span class="ing-amt">1 packet (50ml)</span></li>
+              <li>White rum <span class="ing-amt">60ml</span></li>
+              <li>Fresh lime juice <span class="ing-amt">30ml</span></li>
+              <li>Triple sec <span class="ing-amt">15ml</span></li>
+              <li>Ice <span class="ing-amt">for shaking</span></li>
+              <li>Passion fruit half <span class="ing-amt">to garnish</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Combine syrup, rum, lime and triple sec in a shaker.</li>
+              <li>Fill with ice and shake vigorously for 15 seconds.</li>
+              <li>Double-strain into a chilled coupe glass.</li>
+              <li>Float a passion fruit half on top to serve.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>Passion Fruit Fusion</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Syrup →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 4 -->
+      <div class="rc" data-collection="citrus">
+        <div class="rc-img">
+          <img src="images/other%20images/lemon%20crash.png" alt="Lemon Drop Shot" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(108,43,255,0.12);color:var(--purple);border:1px solid rgba(108,43,255,0.3);">Lemon Crash</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 1 min</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Lemon Drop Shot</div>
+          <div class="rc-tagline">One rip, one shot. Lemon Crash syrup meets ice-cold vodka for the most refreshing shot you've ever taken.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients</div>
+            <ul class="ing-list">
+              <li>Lemon Crash Syrup <span class="ing-amt">1 packet (30ml)</span></li>
+              <li>Vodka <span class="ing-amt">30ml</span></li>
+              <li>Sugar rim <span class="ing-amt">optional</span></li>
+              <li>Lemon zest <span class="ing-amt">to garnish</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Chill the shot glass in the freezer for 10 minutes.</li>
+              <li>Rim the glass with sugar if desired.</li>
+              <li>Mix syrup and vodka directly in the glass.</li>
+              <li>Finish with a twist of lemon zest and shoot.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>Lemon Crash</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Syrup →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 5 -->
+      <div class="rc" data-collection="citrus">
+        <div class="rc-img">
+          <img src="images/other%20images/strawberry.png" alt="Strawberry Mint Smash" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(255,45,149,0.12);color:var(--pink);border:1px solid rgba(255,45,149,0.3);">Strawberry &amp; Mint</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 3 min</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Strawberry Mint Smash</div>
+          <div class="rc-tagline">Muddled mint, crushed ice and our Strawberry Lemon syrup over gin. Looks like summer, tastes even better.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients</div>
+            <ul class="ing-list">
+              <li>Strawberry Lemon &amp; Mint Syrup <span class="ing-amt">1 packet (50ml)</span></li>
+              <li>London Dry Gin <span class="ing-amt">50ml</span></li>
+              <li>Fresh mint <span class="ing-amt">8 leaves</span></li>
+              <li>Lemon juice <span class="ing-amt">15ml</span></li>
+              <li>Crushed ice <span class="ing-amt">to fill</span></li>
+              <li>Soda water <span class="ing-amt">splash</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Muddle mint leaves gently in a rocks glass.</li>
+              <li>Fill the glass with crushed ice.</li>
+              <li>Add gin, syrup and lemon juice over the ice.</li>
+              <li>Top with a splash of soda and stir. Garnish with mint sprig.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>Strawberry Lemon &amp; Mint</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Syrup →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 6 -->
+      <div class="rc" data-collection="citrus">
+        <div class="rc-img">
+          <img src="images/other%20images/mix.png" alt="Citrus Paloma" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(108,43,255,0.12);color:var(--purple);border:1px solid rgba(108,43,255,0.3);">Lemon Crash</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 2 min</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Citrus Paloma</div>
+          <div class="rc-tagline">Tequila, grapefruit and Lemon Crash — the Paloma gets a serious upgrade. Salt rim, ice cold, non-negotiable.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients</div>
+            <ul class="ing-list">
+              <li>Lemon Crash Syrup <span class="ing-amt">1 packet (30ml)</span></li>
+              <li>Blanco tequila <span class="ing-amt">50ml</span></li>
+              <li>Grapefruit soda <span class="ing-amt">150ml</span></li>
+              <li>Salt <span class="ing-amt">for rim</span></li>
+              <li>Ice <span class="ing-amt">large cubes</span></li>
+              <li>Grapefruit slice <span class="ing-amt">garnish</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Salt the rim of a highball glass.</li>
+              <li>Add large ice cubes to the glass.</li>
+              <li>Pour tequila and syrup over the ice and stir briefly.</li>
+              <li>Top with grapefruit soda and garnish. Serve immediately.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>Lemon Crash</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Syrup →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 7 -->
+      <div class="rc" data-collection="festival">
+        <div class="rc-img">
+          <img src="images/other%20images/magic%20cocktail.png" alt="Festival Punch" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(42,229,0,0.12);color:#18a800;border:1px solid rgba(42,229,0,0.3);">All Flavours</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 10 min · 20 servings</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Festival Punch</div>
+          <div class="rc-tagline">The crowd pleaser. Mix a full batch of all four syrups together and let the festival do the rest. Serves 20.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients (Batch)</div>
+            <ul class="ing-list">
+              <li>Pineapple &amp; Pisco Syrup <span class="ing-amt">500ml bottle</span></li>
+              <li>Passion Fruit Syrup <span class="ing-amt">500ml bottle</span></li>
+              <li>White rum <span class="ing-amt">700ml</span></li>
+              <li>Prosecco <span class="ing-amt">2 bottles</span></li>
+              <li>Pineapple juice <span class="ing-amt">1L</span></li>
+              <li>Ice block <span class="ing-amt">1 large</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Combine syrups, rum and pineapple juice in a large punch bowl.</li>
+              <li>Stir well and chill for 30 minutes before serving.</li>
+              <li>Add the ice block just before guests arrive.</li>
+              <li>Top with prosecco when serving and ladle into cups.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>All Syrups</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Shop Bulk →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 8 -->
+      <div class="rc" data-collection="festival">
+        <div class="rc-img">
+          <img src="images/other%20images/rip.png" alt="Neon Shot Train" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(42,229,0,0.12);color:#18a800;border:1px solid rgba(42,229,0,0.3);">All Flavours</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 2 min · 4 shots</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Neon Shot Train</div>
+          <div class="rc-tagline">Four packets. Four shot glasses. Four flavours. Line them up, rip them, shoot them. Repeat as required.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients (Per Round)</div>
+            <ul class="ing-list">
+              <li>Pineapple &amp; Pisco Syrup <span class="ing-amt">1 packet</span></li>
+              <li>Passion Fruit Syrup <span class="ing-amt">1 packet</span></li>
+              <li>Lemon Crash Syrup <span class="ing-amt">1 packet</span></li>
+              <li>Strawberry &amp; Mint Syrup <span class="ing-amt">1 packet</span></li>
+              <li>Vodka <span class="ing-amt">30ml per shot</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Line up four chilled shot glasses.</li>
+              <li>Pour 30ml vodka into each glass.</li>
+              <li>Rip a different syrup packet into each glass.</li>
+              <li>Pass them out, count down from 3, and go.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>All 4 Syrups</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Pack →</a>
+        </div>
+      </div>
+
+      <!-- RECIPE 9 -->
+      <div class="rc" data-collection="festival">
+        <div class="rc-img">
+          <img src="images/product/refreshing.png" alt="Pineapple Spritz" />
+          <div class="rc-img-overlay"></div>
+          <div class="rc-syrup-tag" style="background:rgba(239,182,9,0.2);color:#7a5500;border:1px solid rgba(239,182,9,0.4);">Pineapple &amp; Pisco</div>
+          <div class="rc-diff">
+            <span class="diff-dot diff-filled"></span>
+            <span class="diff-dot diff-empty"></span>
+            <span class="diff-dot diff-empty"></span>
+          </div>
+          <div class="rc-time">⏱ 1 min · 1 serving</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">Pineapple Spritz</div>
+          <div class="rc-tagline">The fastest festival drink alive. One packet into a cup of ice and prosecco. That's it. That's the recipe.</div>
+          <div class="rc-ingredients">
+            <div class="ing-title">Ingredients</div>
+            <ul class="ing-list">
+              <li>Pineapple &amp; Pisco Syrup <span class="ing-amt">1 packet (30ml)</span></li>
+              <li>Prosecco or Cava <span class="ing-amt">150ml</span></li>
+              <li>Ice <span class="ing-amt">to fill</span></li>
+              <li>Mint sprig <span class="ing-amt">optional</span></li>
+            </ul>
+          </div>
+          <div class="rc-steps">
+            <div class="step-title">Method</div>
+            <ol class="step-list">
+              <li>Fill a plastic cup or wine glass with ice.</li>
+              <li>Rip the packet and pour in the syrup.</li>
+              <li>Top with chilled prosecco.</li>
+              <li>Give it one stir and hand it to someone who deserves it.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-syrup-lbl">Uses: <strong>Pineapple &amp; Pisco</strong></div>
+          <a href="summer-shop.html" class="rc-shop-link">Get the Syrup →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div class="container">
+    <div class="cta-banner-inner">
+      <div class="cta-banner-eyebrow">Ready to mix?</div>
+      <h2 class="cta-banner-title">Grab Your Syrups,<br><span>Own the Day.</span></h2>
+      <p class="cta-banner-sub">Pick a recipe, grab your syrups and make today one worth talking about.</p>
+      <div class="cta-banner-btns">
+        <a href="summer-shop.html" class="btn-primary">Shop All Syrups ↗</a>
+        <a href="summer-contact.html" class="btn-outline">Wholesale Enquiry</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Chill Sip</div>
+      <p style="font-size:14px;font-weight:500;color:var(--text);opacity:0.55;margin-bottom:20px;line-height:1.5;">Ready-to-rip cocktail packets.<br>Engineered for the day you'll remember.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social">f</a>
+        <a href="#" class="footer-social">in</a>
+        <a href="#" class="footer-social">tw</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="summer-contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;">Stay Updated</h4>
+      <p>Join our newsletter for exclusive summer offers and new drop alerts.</p>
+      <div class="newsletter-row">
+        <input type="email" placeholder="Email address" />
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT BUTTON -->
+<a href="summer-contact.html" class="contact-btn" title="Contact us">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span class="cb-label">Contact Us</span>
+</a>
+
+<script>
+  function updateCartCount() {
+    const items = JSON.parse(localStorage.getItem('ripSipCartItems') || '[]');
+    const total = items.reduce((s, i) => s + (i.qty || 1), 0);
+    document.getElementById('cartCount').textContent = total;
+  }
+  updateCartCount();
+
+  const filters = document.querySelectorAll('.rf');
+  const recipes = document.querySelectorAll('.rc');
+  filters.forEach(btn => btn.addEventListener('click', () => {
+    filters.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    recipes.forEach(rc => rc.classList.toggle('hidden', f !== 'all' && rc.dataset.collection !== f));
+  }));
+</script>
+
+</body>
+</html>
