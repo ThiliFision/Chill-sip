@@ -393,6 +393,7 @@
     .uni-badge.uni-orange { color: var(--orange); border-color: var(--orange); }
     .uni-badge.uni-pink   { color: var(--pink);   border-color: var(--pink);   }
     .uni-badge.uni-green  { color: #18a800;        border-color: var(--green);  }
+    .uni-badge.uni-purple { color: var(--purple);  border-color: var(--purple); }
 
     /* Bundle card fanned images */
     .bundle-fan { position: relative; width: 100%; height: 100%; }
@@ -400,6 +401,10 @@
     .bundle-fan img:nth-child(1) { left: 4%; top: 44px; transform: rotate(-12deg); z-index: 1; }
     .bundle-fan img:nth-child(2) { left: 50%; top: 28px; transform: translateX(-50%) rotate(0deg); z-index: 3; }
     .bundle-fan img:nth-child(3) { right: 4%; top: 44px; transform: rotate(12deg); z-index: 1; }
+    /* Two-packet duo fan */
+    .duo-fan img { position: absolute; width: 40%; max-height: 200px; object-fit: contain; }
+    .duo-fan img:nth-child(1) { left: 8%; top: 32px; transform: rotate(-12deg); z-index: 1; }
+    .duo-fan img:nth-child(2) { right: 8%; top: 20px; transform: rotate(10deg); z-index: 2; }
     .bundle-disc {
       position: absolute; top: 8px; right: 8px; z-index: 5;
       background: var(--yellow); border-radius: 50%; width: 64px; height: 64px;
@@ -1187,6 +1192,34 @@
               <div class="uni-save">You save £1.50 (20% off)</div>
             </div>
             <button class="uni-btn" onclick="sumAddToCart('Triple Pack Bundle','5.97','images/product-packet/Three%20wonders.png')" style="width:100%;justify-content:center;">🛒 Get Bundle</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 — Double Pack Deal -->
+      <div class="uni-card uni-purple">
+        <div class="uni-img" style="padding:0;">
+          <span class="uni-badge uni-purple">Best Value</span>
+          <div class="bundle-fan duo-fan">
+            <img src="images/product-packet/Container.png" alt="Pineapple" />
+            <img src="images/product-packet/Exotic%20Passion.png" alt="Passion" />
+          </div>
+          <div class="bundle-disc" style="background:var(--purple);color:#fff;"><span class="pct">10%</span><span class="off">OFF</span></div>
+        </div>
+        <div class="uni-body">
+          <div class="uni-name">Double Pack Deal</div>
+          <div class="uni-desc">Pick any 2 flavours and get 10% off. Mix, match, and save — every single order.</div>
+          <div class="uni-rating">
+            <span class="uni-stars">★★★★★</span>
+            <span class="uni-rnum">4.8 (56 reviews)</span>
+          </div>
+          <div class="uni-footer" style="flex-direction:column;align-items:center;gap:10px;">
+            <div style="text-align:center;">
+              <div class="uni-price-old">£4.98</div>
+              <div class="uni-price-new">£4.48</div>
+              <div class="uni-save">You save £0.50 (10% off)</div>
+            </div>
+            <button class="uni-btn" onclick="sumAddToCart('Double Pack Deal','4.48','images/product-packet/Container.png')" style="width:100%;justify-content:center;">🛒 Get Deal</button>
           </div>
         </div>
       </div>
