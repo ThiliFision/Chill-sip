@@ -66,6 +66,22 @@
       transition: background 0.2s;
     }
     .cart-btn-nav:hover { background: var(--brand); }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
+
     .theme-toggle {
       display: flex; align-items: center; gap: 6px;
       background: var(--bg2); border: 1px solid var(--border);
@@ -443,12 +459,13 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
-  <p>☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
+  <p data-i18n-html="promo.text">☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
   <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
 </div>
 
@@ -457,14 +474,14 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html" class="active">For Companies</a>
-      <a href="summer-virgin.html">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" class="active" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle">🌙 Night Edition</a>
+      <a href="#" class="theme-toggle" data-i18n="nav.night">🌙 Night Edition</a>
       <a href="summer-cart.html" class="cart-btn-nav">🛒 Cart</a>
     </div>
   </div>
@@ -478,7 +495,7 @@
     <div class="co-hero-inner">
 
       <div>
-        <div class="co-eyebrow">☀️ B2B &amp; Events</div>
+        <div class="co-eyebrow" data-i18n="companies.hero_eyebrow">☀️ B2B &amp; Events</div>
         <h1 class="co-hero-title">
           Cocktails that <span class="grad">chill every crowd</span>
         </h1>
@@ -486,8 +503,8 @@
           From wedding receptions to Friday office drinks, Chill Sip packets make premium cocktail service effortless — no bar, no bartender, no mess. Just shake, sip, and enjoy.
         </p>
         <div class="co-hero-btns">
-          <a href="summer-contact.html" class="btn-primary">Get a Quote →</a>
-          <a href="#use-cases" class="btn-outline">See How It Works</a>
+          <a href="summer-contact.html" class="btn-primary" data-i18n="companies.hero_cta_quote">Get a Quote →</a>
+          <a href="#use-cases" class="btn-outline" data-i18n="companies.hero_cta_works">See How It Works</a>
         </div>
       </div>
 
@@ -525,28 +542,28 @@
           <div class="intro-feat">
             <span class="intro-feat-icon">🍹</span>
             <div>
-              <div class="intro-feat-title">Ready in 10 seconds</div>
+              <div class="intro-feat-title" data-i18n="companies.feat1_title">Ready in 10 seconds</div>
               <div class="intro-feat-desc">Tear open, pour over ice, add your mixer. No tools, no training, no spillage.</div>
             </div>
           </div>
           <div class="intro-feat">
             <span class="intro-feat-icon">📦</span>
             <div>
-              <div class="intro-feat-title">Bulk packs for any scale</div>
+              <div class="intro-feat-title" data-i18n="companies.feat2_title">Bulk packs for any scale</div>
               <div class="intro-feat-desc">Order from 50 to 5,000+ sachets. Custom branding available for large events.</div>
             </div>
           </div>
           <div class="intro-feat">
             <span class="intro-feat-icon">🌿</span>
             <div>
-              <div class="intro-feat-title">Real ingredients, no nasties</div>
+              <div class="intro-feat-title" data-i18n="companies.feat3_title">Real ingredients, no nasties</div>
               <div class="intro-feat-desc">Natural fruit extracts, no artificial colouring. Always 18+ responsible serving.</div>
             </div>
           </div>
           <div class="intro-feat">
             <span class="intro-feat-icon">🎨</span>
             <div>
-              <div class="intro-feat-title">Custom branding available</div>
+              <div class="intro-feat-title" data-i18n="companies.feat4_title">Custom branding available</div>
               <div class="intro-feat-desc">Add your company logo, event name, or personal message to the packet design.</div>
             </div>
           </div>
@@ -572,22 +589,22 @@
     <div class="why-grid">
       <div class="why-card">
         <div class="why-card-icon">⚡</div>
-        <div class="why-card-title">Zero setup time</div>
+        <div class="why-card-title" data-i18n="companies.why_title1">Zero setup time</div>
         <div class="why-card-desc">No ice sculpture, no cocktail station — just packets in a bucket of ice and you're done.</div>
       </div>
       <div class="why-card">
         <div class="why-card-icon">💸</div>
-        <div class="why-card-title">Cost-controlled</div>
+        <div class="why-card-title" data-i18n="companies.why_title2">Cost-controlled</div>
         <div class="why-card-desc">Fixed price per serve. No over-pouring, no waste, no surprise bar tab at the end.</div>
       </div>
       <div class="why-card">
         <div class="why-card-icon">🔒</div>
-        <div class="why-card-title">Age-verified &amp; compliant</div>
+        <div class="why-card-title" data-i18n="companies.why_title3">Age-verified &amp; compliant</div>
         <div class="why-card-desc">All packaging carries 18+ labelling. Easy to manage responsible service at any event.</div>
       </div>
       <div class="why-card">
         <div class="why-card-icon">🎁</div>
-        <div class="why-card-title">Gifts &amp; goody bags</div>
+        <div class="why-card-title" data-i18n="companies.why_title4">Gifts &amp; goody bags</div>
         <div class="why-card-desc">A packet in a gift bag is an instant talking point. Great for favour tables and welcome kits.</div>
       </div>
     </div>
@@ -609,7 +626,7 @@
     <!-- ── BIG EVENTS ── -->
     <div class="usecase" id="uc-events">
       <div class="uc-text-col">
-        <div class="uc-tag purple">🎉 Big Events</div>
+        <div class="uc-tag purple" data-i18n="companies.uc_events_tag">🎉 Big Events</div>
         <h3 class="uc-title">Weddings, parties &amp; year-end celebrations</h3>
         <p class="uc-desc">
           Whether it's a grand wedding reception, a summer birthday bash, a university year-end ceremony, or an 18+ high school celebration — Chill Sip turns any drinks table into a talking point. Guests help themselves, pick their flavour, and the vibe stays high from the welcome drink to the last dance. No queues at the bar, no stressed staff — just great cocktails flowing freely.
@@ -621,7 +638,7 @@
           <span class="uc-chip">🥂 Galas &amp; Formals</span>
           <span class="uc-chip">🎊 18+ Celebrations</span>
         </div>
-        <a href="summer-contact.html" class="uc-cta">Plan your event with us →</a>
+        <a href="summer-contact.html" class="uc-cta" data-i18n="companies.uc_events_cta">Plan your event with us →</a>
       </div>
       <div class="uc-img-col">
         <div class="uc-img-placeholder ph-events">
@@ -634,7 +651,7 @@
     <!-- ── NIGHT CLUBS ── -->
     <div class="usecase reverse" id="uc-clubs">
       <div class="uc-text-col">
-        <div class="uc-tag pink">🌙 Night Clubs</div>
+        <div class="uc-tag pink" data-i18n="companies.uc_clubs_tag">🌙 Night Clubs</div>
         <h3 class="uc-title">Elevate the dance floor experience</h3>
         <p class="uc-desc">
           Night clubs need speed and style in equal measure. Chill Sip sachets let bar staff serve a premium cocktail in the time it takes to grab a beer — cutting queue times and boosting spend per head. Display them behind the bar as a premium upsell, hand them out as a welcome drink on entry, or bundle them into VIP table packages. The bold packaging looks incredible under club lighting, and the flavours hit different at 1am.
@@ -645,7 +662,7 @@
           <span class="uc-chip">💜 VIP packages</span>
           <span class="uc-chip">✨ Welcome drinks</span>
         </div>
-        <a href="summer-contact.html" class="uc-cta">Wholesale enquiry →</a>
+        <a href="summer-contact.html" class="uc-cta" data-i18n="companies.uc_clubs_cta">Wholesale enquiry →</a>
       </div>
       <div class="uc-img-col">
         <div class="uc-img-placeholder ph-clubs">
@@ -658,7 +675,7 @@
     <!-- ── UNIVERSITY CLUBS ── -->
     <div class="usecase" id="uc-uniclubs">
       <div class="uc-text-col">
-        <div class="uc-tag green">🎓 University Clubs</div>
+        <div class="uc-tag green" data-i18n="companies.uc_uni_tag">🎓 University Clubs</div>
         <h3 class="uc-title">The go-to drink for student socials</h3>
         <p class="uc-desc">
           University club nights, society socials, sports team celebrations, and freshers events all share one thing — a crowd that wants something better than warm beer. Chill Sip packets are affordable enough to stock in bulk for a student budget, easy to serve without a dedicated bar, and varied enough that everyone finds a flavour they love. Available in cases sized for 50 to 500 people, with student society discounts on bulk orders.
@@ -670,7 +687,7 @@
           <span class="uc-chip">📚 End-of-term parties</span>
           <span class="uc-chip">💰 Student bulk pricing</span>
         </div>
-        <a href="summer-contact.html" class="uc-cta">Get student pricing →</a>
+        <a href="summer-contact.html" class="uc-cta" data-i18n="companies.uc_uni_cta">Get student pricing →</a>
       </div>
       <div class="uc-img-col">
         <div class="uc-img-placeholder ph-uniclubs">
@@ -683,7 +700,7 @@
     <!-- ── OFFICE FRIDAY ── -->
     <div class="usecase reverse" id="uc-office">
       <div class="uc-text-col">
-        <div class="uc-tag orange">🏢 Office Friday Drinks</div>
+        <div class="uc-tag orange" data-i18n="companies.uc_office_tag">🏢 Office Friday Drinks</div>
         <h3 class="uc-title">The Dutch tradition of borrel, done better</h3>
         <p class="uc-desc">
           Friday afternoon drinks — the borrel — is woven into Dutch office culture. Teams across the Netherlands gather at 4pm to wind down, connect, and celebrate the week. Chill Sip is the perfect borrel upgrade: no bar setup, no cleaning up wine bottles, no awkward warm prosecco. Just a box of packets, a bucket of ice, and a fridge full of mixers. HR teams love it for team events, team leads love it for milestone celebrations, and everyone else loves it because it actually tastes good.
@@ -695,7 +712,7 @@
           <span class="uc-chip">🏆 Company celebrations</span>
           <span class="uc-chip">📦 Office bulk orders</span>
         </div>
-        <a href="summer-contact.html" class="uc-cta">Order for your team →</a>
+        <a href="summer-contact.html" class="uc-cta" data-i18n="companies.uc_office_cta">Order for your team →</a>
       </div>
       <div class="uc-img-col">
         <div class="uc-img-placeholder ph-office">
@@ -708,7 +725,7 @@
     <!-- ── SPORT CLUBS ── -->
     <div class="usecase" id="uc-sport">
       <div class="uc-text-col">
-        <div class="uc-tag green">🏅 Sport Clubs</div>
+        <div class="uc-tag green" data-i18n="companies.uc_sport_tag">🏅 Sport Clubs</div>
         <h3 class="uc-title">Celebrate every win — big or small</h3>
         <p class="uc-desc">
           Sport clubs run on team spirit, and Chill Sip gives that spirit something to toast with. End-of-season banquets, trophy nights, club anniversaries, charity fundraisers, and sponsor evenings all deserve a proper drink — one that's quick to serve, impressive to look at, and easy to manage for a volunteer committee. Our bulk packs fit the typical club budget, and the sachets work beautifully on trestle tables, in sports halls, or in the changing room after a hard-earned promotion.
@@ -720,7 +737,7 @@
           <span class="uc-chip">🎟 Club fundraisers</span>
           <span class="uc-chip">🥳 Team socials</span>
         </div>
-        <a href="summer-contact.html" class="uc-cta">Talk to us about your club →</a>
+        <a href="summer-contact.html" class="uc-cta" data-i18n="companies.uc_sport_cta">Talk to us about your club →</a>
       </div>
       <div class="uc-img-col">
         <div class="uc-img-placeholder ph-sport">

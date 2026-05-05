@@ -69,6 +69,22 @@
       transition: background 0.2s;
     }
     .cart-btn-nav:hover { background: var(--brand); }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
+
     .theme-toggle {
       display: flex; align-items: center; gap: 6px;
       background: var(--bg2); border: 1px solid var(--border);
@@ -286,12 +302,13 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
-  <p>☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
+  <p data-i18n-html="promo.text">☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
   <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
 </div>
 
@@ -300,14 +317,14 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html">For Companies</a>
-      <a href="summer-virgin.html">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle">🌙 Night Edition</a>
+      <a href="#" class="theme-toggle" data-i18n="nav.night">🌙 Night Edition</a>
       <a href="summer-cart.html" class="cart-btn-nav">🛒 Cart</a>
     </div>
   </div>
@@ -316,10 +333,10 @@
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div class="container" style="position:relative;z-index:1;">
-    <div class="breadcrumb"><a href="summer.html">Home</a> › Contact</div>
-    <div class="page-label">☀️ Summer Edition · Get in Touch</div>
-    <h1 class="page-title">Let's <span>Talk</span></h1>
-    <p class="page-sub">Questions, wholesale orders, collabs or just want to talk cocktails — we're here for it.</p>
+    <div class="breadcrumb"><a href="summer.html" data-i18n="nav.home">Home</a> › Contact</div>
+    <div class="page-label" data-i18n="contact.page_label">☀️ Summer Edition · Get in Touch</div>
+    <h1 class="page-title" data-i18n-html="contact.page_title">Let's <span>Talk</span></h1>
+    <p class="page-sub" data-i18n="contact.page_sub">Questions, wholesale orders, collabs or just want to talk cocktails — we're here for it.</p>
   </div>
 </div>
 
@@ -331,27 +348,27 @@
       <!-- Info -->
       <div class="info-card">
         <div>
-          <div class="info-title">Email</div>
+          <div class="info-title" data-i18n="contact.info_email">Email</div>
           <div class="info-value"><a href="mailto:hello@ripandsip.com">hello@ripandsip.com</a></div>
         </div>
         <div class="info-divider"></div>
         <div>
-          <div class="info-title">Wholesale & Bulk Orders</div>
+          <div class="info-title" data-i18n="contact.info_wholesale">Wholesale & Bulk Orders</div>
           <div class="info-value"><a href="mailto:trade@ripandsip.com">trade@ripandsip.com</a><br>For clubs, bars, and event organisers ordering 5L+</div>
         </div>
         <div class="info-divider"></div>
         <div>
-          <div class="info-title">Location</div>
+          <div class="info-title" data-i18n="contact.info_location">Location</div>
           <div class="info-value">123 Vinyl Row<br>Downtown · EC1A 1BB<br>United Kingdom</div>
         </div>
         <div class="info-divider"></div>
         <div>
-          <div class="info-title">Opening Hours</div>
+          <div class="info-title" data-i18n="contact.info_hours">Opening Hours</div>
           <div class="info-value">Mon – Fri · 9am to 6pm<br>Sat · 10am to 4pm<br>Sun · Closed</div>
         </div>
         <div class="info-divider"></div>
         <div>
-          <div class="info-title">Follow Us</div>
+          <div class="info-title" data-i18n="contact.info_follow">Follow Us</div>
           <div class="social-row">
             <a class="soc" href="#">𝕏</a>
             <a class="soc" href="#">📷</a>
@@ -363,27 +380,27 @@
 
       <!-- Form -->
       <div class="form-card">
-        <div class="form-title">Send Us a Message</div>
-        <div class="form-sub">We reply within 24 hours on weekdays. For urgent orders, email trade@ripandsip.com directly.</div>
+        <div class="form-title" data-i18n="contact.form_title">Send Us a Message</div>
+        <div class="form-sub" data-i18n="contact.form_sub">We reply within 24 hours on weekdays. For urgent orders, email trade@ripandsip.com directly.</div>
 
         <div class="form-row">
           <div class="field">
-            <label>First Name</label>
+            <label data-i18n="contact.first_name">First Name</label>
             <input type="text" placeholder="Alex" />
           </div>
           <div class="field">
-            <label>Last Name</label>
+            <label data-i18n="contact.last_name">Last Name</label>
             <input type="text" placeholder="Kim" />
           </div>
         </div>
 
         <div class="field">
-          <label>Email Address</label>
+          <label data-i18n="contact.email">Email Address</label>
           <input type="email" placeholder="alex@email.com" />
         </div>
 
         <div class="field">
-          <label>Enquiry Type</label>
+          <label data-i18n="contact.enquiry_type">Enquiry Type</label>
           <select>
             <option value="">Select a topic…</option>
             <option>General Enquiry</option>
@@ -397,12 +414,12 @@
         </div>
 
         <div class="field">
-          <label>Message</label>
+          <label data-i18n="contact.message">Message</label>
           <textarea placeholder="Tell us what's on your mind…"></textarea>
         </div>
 
-        <button class="submit-btn" onclick="sendForm(this)">Send Message →</button>
-        <div class="form-note">We never share your details with third parties.</div>
+        <button class="submit-btn" onclick="sendForm(this)" data-i18n="contact.submit">Send Message →</button>
+        <div class="form-note" data-i18n="contact.form_note">We never share your details with third parties.</div>
       </div>
 
     </div>
@@ -426,7 +443,7 @@
 <!-- FLOATING CONTACT BUTTON -->
 <a href="summer-contact.html" class="contact-btn" title="Contact us">
   <span>✉</span>
-  <span class="cb-label">Contact Us</span>
+  <span class="cb-label" data-i18n="contact_btn">Contact Us</span>
 </a>
 
 <script>

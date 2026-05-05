@@ -81,6 +81,22 @@
       width: 18px; height: 18px; font-size: 10px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
     }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
+
     .theme-toggle {
       display: flex; align-items: center; gap: 6px;
       background: var(--bg2); border: 1px solid var(--border);
@@ -446,12 +462,13 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
-  <p>☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
+  <p data-i18n-html="promo.text">☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
   <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
 </div>
 
@@ -460,14 +477,14 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html">For Companies</a>
-      <a href="summer-virgin.html">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
+      <a href="#" class="theme-toggle" title="Night Edition" data-i18n="nav.night">🌙 Night Edition</a>
       <a href="summer-membership.html" class="nav-icon-btn" title="Account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -479,7 +496,7 @@
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-        Cart <span class="cart-count-badge" id="cartCount">0</span>
+        <span data-i18n="nav.cart">Cart</span> <span class="cart-count-badge" id="cartCount">0</span>
       </a>
     </div>
   </div>
@@ -489,11 +506,11 @@
 <div class="page-header">
   <div class="container">
     <div class="breadcrumb">
-      <a href="summer.html">Home</a> &rsaquo;
-      <a href="summer-shop.html">Shop</a> &rsaquo;
-      <span>Cart</span>
+      <a href="summer.html" data-i18n="nav.home">Home</a> &rsaquo;
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a> &rsaquo;
+      <span data-i18n="cart.breadcrumb_cart">Cart</span>
     </div>
-    <h1 class="page-title">Your <span class="grad-word">Cart</span></h1>
+    <h1 class="page-title" data-i18n-html="cart.page_title">Your <span class="grad-word">Cart</span></h1>
   </div>
 </div>
 
@@ -504,9 +521,9 @@
     <!-- Empty state -->
     <div class="empty-state" id="emptyState">
       <div class="empty-icon">🛒</div>
-      <div class="empty-title">Your cart is empty</div>
-      <div class="empty-sub">Looks like you haven't added anything yet. Go find your summer vibe.</div>
-      <a href="summer-shop.html" class="shop-btn">Go to Shop →</a>
+      <div class="empty-title" data-i18n="cart.empty_title">Your cart is empty</div>
+      <div class="empty-sub" data-i18n="cart.empty_sub">Looks like you haven't added anything yet. Go find your summer vibe.</div>
+      <a href="summer-shop.html" class="shop-btn" data-i18n="cart.empty_cta">Go to Shop →</a>
     </div>
 
     <!-- Cart content -->
@@ -516,7 +533,7 @@
       <div class="items-col">
         <div class="items-header">
           <div class="items-title" id="itemsTitle">0 items</div>
-          <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+          <button class="clear-btn" onclick="clearCart()" data-i18n="cart.clear_btn">Clear Cart</button>
         </div>
         <div id="cartItems"></div>
       </div>
@@ -524,37 +541,37 @@
       <!-- Summary column -->
       <div class="summary-col">
         <div class="summary-card">
-          <div class="summary-title">Order Summary</div>
+          <div class="summary-title" data-i18n="cart.summary_title">Order Summary</div>
 
           <div class="promo-row">
-            <input class="promo-input" type="text" placeholder="Promo code" id="promoInput" />
-            <button class="promo-btn" onclick="applyPromo()">Apply</button>
+            <input class="promo-input" type="text" placeholder="Promo code" id="promoInput" data-i18n-placeholder="cart.promo_placeholder" />
+            <button class="promo-btn" onclick="applyPromo()" data-i18n="cart.promo_apply">Apply</button>
           </div>
 
           <div class="summary-row">
-            <span class="summary-label">Subtotal</span>
+            <span class="summary-label" data-i18n="cart.subtotal">Subtotal</span>
             <span class="summary-value" id="subtotal">£0.00</span>
           </div>
           <div class="summary-row">
-            <span class="summary-label">Delivery</span>
+            <span class="summary-label" data-i18n="cart.delivery">Delivery</span>
             <span class="summary-value" id="delivery">£4.99</span>
           </div>
           <div class="summary-row" id="discountRow" style="display:none;">
-            <span class="summary-label">Promo Discount</span>
+            <span class="summary-label" data-i18n="cart.promo_discount">Promo Discount</span>
             <span class="summary-value discount" id="discountVal">-£0.00</span>
           </div>
 
           <div class="summary-divider"></div>
 
           <div class="summary-total-row">
-            <span class="summary-total-label">Total</span>
+            <span class="summary-total-label" data-i18n="cart.total">Total</span>
             <span class="summary-total-value" id="orderTotal">£0.00</span>
           </div>
 
-          <div id="deliveryNote" class="delivery-note">Free delivery on orders over £50</div>
+          <div id="deliveryNote" class="delivery-note" data-i18n="cart.free_delivery_note">Free delivery on orders over £50</div>
 
-          <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
-          <a href="summer-shop.html" class="continue-link">← Continue Shopping</a>
+          <button class="checkout-btn" onclick="checkout()" data-i18n="cart.checkout_btn">Proceed to Checkout →</button>
+          <a href="summer-shop.html" class="continue-link" data-i18n="cart.continue_shopping">← Continue Shopping</a>
         </div>
       </div>
 
@@ -575,35 +592,35 @@
       </div>
     </div>
     <div class="footer-col">
-      <h4>Company</h4>
+      <h4 data-i18n="footer.col_company">Company</h4>
       <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Press</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="summer-contact.html">Contact</a></li>
+        <li><a href="#" data-i18n="footer.about">About Us</a></li>
+        <li><a href="#" data-i18n="footer.careers">Careers</a></li>
+        <li><a href="#" data-i18n="footer.press">Press</a></li>
+        <li><a href="#" data-i18n="footer.blog">Blog</a></li>
+        <li><a href="summer-contact.html" data-i18n="footer.contact">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Support</h4>
+      <h4 data-i18n="footer.col_support">Support</h4>
       <ul>
-        <li><a href="#">Help Center</a></li>
-        <li><a href="#">Returns</a></li>
-        <li><a href="#">Shipping</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#" data-i18n="footer.help">Help Center</a></li>
+        <li><a href="#" data-i18n="footer.returns">Returns</a></li>
+        <li><a href="#" data-i18n="footer.shipping">Shipping</a></li>
+        <li><a href="#" data-i18n="footer.privacy">Privacy Policy</a></li>
+        <li><a href="#" data-i18n="footer.terms">Terms of Service</a></li>
       </ul>
     </div>
     <div class="footer-newsletter">
-      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;">Stay Updated</h4>
-      <p>Join our newsletter for exclusive summer offers and new drop alerts.</p>
+      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;" data-i18n="footer.newsletter_title">Stay Updated</h4>
+      <p data-i18n="footer.newsletter_desc">Join our newsletter for exclusive summer offers and new drop alerts.</p>
       <div class="newsletter-row">
-        <input type="email" placeholder="Email address" />
-        <button>Subscribe</button>
+        <input type="email" placeholder="Email address" data-i18n-placeholder="footer.newsletter_placeholder" />
+        <button data-i18n="footer.newsletter_btn">Subscribe</button>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div class="footer-bottom" data-i18n-html="footer.copyright">
     © 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
   </div>
 </footer>
@@ -613,7 +630,7 @@
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
   </svg>
-  <span class="cb-label">Contact Us</span>
+  <span class="cb-label" data-i18n="contact_btn">Contact Us</span>
 </a>
 
 <div id="sumToast"></div>

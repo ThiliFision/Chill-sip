@@ -83,6 +83,22 @@
       width: 18px; height: 18px; font-size: 10px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
     }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
+
     .theme-toggle {
       display: flex; align-items: center; gap: 6px;
       background: var(--bg2); border: 1px solid var(--border);
@@ -376,6 +392,7 @@
     html.night-edition .uni-price span{color:rgba(255,255,255,.40) !important}
     html.night-edition .uni-footer{border-top-color:rgba(255,255,255,.10) !important}
     html.night-edition .uni-badge{background:rgba(0,0,0,.35) !important;color:#fff !important}
+    html.night-edition .uni-cat-tag{background:rgba(0,0,0,.50) !important;color:rgba(255,255,255,.85) !important;border-color:rgba(255,255,255,.15) !important}
   </style>
   <script>
   (function(){
@@ -405,12 +422,13 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
-  <p>☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
+  <p data-i18n-html="promo.text">☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
   <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
 </div>
 
@@ -419,14 +437,14 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html" class="active">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html">For Companies</a>
-      <a href="summer-virgin.html">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" class="active" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
+      <a href="#" class="theme-toggle" title="Night Edition" data-i18n="nav.night">🌙 Night Edition</a>
       <button class="nav-icon-btn" onclick="window.location='summer-membership.html'" title="Account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -438,7 +456,7 @@
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-        Cart <span class="cart-count-badge" id="cartCount">0</span>
+        <span data-i18n="nav.cart">Cart</span> <span class="cart-count-badge" id="cartCount">0</span>
       </a>
     </div>
   </div>
@@ -451,12 +469,12 @@
       <div class="banner-left">
         <div class="page-eyebrow" data-summer="☀️ Chill Sip Store" data-night="🍸 Cocktail &amp; Mocktail Collection">☀️ Chill Sip Store</div>
         <h1 class="banner-title" data-summer-html="CHILL SIP<br>Own the Day" data-night-html="CHILL SIP<br>Own the Night">CHILL SIP<br>Own the Day</h1>
-        <p class="banner-sub">Cocktail syrups, premium glassware &amp; bar accessories. Delivered to your door.</p>
+        <p class="banner-sub" data-i18n="shop.banner_sub">Cocktail syrups, premium glassware &amp; bar accessories. Delivered to your door.</p>
       </div>
       <div class="banner-promo">
-        <div class="promo-label">First Order Discount</div>
+        <div class="promo-label" data-i18n="shop.promo_label">First Order Discount</div>
         <div class="promo-code-big">SUMMER20</div>
-        <div class="promo-detail">20% off at checkout</div>
+        <div class="promo-detail" data-i18n="shop.promo_detail">20% off at checkout</div>
       </div>
     </div>
   </div>
@@ -467,18 +485,18 @@
   <div class="container">
     <div class="toolbar">
       <div class="filter-tabs">
-        <button class="ftab active" data-cat="all">All Products</button>
-        <button class="ftab" data-cat="syrup">Cocktail Syrups</button>
-        <button class="ftab" data-cat="glasses">Glasses</button>
-        <button class="ftab" data-cat="accessories">Accessories</button>
+        <button class="ftab active" data-cat="all" data-i18n="shop.filter_all">All Products</button>
+        <button class="ftab" data-cat="syrup" data-i18n="shop.filter_syrups">Cocktail Syrups</button>
+        <button class="ftab" data-cat="glasses" data-i18n="shop.filter_glasses">Glasses</button>
+        <button class="ftab" data-cat="accessories" data-i18n="shop.filter_accessories">Accessories</button>
       </div>
       <div class="sort-row">
-        <span class="sort-label">Sort</span>
+        <span class="sort-label" data-i18n="shop.sort_label">Sort</span>
         <select class="sort-select" id="sortSel" onchange="sortProducts()">
-          <option value="default">Featured</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="rating">Top Rated</option>
+          <option value="default" data-i18n="shop.sort_featured">Featured</option>
+          <option value="price-asc" data-i18n="shop.sort_price_asc">Price: Low to High</option>
+          <option value="price-desc" data-i18n="shop.sort_price_desc">Price: High to Low</option>
+          <option value="rating" data-i18n="shop.sort_rating">Top Rated</option>
         </select>
         <span class="prod-count-label" id="prodCount"></span>
       </div>
@@ -503,7 +521,7 @@
         <div class="uni-img">
           <span class="uni-badge uni-yellow">Best Seller</span>
           <img src="images/Pick-your-vide/Pineapple.png" alt="Pineapple &amp; Pisco" />
-          <span class="uni-cat-tag">Cocktail Syrup</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_syrup">Cocktail Syrup</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Pineapple &amp; Pisco Concentrate</div>
@@ -521,7 +539,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£1.99 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Pineapple & Pisco','syrup','images/Pick-your-vide/Pineapple.png')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Pineapple & Pisco','syrup','images/Pick-your-vide/Pineapple.png')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -531,7 +549,7 @@
         <div class="uni-img">
           <span class="uni-badge uni-pink">Fan Favourite</span>
           <img src="images/Pick-your-vide/strawberry.png" alt="Strawberry, Lemon &amp; Mint" />
-          <span class="uni-cat-tag">Cocktail Syrup</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_syrup">Cocktail Syrup</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Strawberry, Lemon &amp; Mint</div>
@@ -548,7 +566,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£2.49 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Strawberry Lemon & Mint','syrup','images/Pick-your-vide/strawberry.png')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Strawberry Lemon & Mint','syrup','images/Pick-your-vide/strawberry.png')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -558,7 +576,7 @@
         <div class="uni-img">
           <span class="uni-badge uni-orange">New Drop</span>
           <img src="images/Pick-your-vide/Passion.png" alt="Passion Fruit Fusion" />
-          <span class="uni-cat-tag">Cocktail Syrup</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_syrup">Cocktail Syrup</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Passion Fruit Fusion</div>
@@ -575,7 +593,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£2.99 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Passion Fruit Fusion','syrup','images/Pick-your-vide/Passion.png')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Passion Fruit Fusion','syrup','images/Pick-your-vide/Passion.png')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -585,7 +603,7 @@
         <div class="uni-img">
           <span class="uni-badge uni-cyan">Limited</span>
           <img src="images/other%20images/lemon%20crash.png" alt="Lemon Crash" />
-          <span class="uni-cat-tag">Cocktail Syrup</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_syrup">Cocktail Syrup</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Lemon Crash</div>
@@ -601,7 +619,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£1.99 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Lemon Crash','syrup','images/other%20images/lemon%20crash.png')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Lemon Crash','syrup','images/other%20images/lemon%20crash.png')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -610,7 +628,7 @@
       <div class="uni-card uni-blue" data-category="glasses" data-price="12.99" data-rating="4.8">
         <div class="uni-img">
           <span class="uni-img-emoji">🥃</span>
-          <span class="uni-cat-tag">Glassware</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_glasses">Glassware</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Highball Glass — Set of 2</div>
@@ -626,7 +644,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£12.99 <span>/ set</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Highball Glass','glasses','')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Highball Glass','glasses','')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -635,7 +653,7 @@
       <div class="uni-card uni-pink" data-category="glasses" data-price="14.99" data-rating="4.9">
         <div class="uni-img">
           <span class="uni-img-emoji">🍸</span>
-          <span class="uni-cat-tag">Glassware</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_glasses">Glassware</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Coupe Glass — Set of 2</div>
@@ -650,7 +668,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£14.99 <span>/ set</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Coupe Glass','glasses','')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Coupe Glass','glasses','')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -659,7 +677,7 @@
       <div class="uni-card uni-green" data-category="glasses" data-price="11.99" data-rating="4.7">
         <div class="uni-img">
           <span class="uni-img-emoji">🪨</span>
-          <span class="uni-cat-tag">Glassware</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_glasses">Glassware</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Rocks Glass — Set of 2</div>
@@ -674,7 +692,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£11.99 <span>/ set</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Rocks Glass','glasses','')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Rocks Glass','glasses','')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -683,7 +701,7 @@
       <div class="uni-card uni-yellow" data-category="accessories" data-price="24.99" data-rating="4.8">
         <div class="uni-img">
           <span class="uni-img-emoji">🍹</span>
-          <span class="uni-cat-tag">Accessories</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_accessories">Accessories</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Boston Shaker — Pro Series</div>
@@ -698,7 +716,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£24.99 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Boston Shaker','accessories','')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Boston Shaker','accessories','')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -707,7 +725,7 @@
       <div class="uni-card uni-purple" data-category="accessories" data-price="34.99" data-rating="4.9">
         <div class="uni-img">
           <span class="uni-img-emoji">🧑‍🍳</span>
-          <span class="uni-cat-tag">Accessories</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_accessories">Accessories</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Bar Tool Set — 6 Piece</div>
@@ -722,7 +740,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£34.99 <span>/ set</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Bar Tool Set','accessories','')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Bar Tool Set','accessories','')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -731,7 +749,7 @@
       <div class="uni-card uni-green" data-category="accessories" data-price="6.99" data-rating="4.5">
         <div class="uni-img">
           <span class="uni-img-emoji">🌿</span>
-          <span class="uni-cat-tag">Accessories</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_accessories">Accessories</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Eco Straws — Pack of 50</div>
@@ -746,7 +764,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£6.99 <span>/ pack</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Eco Straws','accessories','')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Eco Straws','accessories','')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -756,7 +774,7 @@
         <div class="uni-img">
           <span class="uni-badge uni-green">Virgin</span>
           <img src="images/Pick-your-vide/Pineapple.png" alt="Virgin Pineapple" />
-          <span class="uni-cat-tag">Virgin Cocktail</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_virgin">Virgin Cocktail</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Virgin Pineapple Tropical</div>
@@ -772,7 +790,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£1.79 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Pineapple Tropical','syrup','images/Pick-your-vide/Pineapple.png')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Pineapple Tropical','syrup','images/Pick-your-vide/Pineapple.png')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -782,7 +800,7 @@
         <div class="uni-img">
           <span class="uni-badge uni-green">Virgin</span>
           <img src="images/Pick-your-vide/strawberry.png" alt="Virgin Strawberry" />
-          <span class="uni-cat-tag">Virgin Cocktail</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_virgin">Virgin Cocktail</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Virgin Strawberry &amp; Mint</div>
@@ -798,7 +816,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£2.29 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Strawberry & Mint','syrup','images/Pick-your-vide/strawberry.png')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Strawberry & Mint','syrup','images/Pick-your-vide/strawberry.png')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -808,7 +826,7 @@
         <div class="uni-img">
           <span class="uni-badge uni-green">Virgin</span>
           <img src="images/Pick-your-vide/Passion.png" alt="Virgin Passion Fruit" />
-          <span class="uni-cat-tag">Virgin Cocktail</span>
+          <span class="uni-cat-tag" data-i18n="shop.cat_virgin">Virgin Cocktail</span>
         </div>
         <div class="uni-body">
           <div class="uni-name">Virgin Passion Fruit Fusion</div>
@@ -824,7 +842,7 @@
           </div>
           <div class="uni-footer">
             <div class="uni-price">£2.79 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Passion Fruit Fusion','syrup','images/Pick-your-vide/Passion.png')">Add to Cart</button>
+            <button class="uni-btn" onclick="shopAddToCart(this,'Virgin Passion Fruit Fusion','syrup','images/Pick-your-vide/Passion.png')" data-i18n="shop.add_to_cart">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -890,7 +908,7 @@
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
   </svg>
-  <span class="cb-label">Contact Us</span>
+  <span class="cb-label" data-i18n="contact_btn">Contact Us</span>
 </a>
 
 <div id="sumToast">Added to cart!</div>

@@ -52,6 +52,22 @@
     }
     .nav-icon-btn:hover { color: var(--purple); }
     .nav-icon-btn svg { width: 22px; height: 22px; }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
+
     .theme-toggle {
       display: flex; align-items: center; gap: 6px;
       background: var(--bg2); border: 1px solid var(--border);
@@ -518,6 +534,7 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
@@ -526,14 +543,14 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html">For Companies</a>
-      <a href="summer-virgin.html">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
+      <a href="#" class="theme-toggle" title="Night Edition" data-i18n="nav.night">🌙 Night Edition</a>
       <!-- Account icon -->
       <button class="nav-icon-btn" onclick="window.location='summer-membership.html'" title="Account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -547,7 +564,7 @@
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-        Cart <span class="cart-count-badge" id="cartCount">0</span>
+        <span data-i18n="nav.cart">Cart</span> <span class="cart-count-badge" id="cartCount">0</span>
       </a>
     </div>
   </div>
@@ -557,34 +574,34 @@
 <div class="page-header">
   <div class="container">
     <div class="breadcrumb">
-      <a href="summer.html">Home</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
       <span class="sep">›</span>
-      <a href="summer-shop.html">Shop</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
       <span class="sep">›</span>
-      <a href="summer-cart.html">Cart</a>
+      <a href="summer-cart.html" data-i18n="checkout.step_cart">Cart</a>
       <span class="sep">›</span>
-      <span>Checkout</span>
+      <span data-i18n="checkout.breadcrumb">Checkout</span>
     </div>
-    <h1 class="page-title">Secure <span class="grad-word">Checkout</span></h1>
+    <h1 class="page-title" data-i18n-html="checkout.page_title">Secure <span class="grad-word">Checkout</span></h1>
     <div class="steps-bar">
       <div class="step done">
         <div class="step-circle">✓</div>
-        Cart
+        <span data-i18n="checkout.step_cart">Cart</span>
       </div>
       <div class="step-sep"></div>
       <div class="step active">
         <div class="step-circle">2</div>
-        Details
+        <span data-i18n="checkout.step_details">Details</span>
       </div>
       <div class="step-sep"></div>
       <div class="step">
         <div class="step-circle">3</div>
-        Payment
+        <span data-i18n="checkout.step_payment">Payment</span>
       </div>
       <div class="step-sep"></div>
       <div class="step">
         <div class="step-circle">4</div>
-        Confirm
+        <span data-i18n="checkout.step_confirm">Confirm</span>
       </div>
     </div>
   </div>
@@ -604,27 +621,27 @@
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
             </svg>
-            Contact Information
+            <span data-i18n="checkout.contact_info">Contact Information</span>
           </div>
           <div class="form-row cols-2">
             <div class="form-group">
-              <label class="form-label" for="firstName">First Name</label>
+              <label class="form-label" for="firstName" data-i18n="checkout.first_name">First Name</label>
               <input class="form-input" type="text" id="firstName" placeholder="Alex" autocomplete="given-name" />
             </div>
             <div class="form-group">
-              <label class="form-label" for="lastName">Last Name</label>
+              <label class="form-label" for="lastName" data-i18n="checkout.last_name">Last Name</label>
               <input class="form-input" type="text" id="lastName" placeholder="Smith" autocomplete="family-name" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="email">Email Address</label>
+              <label class="form-label" for="email" data-i18n="checkout.email">Email Address</label>
               <input class="form-input" type="email" id="email" placeholder="alex@example.com" autocomplete="email" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="phone">Phone Number</label>
+              <label class="form-label" for="phone" data-i18n="checkout.phone">Phone Number</label>
               <input class="form-input" type="tel" id="phone" placeholder="+44 7700 900000" autocomplete="tel" />
             </div>
           </div>
@@ -636,33 +653,33 @@
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
-            Delivery Address
+            <span data-i18n="checkout.delivery_address">Delivery Address</span>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="address1">Address Line 1</label>
+              <label class="form-label" for="address1" data-i18n="checkout.address_line1">Address Line 1</label>
               <input class="form-input" type="text" id="address1" placeholder="123 High Street" autocomplete="address-line1" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="address2">Address Line 2 (optional)</label>
+              <label class="form-label" for="address2" data-i18n="checkout.address_line2">Address Line 2 (optional)</label>
               <input class="form-input" type="text" id="address2" placeholder="Apartment, suite, etc." autocomplete="address-line2" />
             </div>
           </div>
           <div class="form-row cols-2">
             <div class="form-group">
-              <label class="form-label" for="city">City</label>
+              <label class="form-label" for="city" data-i18n="checkout.city">City</label>
               <input class="form-input" type="text" id="city" placeholder="London" autocomplete="address-level2" />
             </div>
             <div class="form-group">
-              <label class="form-label" for="postcode">Postcode</label>
+              <label class="form-label" for="postcode" data-i18n="checkout.postcode">Postcode</label>
               <input class="form-input" type="text" id="postcode" placeholder="EC1A 1BB" autocomplete="postal-code" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="country">Country</label>
+              <label class="form-label" for="country" data-i18n="checkout.country">Country</label>
               <select class="form-select" id="country" autocomplete="country">
                 <option value="GB">United Kingdom</option>
                 <option value="IE">Ireland</option>
@@ -689,15 +706,15 @@
               <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
               <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
             </svg>
-            Delivery Options
+            <span data-i18n="checkout.delivery_options">Delivery Options</span>
           </div>
           <div class="delivery-options">
             <label>
               <input type="radio" name="delivery" value="standard" checked style="display:none;" />
               <div class="delivery-opt-inner active" id="opt-standard" onclick="selectDelivery('standard', this)">
                 <div>
-                  <div class="delivery-opt-label">Standard Delivery</div>
-                  <div class="delivery-opt-sub">3–5 business days</div>
+                  <div class="delivery-opt-label" data-i18n="checkout.standard_delivery">Standard Delivery</div>
+                  <div class="delivery-opt-sub" data-i18n="checkout.standard_days">3–5 business days</div>
                 </div>
                 <div class="delivery-opt-price free" id="delivery-standard-price">FREE</div>
               </div>
@@ -706,8 +723,8 @@
               <input type="radio" name="delivery" value="express" style="display:none;" />
               <div class="delivery-opt-inner" id="opt-express" onclick="selectDelivery('express', this)">
                 <div>
-                  <div class="delivery-opt-label">Express Delivery</div>
-                  <div class="delivery-opt-sub">Next business day · Order before 2pm</div>
+                  <div class="delivery-opt-label" data-i18n="checkout.express_delivery">Express Delivery</div>
+                  <div class="delivery-opt-sub" data-i18n="checkout.express_days">Next business day · Order before 2pm</div>
                 </div>
                 <div class="delivery-opt-price">£6.99</div>
               </div>
@@ -721,7 +738,7 @@
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
             </svg>
-            Payment
+            <span data-i18n="checkout.payment_title">Payment</span>
             <span style="margin-left:auto;font-size:10px;font-weight:700;letter-spacing:1px;background:var(--bg2);border:1.5px solid var(--border);border-radius:6px;padding:3px 10px;color:rgba(46,22,100,0.5);">
               🔒 SECURE
             </span>
@@ -729,13 +746,13 @@
 
           <div class="payment-methods">
             <div class="pay-method active" onclick="selectMethod(this,'card')">
-              <span class="pay-method-icon">💳</span> Card
+              <span class="pay-method-icon">💳</span> <span data-i18n="checkout.payment_card">Card</span>
             </div>
             <div class="pay-method" onclick="selectMethod(this,'apple')">
-              <span class="pay-method-icon">🍎</span> Apple Pay
+              <span class="pay-method-icon">🍎</span> <span data-i18n="checkout.payment_apple">Apple Pay</span>
             </div>
             <div class="pay-method" onclick="selectMethod(this,'google')">
-              <span class="pay-method-icon">🔵</span> Google Pay
+              <span class="pay-method-icon">🔵</span> <span data-i18n="checkout.payment_google">Google Pay</span>
             </div>
           </div>
 
@@ -748,7 +765,7 @@
           <div id="card-payment-form">
             <div class="stripe-note">
               <div class="stripe-note-icon">🔒</div>
-              <div class="stripe-note-text">
+              <div class="stripe-note-text" data-i18n-html="checkout.stripe_note">
                 Payment powered by <strong>Stripe</strong>.<br />
                 Add your Stripe publishable key to activate secure card entry.
               </div>
@@ -756,21 +773,21 @@
 
             <div class="form-row cols-2">
               <div class="form-group">
-                <label class="form-label" for="cardName">Name on Card</label>
+                <label class="form-label" for="cardName" data-i18n="checkout.card_name">Name on Card</label>
                 <input class="form-input" type="text" id="cardName" placeholder="Alex Smith" autocomplete="cc-name" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="cardNumber">Card Number</label>
+                <label class="form-label" for="cardNumber" data-i18n="checkout.card_number">Card Number</label>
                 <input class="form-input" type="text" id="cardNumber" placeholder="•••• •••• •••• ••••" maxlength="19" autocomplete="cc-number" oninput="formatCard(this)" />
               </div>
             </div>
             <div class="form-row cols-2">
               <div class="form-group">
-                <label class="form-label" for="cardExpiry">Expiry Date</label>
+                <label class="form-label" for="cardExpiry" data-i18n="checkout.card_expiry">Expiry Date</label>
                 <input class="form-input" type="text" id="cardExpiry" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp" oninput="formatExpiry(this)" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="cardCvc">CVC</label>
+                <label class="form-label" for="cardCvc" data-i18n="checkout.card_cvc">CVC</label>
                 <input class="form-input" type="text" id="cardCvc" placeholder="•••" maxlength="4" autocomplete="cc-csc" />
               </div>
             </div>
@@ -780,7 +797,7 @@
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
-            Your payment information is encrypted and never stored on our servers.
+            <span data-i18n="checkout.security_note">Your payment information is encrypted and never stored on our servers.</span>
           </div>
         </div>
 
@@ -789,24 +806,24 @@
       <!-- RIGHT: ORDER SUMMARY -->
       <div class="order-sidebar">
         <div class="order-card">
-          <div class="order-title">Order Summary</div>
+          <div class="order-title" data-i18n="checkout.order_summary">Order Summary</div>
           <div id="orderItems"><!-- rendered by JS --></div>
           <div class="order-divider"></div>
           <div class="order-row">
-            <span class="order-label">Subtotal</span>
+            <span class="order-label" data-i18n="checkout.subtotal">Subtotal</span>
             <span class="order-value" id="orderSubtotal">£0.00</span>
           </div>
           <div class="order-row">
-            <span class="order-label">Delivery</span>
+            <span class="order-label" data-i18n="checkout.delivery">Delivery</span>
             <span class="order-value" id="orderDelivery">£4.99</span>
           </div>
           <div class="order-row" id="orderDiscountRow" style="display:none;">
-            <span class="order-label">Discount</span>
+            <span class="order-label" data-i18n="checkout.discount">Discount</span>
             <span class="order-value discount" id="orderDiscount">-£0.00</span>
           </div>
           <div class="order-divider"></div>
           <div class="order-total-row">
-            <span class="order-total-label">Total</span>
+            <span class="order-total-label" data-i18n="checkout.total">Total</span>
             <span class="order-total-value" id="orderTotal">£0.00</span>
           </div>
 
@@ -816,7 +833,7 @@
           <button class="pay-btn" id="payBtn" onclick="placeOrder()">
             🔒 Pay £0.00
           </button>
-          <a href="summer-cart.html" class="back-link">← Back to Cart</a>
+          <a href="summer-cart.html" class="back-link" data-i18n="checkout.back_to_cart">← Back to Cart</a>
         </div>
       </div>
 
@@ -837,35 +854,35 @@
       </div>
     </div>
     <div class="footer-col">
-      <h4>Company</h4>
+      <h4 data-i18n="footer.col_company">Company</h4>
       <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Press</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="summer-contact.html">Contact</a></li>
+        <li><a href="#" data-i18n="footer.about">About Us</a></li>
+        <li><a href="#" data-i18n="footer.careers">Careers</a></li>
+        <li><a href="#" data-i18n="footer.press">Press</a></li>
+        <li><a href="#" data-i18n="footer.blog">Blog</a></li>
+        <li><a href="summer-contact.html" data-i18n="footer.contact">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Support</h4>
+      <h4 data-i18n="footer.col_support">Support</h4>
       <ul>
-        <li><a href="#">Help Center</a></li>
-        <li><a href="#">Returns</a></li>
-        <li><a href="#">Shipping</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#" data-i18n="footer.help">Help Center</a></li>
+        <li><a href="#" data-i18n="footer.returns">Returns</a></li>
+        <li><a href="#" data-i18n="footer.shipping">Shipping</a></li>
+        <li><a href="#" data-i18n="footer.privacy">Privacy Policy</a></li>
+        <li><a href="#" data-i18n="footer.terms">Terms of Service</a></li>
       </ul>
     </div>
     <div class="footer-newsletter">
-      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;">Stay Updated</h4>
-      <p>Join our newsletter for exclusive summer offers and new drop alerts.</p>
+      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;" data-i18n="footer.newsletter_title">Stay Updated</h4>
+      <p data-i18n="footer.newsletter_desc">Join our newsletter for exclusive summer offers and new drop alerts.</p>
       <div class="newsletter-row">
-        <input type="email" placeholder="Email address" />
-        <button>Subscribe</button>
+        <input type="email" placeholder="Email address" data-i18n-placeholder="footer.newsletter_placeholder" />
+        <button data-i18n="footer.newsletter_btn">Subscribe</button>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div class="footer-bottom" data-i18n-html="footer.copyright">
     © 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
   </div>
 </footer>
@@ -875,7 +892,7 @@
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
   </svg>
-  <span class="cb-label">Contact Us</span>
+  <span class="cb-label" data-i18n="contact_btn">Contact Us</span>
 </a>
 
 <!-- TOAST -->

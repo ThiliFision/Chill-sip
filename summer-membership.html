@@ -42,6 +42,22 @@
     .nav-icons { display: flex; align-items: center; gap: 16px; }
     .cart-btn-nav { display: flex; align-items: center; gap: 6px; background: var(--purple); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
     .cart-btn-nav:hover { background: var(--brand); }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
+
     .theme-toggle { display: flex; align-items: center; gap: 6px; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; text-decoration: none; white-space: nowrap; }
     .theme-toggle:hover { background: #eee; }
 
@@ -267,12 +283,13 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
-  <p>☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
+  <p data-i18n-html="promo.text">☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
   <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
 </div>
 
@@ -281,14 +298,14 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html">For Companies</a>
-      <a href="summer-virgin.html">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle">🌙 Night Edition</a>
+      <a href="#" class="theme-toggle" data-i18n="nav.night">🌙 Night Edition</a>
       <a href="summer-cart.html" class="cart-btn-nav">🛒 Cart</a>
     </div>
   </div>
@@ -297,9 +314,9 @@
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div class="container" style="position:relative;z-index:1;">
-    <div class="page-tag">⭐ Loyalty Programme</div>
-    <h1 class="page-title">Chill Sip <span>Members</span></h1>
-    <p class="page-sub">Earn points with every order. Collect 10 points and get a free packet — delivered straight to your inbox or phone.</p>
+    <div class="page-tag" data-i18n="membership.page_tag">⭐ Loyalty Programme</div>
+    <h1 class="page-title" data-i18n-html="membership.page_title">Chill Sip <span>Members</span></h1>
+    <p class="page-sub" data-i18n="membership.page_sub">Earn points with every order. Collect 10 points and get a free packet — delivered straight to your inbox or phone.</p>
   </div>
 </div>
 
@@ -312,13 +329,13 @@
       <div class="auth-options">
         <div class="auth-option-card join-card" onclick="showJoin()">
           <div class="auth-option-icon">🌟</div>
-          <div class="auth-option-title">Join Free</div>
-          <div class="auth-option-sub">Create your membership with just your email and phone. Start earning points today.</div>
+          <div class="auth-option-title" data-i18n="membership.join_title">Join Free</div>
+          <div class="auth-option-sub" data-i18n="membership.join_sub">Create your membership with just your email and phone. Start earning points today.</div>
         </div>
         <div class="auth-option-card login-card" onclick="showLogin()">
           <div class="auth-option-icon">🔑</div>
-          <div class="auth-option-title">Member Login</div>
-          <div class="auth-option-sub">Already a member? Log in to check your points and rewards.</div>
+          <div class="auth-option-title" data-i18n="membership.login_title">Member Login</div>
+          <div class="auth-option-sub" data-i18n="membership.login_sub">Already a member? Log in to check your points and rewards.</div>
         </div>
       </div>
     </div>
@@ -326,36 +343,36 @@
     <!-- JOIN FORM -->
     <div id="joinScreen" style="display:none;">
       <div class="form-panel">
-        <div class="form-panel-title">Create Membership</div>
-        <div class="form-panel-sub">Free to join. No password needed — we identify you by your email and phone number.</div>
+        <div class="form-panel-title" data-i18n="membership.form_join_title">Create Membership</div>
+        <div class="form-panel-sub" data-i18n="membership.form_join_sub">Free to join. No password needed — we identify you by your email and phone number.</div>
         <div class="form-group">
-          <label class="form-label">Email Address</label>
+          <label class="form-label" data-i18n="membership.email">Email Address</label>
           <input class="form-input" type="email" id="joinEmail" placeholder="you@example.com" autocomplete="email" />
         </div>
         <div class="form-group">
-          <label class="form-label">Phone Number</label>
+          <label class="form-label" data-i18n="membership.phone">Phone Number</label>
           <input class="form-input" type="tel" id="joinPhone" placeholder="+44 7700 900000" autocomplete="tel" />
         </div>
-        <button class="submit-btn" onclick="doJoin()">Create My Membership →</button>
+        <button class="submit-btn" onclick="doJoin()" data-i18n="membership.create_btn">Create My Membership →</button>
         <div class="form-divider"></div>
-        <div class="switch-mode">Already a member? <a onclick="showLogin()">Log in here</a></div>
-        <span class="back-link" onclick="showAuth()">← Back</span>
+        <div class="switch-mode"><span data-i18n="membership.already_member">Already a member?</span> <a onclick="showLogin()" data-i18n="membership.login_here">Log in here</a></div>
+        <span class="back-link" onclick="showAuth()" data-i18n="membership.back">← Back</span>
       </div>
     </div>
 
     <!-- LOGIN FORM -->
     <div id="loginScreen" style="display:none;">
       <div class="form-panel">
-        <div class="form-panel-title">Member Login</div>
-        <div class="form-panel-sub">Enter your registered email address to access your membership dashboard.</div>
+        <div class="form-panel-title" data-i18n="membership.form_login_title">Member Login</div>
+        <div class="form-panel-sub" data-i18n="membership.form_login_sub">Enter your registered email address to access your membership dashboard.</div>
         <div class="form-group">
-          <label class="form-label">Email Address</label>
+          <label class="form-label" data-i18n="membership.email">Email Address</label>
           <input class="form-input" type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
         </div>
-        <button class="submit-btn" onclick="doLogin()">Access My Account →</button>
+        <button class="submit-btn" onclick="doLogin()" data-i18n="membership.access_btn">Access My Account →</button>
         <div class="form-divider"></div>
-        <div class="switch-mode">Not a member yet? <a onclick="showJoin()">Join for free</a></div>
-        <span class="back-link" onclick="showAuth()">← Back</span>
+        <div class="switch-mode"><span data-i18n="membership.not_member">Not a member yet?</span> <a onclick="showJoin()" data-i18n="membership.join_free">Join for free</a></div>
+        <span class="back-link" onclick="showAuth()" data-i18n="membership.back">← Back</span>
       </div>
     </div>
 
@@ -367,41 +384,41 @@
         <div class="member-card">
           <div class="member-avatar" id="memberAvatar">?</div>
           <div class="member-details">
-            <div class="member-greeting">Welcome back</div>
+            <div class="member-greeting" data-i18n="membership.welcome_back">Welcome back</div>
             <div class="member-email" id="memberEmail">—</div>
             <div class="member-phone" id="memberPhone">—</div>
           </div>
           <div class="member-meta">
-            <div class="member-id-label">Member ID</div>
+            <div class="member-id-label" data-i18n="membership.member_id_label">Member ID</div>
             <div class="member-id" id="memberId">—</div>
-            <div class="member-badge">⭐ Gold Member</div>
-            <span class="logout-link" onclick="doLogout()">Log out</span>
+            <div class="member-badge" data-i18n="membership.gold_member">⭐ Gold Member</div>
+            <span class="logout-link" onclick="doLogout()" data-i18n="membership.log_out">Log out</span>
           </div>
         </div>
 
         <!-- Stats -->
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-label">Points Balance</div>
+            <div class="stat-label" data-i18n="membership.stat_points">Points Balance</div>
             <div class="stat-value purple" id="statPoints">0</div>
-            <div class="stat-sub">1 pt = £1 value</div>
+            <div class="stat-sub" data-i18n="membership.stat_pts_sub">1 pt = £1 value</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Products Bought</div>
+            <div class="stat-label" data-i18n="membership.stat_purchases">Products Bought</div>
             <div class="stat-value" id="statPurchases">0</div>
-            <div class="stat-sub">10 products = 1 pt</div>
+            <div class="stat-sub" data-i18n="membership.stat_purchases_sub">10 products = 1 pt</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Free Packets Earned</div>
+            <div class="stat-label" data-i18n="membership.stat_rewards">Free Packets Earned</div>
             <div class="stat-value green" id="statRewards">0</div>
-            <div class="stat-sub">Lifetime total</div>
+            <div class="stat-sub" data-i18n="membership.stat_rewards_sub">Lifetime total</div>
           </div>
         </div>
 
         <!-- Progress -->
         <div class="progress-block">
           <div class="progress-block-title">
-            <span>Progress to Free Packet</span>
+            <span data-i18n="membership.progress_title">Progress to Free Packet</span>
             <span id="progressText" style="color:var(--purple);">0 / 10 pts</span>
           </div>
           <div class="progress-bar-track">
@@ -419,7 +436,7 @@
 
         <!-- History -->
         <div class="history-block">
-          <div class="history-title">Points History</div>
+          <div class="history-title" data-i18n="membership.history_title">Points History</div>
           <div id="historyList"><div class="history-empty">No purchases yet. <a href="summer-shop.html" style="color:var(--purple);text-decoration:none;font-weight:700;">Start shopping →</a></div></div>
         </div>
 
@@ -447,7 +464,7 @@
 <!-- FLOATING CONTACT -->
 <a href="summer-contact.html" class="contact-btn" title="Contact us">
   <span>✉</span>
-  <span class="cb-label">Contact Us</span>
+  <span class="cb-label" data-i18n="contact_btn">Contact Us</span>
 </a>
 
 <!-- TOAST -->

@@ -91,6 +91,21 @@
       width: 18px; height: 18px; font-size: 10px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
     }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
     /* Theme toggle */
     .theme-toggle {
       display: flex; align-items: center; gap: 6px;
@@ -317,13 +332,14 @@
 
     /* ── CAROUSEL ── */
     .fav-carousel-outer {
-      position: relative; max-width: 1200px; margin: 40px auto 0;
+      max-width: 1200px; margin: 40px auto 0; padding: 0 16px;
     }
     .fav-carousel {
+      flex: 1; min-width: 0;
       display: flex; gap: 20px;
       overflow-x: auto; scroll-snap-type: x mandatory;
       scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-      padding: 12px 48px 24px;
+      padding: 12px 12px 24px;
       scrollbar-width: none;
     }
     .fav-carousel::-webkit-scrollbar { display: none; }
@@ -332,21 +348,25 @@
     .fav-carousel .uni-card {
       flex: 1 0 300px; min-width: 300px; max-width: 380px;
       scroll-snap-align: start;
-      height: 520px;
+      min-height: 520px; height: auto;
     }
     .fav-carousel .uni-img {
       height: 220px; flex-shrink: 0; overflow: hidden;
     }
     .fav-carousel .uni-body {
-      flex: 1; overflow: hidden;
+      flex: 1; overflow: visible;
       text-align: center; align-items: center;
     }
     .fav-carousel .uni-rating { justify-content: center; }
     .fav-carousel .uni-footer { justify-content: center; gap: 16px; }
 
     /* Arrow buttons */
+    .fav-carousel-wrap {
+      display: flex; align-items: center; gap: 16px;
+      max-width: 1200px; margin: 0 auto;
+    }
     .fav-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
+      flex-shrink: 0;
       z-index: 10; width: 48px; height: 48px; border-radius: 50%;
       background: #fff; border: 2px solid var(--border);
       box-shadow: 0 4px 18px rgba(46,22,100,0.14);
@@ -354,9 +374,7 @@
       font-size: 18px; cursor: pointer; transition: background 0.18s, border-color 0.18s, transform 0.15s;
       color: var(--text); user-select: none;
     }
-    .fav-arrow:hover { background: var(--purple); border-color: var(--purple); color: #fff; transform: translateY(-50%) scale(1.08); }
-    .fav-arrow.left  { left: 8px; }
-    .fav-arrow.right { right: 8px; }
+    .fav-arrow:hover { background: var(--purple); border-color: var(--purple); color: #fff; transform: scale(1.08); }
     .fav-arrow:disabled { opacity: 0.3; pointer-events: none; }
 
     /* ── UNIFIED PRODUCT CARD ── */
@@ -373,6 +391,7 @@
     .uni-card.uni-orange { background: #f5ede0; border-color: var(--orange); }
     .uni-card.uni-pink   { background: #ffe8f2; border-color: var(--pink); }
     .uni-card.uni-green  { background: #edfce7; border-color: var(--green); }
+    .uni-card.uni-purple { background: rgba(226,215,255,0.55); border-color: var(--purple); }
 
     .uni-img {
       position: relative; width: 100%; height: 280px;
@@ -878,6 +897,7 @@
     html.night-edition .uni-card.uni-orange{background:rgba(251,146,60,.10) !important;border-color:var(--orange) !important}
     html.night-edition .uni-card.uni-pink{background:rgba(255,110,184,.10) !important;border-color:var(--pink) !important}
     html.night-edition .uni-card.uni-green{background:rgba(74,222,128,.08) !important;border-color:var(--green) !important}
+    html.night-edition .uni-card.uni-purple{background:rgba(108,43,255,.10) !important;border-color:var(--purple) !important}
     html.night-edition .rc,
     html.night-edition .summary-card,
     html.night-edition .cart-item,
@@ -934,6 +954,7 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
@@ -942,20 +963,20 @@
   <div class="age-box">
     <span class="age-logo">Chill Sip</span>
     <span class="age-icon">🍹</span>
-    <div class="age-title">How old are you?</div>
-    <p class="age-sub">Some of our cocktails contain alcohol. Tell us your age so we can show you the right range for you.</p>
+    <div class="age-title" data-i18n="age.title">How old are you?</div>
+    <p class="age-sub" data-i18n="age.sub">Some of our cocktails contain alcohol. Tell us your age so we can show you the right range for you.</p>
     <div class="age-btns">
-      <button class="age-btn-yes" onclick="ageVerify(true)">I'm 18 or over</button>
-      <button class="age-btn-no"  onclick="ageVerify(false)">I'm under 18</button>
+      <button class="age-btn-yes" onclick="ageVerify(true)" data-i18n="age.yes">I'm 18 or over</button>
+      <button class="age-btn-no"  onclick="ageVerify(false)" data-i18n="age.no">I'm under 18</button>
     </div>
-    <p class="age-minor-msg" id="ageMinorMsg">No problem! You can still enjoy our full range of <strong>Virgin Cocktails</strong> — same great taste, zero alcohol. Redirecting to your menu…</p>
-    <p class="age-legal">By entering you confirm your age is accurate. Please drink responsibly. 18+</p>
+    <p class="age-minor-msg" id="ageMinorMsg" data-i18n-html="age.minor">No problem! You can still enjoy our full range of <strong>Virgin Cocktails</strong> — same great taste, zero alcohol. Redirecting to your menu…</p>
+    <p class="age-legal" data-i18n="age.legal">By entering you confirm your age is accurate. Please drink responsibly. 18+</p>
   </div>
 </div>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
-  <p>☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
+  <p data-i18n-html="promo.text">☀️ Summer Vibes Sale! &nbsp; Use code <span class="promo-code">SUMMER20</span> for 20% off</p>
   <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
 </div>
 
@@ -964,14 +985,19 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html">For Companies</a>
-      <a href="summer-virgin.html">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle" title="Night Edition">🌙 Night Edition</a>
+      <div class="lang-switch" aria-label="Language selector">
+        <button class="lang-btn active" data-lang="en" onclick="window.i18n.setLang('en')">EN</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" data-lang="es" onclick="window.i18n.setLang('es')">ES</button>
+      </div>
+      <a href="#" class="theme-toggle" title="Night Edition" data-i18n="nav.night">🌙 Night Edition</a>
       <!-- Account icon -->
       <button class="nav-icon-btn" onclick="window.location='summer-membership.html'" title="Account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -985,7 +1011,7 @@
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-        Cart <span class="cart-count-badge" id="cartCount">0</span>
+        <span data-i18n="nav.cart">Cart</span> <span class="cart-count-badge" id="cartCount">0</span>
       </a>
     </div>
   </div>
@@ -1000,16 +1026,16 @@
   <!-- Ticker at the very top of the hero — full width, end to end -->
   <div class="hero-ticker" onclick="openSampleModal()" role="button" aria-label="Order a free sample set">
     <div class="hero-ticker-track">
-      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🎁 Order a free sample set of cocktails · Chill your day on us</span>
-      <span>🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_gift">🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_drink">🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_gift">🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_drink">🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_gift">🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_drink">🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_gift">🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_drink">🍹 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_gift">🎁 Order a free sample set of cocktails · Chill your day on us</span>
+      <span data-i18n="hero.ticker_drink">🍹 Order a free sample set of cocktails · Chill your day on us</span>
     </div>
   </div>
 
@@ -1031,22 +1057,22 @@
         <div class="hb" style="left:42%; width:9px;  height:9px;  animation-duration:7.5s; animation-delay:6s;    --drift:-7px;"></div>
       </div>
       <div class="hero-text-stack">
-        <div class="hero-eyebrow">🍹 Premium Cocktail Pouches · Summer 2026</div>
-        <div class="hero-headline">
+        <div class="hero-eyebrow" data-i18n="hero.eyebrow">🍹 Premium Cocktail Pouches · Summer 2026</div>
+        <div class="hero-headline" data-i18n-html="hero.headline">
           Rip it. Drink it.<br>
           <span class="own grad-text">Own the Day.</span>
         </div>
-        <p class="hero-sub">Ready-to-drink cocktail packets with easy grip — made for the sunniest days of your life.</p>
+        <p class="hero-sub" data-i18n="hero.sub">Ready-to-drink cocktail packets with easy grip — made for the sunniest days of your life.</p>
         <div class="hero-flavour-pills">
-          <a href="summer-cocktails.html#tropical" class="flavour-pill active">🍍 Pineapple</a>
-          <a href="summer-cocktails.html#citrus"   class="flavour-pill">Passion Fruit</a>
-          <a href="summer-cocktails.html#festival" class="flavour-pill">🍓 Strawberry</a>
+          <a href="summer-cocktails.html#tropical" class="flavour-pill active" data-i18n="hero.pill_pineapple">🍍 Pineapple</a>
+          <a href="summer-cocktails.html#citrus"   class="flavour-pill" data-i18n="hero.pill_passion">Passion Fruit</a>
+          <a href="summer-cocktails.html#festival" class="flavour-pill" data-i18n="hero.pill_strawberry">🍓 Strawberry</a>
         </div>
         <div class="hero-ctas">
-          <a href="summer-shop.html" class="btn-summer-primary">VIEW FULL SHOP ↗</a>
-          <a href="summer-cocktails.html" class="btn-summer-outline">OUR COCKTAILS</a>
+          <a href="summer-shop.html" class="btn-summer-primary" data-i18n="hero.cta_shop">VIEW FULL SHOP ↗</a>
+          <a href="summer-cocktails.html" class="btn-summer-outline" data-i18n="hero.cta_cocktails">OUR COCKTAILS</a>
         </div>
-        <div class="hero-trust">⭐ 4.9 rated &nbsp;·&nbsp; 🚚 Free UK delivery &nbsp;·&nbsp; No subscription</div>
+        <div class="hero-trust" data-i18n-html="hero.trust">⭐ 4.9 rated &nbsp;·&nbsp; 🚚 Free UK delivery &nbsp;·&nbsp; No subscription</div>
       </div>
     </div>
 
@@ -1056,8 +1082,8 @@
       <div class="hero-cocktail-badge">
         <div class="hero-badge-icon">🍹</div>
         <div>
-          <div class="hero-badge-title">Ready-to-Drink</div>
-          <div class="hero-badge-sub">Premium Cocktails</div>
+          <div class="hero-badge-title" data-i18n="hero.badge_title">Ready-to-Drink</div>
+          <div class="hero-badge-sub" data-i18n="hero.badge_sub">Premium Cocktails</div>
         </div>
       </div>
       <div class="hero-bubbles" aria-hidden="true">
@@ -1096,33 +1122,33 @@
 <!-- MOST FAVOURITE -->
 <section class="fav-sec" id="favourites">
   <div class="container">
-    <div class="fav-section-label">⭐ Community Picks</div>
-    <h2 class="fav-h2">MOST FAVOURITE</h2>
-    <p class="fav-desc-header">The packets our community can't stop ordering</p>
+    <div class="fav-section-label" data-i18n="fav.label">⭐ Community Picks</div>
+    <h2 class="fav-h2" data-i18n="fav.title">MOST FAVOURITE</h2>
+    <p class="fav-desc-header" data-i18n="fav.desc">The packets our community can't stop ordering</p>
   </div>
 
   <!-- Wall-to-wall carousel -->
   <div class="fav-carousel-outer">
-    <button class="fav-arrow left"  id="favPrev" onclick="favScroll(-1)" aria-label="Previous">&#8592;</button>
-    <button class="fav-arrow right" id="favNext" onclick="favScroll(1)"  aria-label="Next">&#8594;</button>
-    <div class="fav-carousel" id="favCarousel">
+    <div class="fav-carousel-wrap">
+      <button class="fav-arrow left"  id="favPrev" onclick="favScroll(-1)" aria-label="Previous">&#8592;</button>
+      <div class="fav-carousel" id="favCarousel">
 
       <!-- Card 1 — Pineapple -->
       <div class="uni-card uni-cyan">
         <div class="uni-img">
-          <span class="uni-badge uni-cyan">Best Seller</span>
+          <span class="uni-badge uni-cyan" data-i18n="fav.badge_bestseller">Best Seller</span>
           <img src="images/product-packet/Container.png" alt="Pineapple &amp; Pisco" />
         </div>
         <div class="uni-body">
-          <div class="uni-name">Pineapple &amp; Pisco</div>
-          <div class="uni-desc">Sharp Peruvian Pisco meets cold-pressed golden pineapple. Tear it. Mix it. Go.</div>
+          <div class="uni-name" data-i18n="fav.card1_name">Pineapple &amp; Pisco</div>
+          <div class="uni-desc" data-i18n="fav.card1_desc">Sharp Peruvian Pisco meets cold-pressed golden pineapple. Tear it. Mix it. Go.</div>
           <div class="uni-rating">
             <span class="uni-stars">★★★★★</span>
             <span class="uni-rnum">4.8 (124 reviews)</span>
           </div>
           <div class="uni-footer">
-            <div class="uni-price">£1.99 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')">🛒 Add to Cart</button>
+            <div class="uni-price">£1.99 <span data-i18n="fav.unit">/ unit</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')" data-i18n="fav.add_to_cart">🛒 Add to Cart</button>
           </div>
         </div>
       </div>
@@ -1130,19 +1156,19 @@
       <!-- Card 2 — Exotic Passion -->
       <div class="uni-card uni-orange">
         <div class="uni-img">
-          <span class="uni-badge uni-orange">Fan Favourite</span>
+          <span class="uni-badge uni-orange" data-i18n="fav.badge_fanfav">Fan Favourite</span>
           <img src="images/product-packet/Exotic%20Passion.png" alt="Exotic Passion" />
         </div>
         <div class="uni-body">
-          <div class="uni-name">Exotic Passion</div>
-          <div class="uni-desc">Tropical passion fruit with a citrus edge. The one that always runs out first.</div>
+          <div class="uni-name" data-i18n="fav.card2_name">Exotic Passion</div>
+          <div class="uni-desc" data-i18n="fav.card2_desc">Tropical passion fruit with a citrus edge. The one that always runs out first.</div>
           <div class="uni-rating">
             <span class="uni-stars">★★★★★</span>
             <span class="uni-rnum">4.9 (98 reviews)</span>
           </div>
           <div class="uni-footer">
-            <div class="uni-price">£2.49 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')">🛒 Add to Cart</button>
+            <div class="uni-price">£2.49 <span data-i18n="fav.unit">/ unit</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')" data-i18n="fav.add_to_cart">🛒 Add to Cart</button>
           </div>
         </div>
       </div>
@@ -1150,19 +1176,19 @@
       <!-- Card 3 — Strawberry & Mint -->
       <div class="uni-card uni-pink">
         <div class="uni-img">
-          <span class="uni-badge uni-pink">Top Rated</span>
+          <span class="uni-badge uni-pink" data-i18n="fav.badge_toprated">Top Rated</span>
           <img src="images/product-packet/Refreshing.png" alt="Strawberry &amp; Mint" />
         </div>
         <div class="uni-body">
-          <div class="uni-name">Strawberry &amp; Mint</div>
-          <div class="uni-desc">Fresh strawberry with a cool mint finish. Summer in a packet — any time of year.</div>
+          <div class="uni-name" data-i18n="fav.card3_name">Strawberry &amp; Mint</div>
+          <div class="uni-desc" data-i18n="fav.card3_desc">Fresh strawberry with a cool mint finish. Summer in a packet — any time of year.</div>
           <div class="uni-rating">
             <span class="uni-stars">★★★★★</span>
             <span class="uni-rnum">4.8 (87 reviews)</span>
           </div>
           <div class="uni-footer">
-            <div class="uni-price">£2.49 <span>/ unit</span></div>
-            <button class="uni-btn" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')">🛒 Add to Cart</button>
+            <div class="uni-price">£2.49 <span data-i18n="fav.unit">/ unit</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')" data-i18n="fav.add_to_cart">🛒 Add to Cart</button>
           </div>
         </div>
       </div>
@@ -1170,7 +1196,7 @@
       <!-- Card 4 — Bundle -->
       <div class="uni-card uni-green">
         <div class="uni-img" style="padding:0;">
-          <span class="uni-badge uni-green">Bundle Deal</span>
+          <span class="uni-badge uni-green" data-i18n="fav.badge_bundle">Bundle Deal</span>
           <div class="bundle-fan">
             <img src="images/product-packet/Refreshing.png" alt="Strawberry" />
             <img src="images/product-packet/Container.png" alt="Pineapple" />
@@ -1179,19 +1205,19 @@
           <div class="bundle-disc"><span class="pct">20%</span><span class="off">OFF</span></div>
         </div>
         <div class="uni-body">
-          <div class="uni-name">Triple Pack Bundle</div>
-          <div class="uni-desc">Buy 3 packets and get 20% off the total price. Mix any flavours.</div>
+          <div class="uni-name" data-i18n="fav.card4_name">Triple Pack Bundle</div>
+          <div class="uni-desc" data-i18n="fav.card4_desc">Buy 3 packets and get 20% off the total price. Mix any flavours.</div>
           <div class="uni-rating">
             <span class="uni-stars">★★★★★</span>
             <span class="uni-rnum">4.9 (211 reviews)</span>
           </div>
-          <div class="uni-footer" style="flex-direction:column; align-items:flex-start;">
-            <div>
-              <div class="uni-price-old">£7.47</div>
-              <div class="uni-price-new">£5.97</div>
-              <div class="uni-save">You save £1.50 (20% off)</div>
-            </div>
-            <button class="uni-btn" onclick="sumAddToCart('Triple Pack Bundle','5.97','images/product-packet/Three%20wonders.png')" style="width:100%;justify-content:center;">🛒 Get Bundle</button>
+          <div style="text-align:center; margin-bottom:6px;">
+            <div class="uni-price-old">£7.47</div>
+            <div class="uni-save" data-i18n="fav.card4_save">You save £1.50 (20% off)</div>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price"><span>£5.97</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Triple Pack Bundle','5.97','images/product-packet/Three%20wonders.png')" data-i18n="fav.get_bundle">🛒 Get Bundle</button>
           </div>
         </div>
       </div>
@@ -1199,7 +1225,7 @@
       <!-- Card 5 — Double Pack Deal -->
       <div class="uni-card uni-purple">
         <div class="uni-img" style="padding:0;">
-          <span class="uni-badge uni-purple">Best Value</span>
+          <span class="uni-badge uni-purple" data-i18n="fav.badge_bestvalue">Best Value</span>
           <div class="bundle-fan duo-fan">
             <img src="images/product-packet/Container.png" alt="Pineapple" />
             <img src="images/product-packet/Exotic%20Passion.png" alt="Passion" />
@@ -1207,29 +1233,31 @@
           <div class="bundle-disc" style="background:var(--purple);color:#fff;"><span class="pct">10%</span><span class="off">OFF</span></div>
         </div>
         <div class="uni-body">
-          <div class="uni-name">Double Pack Deal</div>
-          <div class="uni-desc">Pick any 2 flavours and get 10% off. Mix, match, and save — every single order.</div>
+          <div class="uni-name" data-i18n="fav.card5_name">Double Pack Deal</div>
+          <div class="uni-desc" data-i18n="fav.card5_desc">Pick any 2 flavours and get 10% off. Mix, match, and save — every single order.</div>
           <div class="uni-rating">
             <span class="uni-stars">★★★★★</span>
             <span class="uni-rnum">4.8 (56 reviews)</span>
           </div>
-          <div class="uni-footer" style="flex-direction:column;align-items:center;gap:10px;">
-            <div style="text-align:center;">
-              <div class="uni-price-old">£4.98</div>
-              <div class="uni-price-new">£4.48</div>
-              <div class="uni-save">You save £0.50 (10% off)</div>
-            </div>
-            <button class="uni-btn" onclick="sumAddToCart('Double Pack Deal','4.48','images/product-packet/Container.png')" style="width:100%;justify-content:center;">🛒 Get Deal</button>
+          <div style="text-align:center; margin-bottom:6px;">
+            <div class="uni-price-old">£4.98</div>
+            <div class="uni-save" data-i18n="fav.card5_save">You save £0.50 (10% off)</div>
+          </div>
+          <div class="uni-footer">
+            <div class="uni-price"><span>£4.48</span></div>
+            <button class="uni-btn" onclick="sumAddToCart('Double Pack Deal','4.48','images/product-packet/Container.png')" data-i18n="fav.get_deal">🛒 Get Deal</button>
           </div>
         </div>
       </div>
 
-    </div><!-- end fav-carousel -->
+      </div><!-- end fav-carousel -->
+      <button class="fav-arrow right" id="favNext" onclick="favScroll(1)"  aria-label="Next">&#8594;</button>
+    </div><!-- end fav-carousel-wrap -->
   </div><!-- end fav-carousel-outer -->
 
   <div class="container">
     <div class="view-all-wrap">
-      <a href="summer-shop.html" class="btn-view-all">VIEW FULL SHOP →</a>
+      <a href="summer-shop.html" class="btn-view-all" data-i18n="fav.view_all">VIEW FULL SHOP →</a>
     </div>
   </div>
 </section>
@@ -1237,24 +1265,24 @@
 <!-- HOW IT WORKS -->
 <section class="how-sec" id="how">
   <div class="container">
-    <div class="how-label">How it works</div>
-    <h2 class="how-h2">TWO STEPS. ZERO LIMITS.</h2>
-    <p class="how-sub">No bartenders. No queue. Just you and the packet.</p>
+    <div class="how-label" data-i18n="how.label">How it works</div>
+    <h2 class="how-h2" data-i18n="how.title">TWO STEPS. ZERO LIMITS.</h2>
+    <p class="how-sub" data-i18n="how.sub">No bartenders. No queue. Just you and the packet.</p>
     <div class="how-steps">
       <div class="how-step">
         <img src="https://www.figma.com/api/mcp/asset/ac74832d-434f-4a67-b10f-658515349ff5" alt="Rip it" />
         <div class="how-step-body">
-          <div class="how-step-num">Step 01</div>
-          <div class="how-step-title">Rip it</div>
-          <div class="how-step-desc">Tear the packet along the perforated edge. One clean rip and you're ready. No tools, no mess.</div>
+          <div class="how-step-num" data-i18n="how.step1_num">Step 01</div>
+          <div class="how-step-title" data-i18n="how.step1_title">Rip it</div>
+          <div class="how-step-desc" data-i18n="how.step1_desc">Tear the packet along the perforated edge. One clean rip and you're ready. No tools, no mess.</div>
         </div>
       </div>
       <div class="how-step">
         <img src="https://www.figma.com/api/mcp/asset/c0355ead-af84-46af-b5ce-5635694777ff" alt="Drink it" />
         <div class="how-step-body">
-          <div class="how-step-num">Step 02</div>
-          <div class="how-step-title">Drink it</div>
-          <div class="how-step-desc">Sip, share, repeat. No bad drinks. No waiting. Just the night you actually wanted.</div>
+          <div class="how-step-num" data-i18n="how.step2_num">Step 02</div>
+          <div class="how-step-title" data-i18n="how.step2_title">Drink it</div>
+          <div class="how-step-desc" data-i18n="how.step2_desc">Sip, share, repeat. No bad drinks. No waiting. Just the night you actually wanted.</div>
         </div>
       </div>
     </div>
@@ -1266,21 +1294,21 @@
   <div class="container">
     <div class="vibe-header">
       <div>
-        <div class="vibe-label">The Lineup</div>
-        <h2 class="vibe-h2">Pick Your <span>Vibe</span></h2>
+        <div class="vibe-label" data-i18n="vibe.label">The Lineup</div>
+        <h2 class="vibe-h2"><span data-i18n="vibe.title">Pick Your</span> <span data-i18n="vibe.title_span">Vibe</span></h2>
       </div>
-      <a href="shop.html" class="btn-summer-outline" style="font-size:15px;padding:12px 28px;border-radius:10px;">View All Flavors</a>
+      <a href="shop.html" class="btn-summer-outline" style="font-size:15px;padding:12px 28px;border-radius:10px;" data-i18n="vibe.view_all">View All Flavors</a>
     </div>
     <div class="vibe-grid">
 
       <div class="vibe-card">
         <img src="https://www.figma.com/api/mcp/asset/54d4e325-ee3a-4213-a23b-38041cba2dc6" alt="Pineapple &amp; Pisco cocktail" />
         <div class="vibe-card-body">
-          <div class="vibe-card-vibe">The Tropical Disruptor</div>
-          <div class="vibe-card-name">Pineapple &amp; Pisco</div>
-          <div class="vibe-card-desc">A sharp, electrified blend of Peruvian Pisco, cold-pressed golden pineapple, and volcanic salt. Finished with vapor-infused lime zest.</div>
+          <div class="vibe-card-vibe" data-i18n="vibe.card1_vibe">The Tropical Disruptor</div>
+          <div class="vibe-card-name" data-i18n="vibe.card1_name">Pineapple &amp; Pisco</div>
+          <div class="vibe-card-desc" data-i18n="vibe.card1_desc">A sharp, electrified blend of Peruvian Pisco, cold-pressed golden pineapple, and volcanic salt. Finished with vapor-infused lime zest.</div>
           <div class="vibe-card-footer">
-            <button class="btn-order yellow" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')">Order Now</button>
+            <button class="btn-order yellow" onclick="sumAddToCart('Pineapple & Pisco','1.99','images/product-packet/Container.png')" data-i18n="vibe.order_now">Order Now</button>
           </div>
         </div>
       </div>
@@ -1288,11 +1316,11 @@
       <div class="vibe-card">
         <img src="https://www.figma.com/api/mcp/asset/a0e8862b-fdcc-4439-a0db-6b5c067af636" alt="Strawberry cocktail" />
         <div class="vibe-card-body">
-          <div class="vibe-card-vibe">The Neon Refresh</div>
-          <div class="vibe-card-name">Strawberry, Lemon &amp; Mint</div>
-          <div class="vibe-card-desc">Muddled forest strawberries and cryogenic mint with bright lemon. Craft-inspired. Freezing, aromatic, and dangerously easy to drink.</div>
+          <div class="vibe-card-vibe" data-i18n="vibe.card2_vibe">The Neon Refresh</div>
+          <div class="vibe-card-name" data-i18n="vibe.card2_name">Strawberry, Lemon &amp; Mint</div>
+          <div class="vibe-card-desc" data-i18n="vibe.card2_desc">Muddled forest strawberries and cryogenic mint with bright lemon. Craft-inspired. Freezing, aromatic, and dangerously easy to drink.</div>
           <div class="vibe-card-footer">
-            <button class="btn-order red" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')">Order Now</button>
+            <button class="btn-order red" onclick="sumAddToCart('Strawberry & Mint','2.49','images/product-packet/Refreshing.png')" data-i18n="vibe.order_now">Order Now</button>
           </div>
         </div>
       </div>
@@ -1300,11 +1328,11 @@
       <div class="vibe-card">
         <img src="https://www.figma.com/api/mcp/asset/7106f3a6-6037-4fb0-b86d-fd5c9854efe3" alt="Passion Fruit cocktail" />
         <div class="vibe-card-body">
-          <div class="vibe-card-vibe">High Voltage</div>
-          <div class="vibe-card-name">Passion Fruit Fusion</div>
-          <div class="vibe-card-desc">Tart passion fruit nectar, artisanal agave, and a hidden habanero hit. Exotic, vibrant, and built for high-energy nights.</div>
+          <div class="vibe-card-vibe" data-i18n="vibe.card3_vibe">High Voltage</div>
+          <div class="vibe-card-name" data-i18n="vibe.card3_name">Passion Fruit Fusion</div>
+          <div class="vibe-card-desc" data-i18n="vibe.card3_desc">Tart passion fruit nectar, artisanal agave, and a hidden habanero hit. Exotic, vibrant, and built for high-energy nights.</div>
           <div class="vibe-card-footer">
-            <button class="btn-order orange" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')">Order Now</button>
+            <button class="btn-order orange" onclick="sumAddToCart('Exotic Passion','2.49','images/product-packet/Exotic%20Passion.png')" data-i18n="vibe.order_now">Order Now</button>
           </div>
         </div>
       </div>
@@ -1321,30 +1349,30 @@
     <div class="proof-stats">
       <div class="proof-stat">
         <div class="proof-stat-num">12,500+</div>
-        <div class="proof-stat-label">Happy Customers</div>
+        <div class="proof-stat-label" data-i18n="proof.stat1_label">Happy Customers</div>
       </div>
       <div class="proof-stat-div"></div>
       <div class="proof-stat">
         <div class="proof-stat-num">47</div>
-        <div class="proof-stat-label">Events &amp; Festivals</div>
+        <div class="proof-stat-label" data-i18n="proof.stat2_label">Events &amp; Festivals</div>
       </div>
       <div class="proof-stat-div"></div>
       <div class="proof-stat">
         <div class="proof-stat-num">4.9★</div>
-        <div class="proof-stat-label">Average Rating</div>
+        <div class="proof-stat-label" data-i18n="proof.stat3_label">Average Rating</div>
       </div>
       <div class="proof-stat-div"></div>
       <div class="proof-stat">
         <div class="proof-stat-num">3</div>
-        <div class="proof-stat-label">Countries Served</div>
+        <div class="proof-stat-label" data-i18n="proof.stat4_label">Countries Served</div>
       </div>
     </div>
 
     <!-- Header -->
     <div class="proof-header">
-      <div class="proof-label">Real Reviews</div>
-      <h2 class="proof-h2">What Our Customers Say</h2>
-      <p class="proof-sub">From festival grounds to garden parties — here's what people are sipping and saying.</p>
+      <div class="proof-label" data-i18n="proof.label">Real Reviews</div>
+      <h2 class="proof-h2" data-i18n="proof.title">What Our Customers Say</h2>
+      <p class="proof-sub" data-i18n="proof.sub">From festival grounds to garden parties — here's what people are sipping and saying.</p>
     </div>
 
     <!-- Testimonial cards -->
@@ -1352,36 +1380,36 @@
 
       <div class="proof-card proof-card-orange">
         <div class="proof-stars">★★★★★</div>
-        <p class="proof-quote">"Brought these to a music festival and everyone went wild. We ran out in two hours flat — had to order more on the spot. Absolute game changer for outdoor events."</p>
+        <p class="proof-quote" data-i18n="proof.review1">"Brought these to a music festival and everyone went wild. We ran out in two hours flat — had to order more on the spot. Absolute game changer for outdoor events."</p>
         <div class="proof-author">
           <div class="proof-avatar proof-av-orange">JM</div>
           <div>
             <div class="proof-name">Jamie M.</div>
-            <div class="proof-role">Festival Goer · London</div>
+            <div class="proof-role" data-i18n="proof.review1_role">Festival Goer · London</div>
           </div>
         </div>
       </div>
 
       <div class="proof-card proof-card-cyan">
         <div class="proof-stars">★★★★★</div>
-        <p class="proof-quote">"We used Chill Sip for our corporate summer party and the feedback was incredible. Professional setup, amazing flavours, and zero mess. Will be back for every event."</p>
+        <p class="proof-quote" data-i18n="proof.review2">"We used Chill Sip for our corporate summer party and the feedback was incredible. Professional setup, amazing flavours, and zero mess. Will be back for every event."</p>
         <div class="proof-author">
           <div class="proof-avatar proof-av-cyan">SR</div>
           <div>
             <div class="proof-name">Sarah R.</div>
-            <div class="proof-role">Events Manager · Manchester</div>
+            <div class="proof-role" data-i18n="proof.review2_role">Events Manager · Manchester</div>
           </div>
         </div>
       </div>
 
       <div class="proof-card proof-card-pink">
         <div class="proof-stars">★★★★★</div>
-        <p class="proof-quote">"The Exotic Passion flavour is just unreal. I've been ordering every month since I tried it at a pop-up. The packets are so convenient — perfect for picnics and beach days."</p>
+        <p class="proof-quote" data-i18n="proof.review3">"The Exotic Passion flavour is just unreal. I've been ordering every month since I tried it at a pop-up. The packets are so convenient — perfect for picnics and beach days."</p>
         <div class="proof-author">
           <div class="proof-avatar proof-av-pink">AL</div>
           <div>
             <div class="proof-name">Aisha L.</div>
-            <div class="proof-role">Loyal Customer · Birmingham</div>
+            <div class="proof-role" data-i18n="proof.review3_role">Loyal Customer · Birmingham</div>
           </div>
         </div>
       </div>
@@ -1395,9 +1423,9 @@
   <div class="container">
 
     <div class="tasting-header">
-      <div class="tasting-label">Experience First</div>
-      <h2 class="tasting-h2">Taste Before You Commit</h2>
-      <p class="tasting-sub">Not sure which flavours are right for your event? Come taste them yourself — completely free.</p>
+      <div class="tasting-label" data-i18n="tasting.label">Experience First</div>
+      <h2 class="tasting-h2" data-i18n="tasting.title">Taste Before You Commit</h2>
+      <p class="tasting-sub" data-i18n="tasting.sub">Not sure which flavours are right for your event? Come taste them yourself — completely free.</p>
     </div>
 
     <div class="tasting-grid">
@@ -1405,44 +1433,44 @@
       <!-- Tasting Session -->
       <div class="tasting-card">
         <div class="tasting-icon">🍹</div>
-        <span class="tasting-card-tag">Most Popular</span>
-        <h3 class="tasting-card-title">Cocktail Tasting Session</h3>
-        <p class="tasting-card-desc">Book a private 45-minute tasting session with our mixologist. Try every flavour, get pairing suggestions, and find your perfect match before placing a bulk order.</p>
+        <span class="tasting-card-tag" data-i18n="tasting.card1_tag">Most Popular</span>
+        <h3 class="tasting-card-title" data-i18n="tasting.card1_title">Cocktail Tasting Session</h3>
+        <p class="tasting-card-desc" data-i18n="tasting.card1_desc">Book a private 45-minute tasting session with our mixologist. Try every flavour, get pairing suggestions, and find your perfect match before placing a bulk order.</p>
         <ul class="tasting-perks">
-          <li>Try all current flavours</li>
-          <li>Guided by our head mixologist</li>
-          <li>100% free — no commitment needed</li>
-          <li>Available weekdays &amp; weekends</li>
-          <li>Groups of up to 8 people welcome</li>
+          <li data-i18n="tasting.card1_perk1">Try all current flavours</li>
+          <li data-i18n="tasting.card1_perk2">Guided by our head mixologist</li>
+          <li data-i18n="tasting.card1_perk3">100% free — no commitment needed</li>
+          <li data-i18n="tasting.card1_perk4">Available weekdays &amp; weekends</li>
+          <li data-i18n="tasting.card1_perk5">Groups of up to 8 people welcome</li>
         </ul>
-        <a href="summer-contact.html" class="tasting-btn tasting-btn-primary">Book a Free Tasting →</a>
-        <div class="tasting-note">No credit card required · Confirm in 24 hrs</div>
+        <a href="summer-contact.html" class="tasting-btn tasting-btn-primary" data-i18n="tasting.card1_btn">Book a Free Tasting →</a>
+        <div class="tasting-note" data-i18n="tasting.card1_note">No credit card required · Confirm in 24 hrs</div>
       </div>
 
       <!-- Site Visit -->
       <div class="tasting-card tasting-card-alt">
         <div class="tasting-icon">🏭</div>
-        <h3 class="tasting-card-title">Production Site Visit</h3>
-        <p class="tasting-card-desc">See exactly how our cocktail packets are crafted. Tour our production facility, meet the team, and understand the quality behind every sip before you sign.</p>
+        <h3 class="tasting-card-title" data-i18n="tasting.card2_title">Production Site Visit</h3>
+        <p class="tasting-card-desc" data-i18n="tasting.card2_desc">See exactly how our cocktail packets are crafted. Tour our production facility, meet the team, and understand the quality behind every sip before you sign.</p>
         <ul class="tasting-perks tasting-perks-alt">
-          <li>Full facility tour (approx. 60 mins)</li>
-          <li>Meet the production &amp; quality team</li>
-          <li>Exclusive behind-the-scenes access</li>
-          <li>Sample pack included to take home</li>
-          <li>Open to trade &amp; retail buyers</li>
+          <li data-i18n="tasting.card2_perk1">Full facility tour (approx. 60 mins)</li>
+          <li data-i18n="tasting.card2_perk2">Meet the production &amp; quality team</li>
+          <li data-i18n="tasting.card2_perk3">Exclusive behind-the-scenes access</li>
+          <li data-i18n="tasting.card2_perk4">Sample pack included to take home</li>
+          <li data-i18n="tasting.card2_perk5">Open to trade &amp; retail buyers</li>
         </ul>
-        <a href="summer-contact.html" class="tasting-btn tasting-btn-outline">Request a Site Visit →</a>
-        <div class="tasting-note">For business partners &amp; events teams</div>
+        <a href="summer-contact.html" class="tasting-btn tasting-btn-outline" data-i18n="tasting.card2_btn">Request a Site Visit →</a>
+        <div class="tasting-note" data-i18n="tasting.card2_note">For business partners &amp; events teams</div>
       </div>
 
     </div>
 
     <!-- Trust bar -->
     <div class="tasting-trust">
-      <div class="trust-item"><span>🔒</span>No payment required</div>
-      <div class="trust-item"><span>📅</span>Flexible scheduling</div>
-      <div class="trust-item"><span>🤝</span>Zero sales pressure</div>
-      <div class="trust-item"><span>⭐</span>4.9-star experience</div>
+      <div class="trust-item"><span>🔒</span><span data-i18n="tasting.trust1">No payment required</span></div>
+      <div class="trust-item"><span>📅</span><span data-i18n="tasting.trust2">Flexible scheduling</span></div>
+      <div class="trust-item"><span>🤝</span><span data-i18n="tasting.trust3">Zero sales pressure</span></div>
+      <div class="trust-item"><span>⭐</span><span data-i18n="tasting.trust4">4.9-star experience</span></div>
     </div>
 
   </div>
@@ -1451,7 +1479,7 @@
 <!-- BOLD TAGLINE -->
 <section class="tagline-sec">
   <div class="container">
-    <p class="tagline-text">Your drink, your rules.<br>No bar? No problem.</p>
+    <p class="tagline-text" data-i18n-html="tagline.text">Your drink, your rules.<br>No bar? No problem.</p>
   </div>
 </section>
 
@@ -1460,7 +1488,7 @@
   <div class="footer-inner">
     <div>
       <div class="footer-logo">Chill Sip</div>
-      <p style="font-size:14px;font-weight:500;color:var(--text);opacity:0.55;margin-bottom:20px;line-height:1.5;">Ready-to-rip cocktail packets.<br>Engineered for the day you'll remember.</p>
+      <p style="font-size:14px;font-weight:500;color:var(--text);opacity:0.55;margin-bottom:20px;line-height:1.5;" data-i18n-html="footer.tagline">Ready-to-rip cocktail packets.<br>Engineered for the day you'll remember.</p>
       <div class="footer-socials">
         <a href="#" class="footer-social">f</a>
         <a href="#" class="footer-social">in</a>
@@ -1468,36 +1496,36 @@
       </div>
     </div>
     <div class="footer-col">
-      <h4>Company</h4>
+      <h4 data-i18n="footer.col_company">Company</h4>
       <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Press</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="summer-contact.html">Contact</a></li>
+        <li><a href="#" data-i18n="footer.about">About Us</a></li>
+        <li><a href="#" data-i18n="footer.careers">Careers</a></li>
+        <li><a href="#" data-i18n="footer.press">Press</a></li>
+        <li><a href="#" data-i18n="footer.blog">Blog</a></li>
+        <li><a href="summer-contact.html" data-i18n="footer.contact">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Support</h4>
+      <h4 data-i18n="footer.col_support">Support</h4>
       <ul>
-        <li><a href="#">Help Center</a></li>
-        <li><a href="#">Returns</a></li>
-        <li><a href="#">Shipping</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#" data-i18n="footer.help">Help Center</a></li>
+        <li><a href="#" data-i18n="footer.returns">Returns</a></li>
+        <li><a href="#" data-i18n="footer.shipping">Shipping</a></li>
+        <li><a href="#" data-i18n="footer.privacy">Privacy Policy</a></li>
+        <li><a href="#" data-i18n="footer.terms">Terms of Service</a></li>
       </ul>
     </div>
     <div class="footer-newsletter">
-      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;">Stay Updated</h4>
-      <p>Join our newsletter for exclusive summer offers and new drop alerts.</p>
+      <h4 style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:8px;" data-i18n="footer.newsletter_title">Stay Updated</h4>
+      <p data-i18n="footer.newsletter_desc">Join our newsletter for exclusive summer offers and new drop alerts.</p>
       <div class="newsletter-row">
-        <input type="email" placeholder="Email address" />
-        <button>Subscribe</button>
+        <input type="email" data-i18n-placeholder="footer.newsletter_placeholder" placeholder="Email address" />
+        <button data-i18n="footer.newsletter_btn">Subscribe</button>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    © 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition
+    <span data-i18n-html="footer.copyright">© 2026 Chill Sip. All rights reserved. &nbsp;·&nbsp; Summer Edition</span>
   </div>
 </footer>
 
@@ -1509,24 +1537,24 @@
     <!-- Form view -->
     <div class="sample-form-wrap" id="sampleFormWrap">
       <div class="sample-icon">🎁</div>
-      <h3 class="sample-h3">Get Your Free Sample Set</h3>
-      <p class="sample-desc">Fill in your details and we'll send a curated set of our best cocktail packets straight to your door — completely free.</p>
+      <h3 class="sample-h3" data-i18n="sample.title">Get Your Free Sample Set</h3>
+      <p class="sample-desc" data-i18n="sample.desc">Fill in your details and we'll send a curated set of our best cocktail packets straight to your door — completely free.</p>
       <form class="sample-form" id="sampleForm" onsubmit="submitSampleForm(event)">
-        <input type="email"  id="sf-email"   placeholder="Email address *"        required autocomplete="email" />
-        <input type="tel"    id="sf-phone"   placeholder="Phone number *"         required autocomplete="tel" />
-        <input type="text"   id="sf-address" placeholder="Delivery address *"     required autocomplete="street-address" />
-        <input type="text"   id="sf-city"    placeholder="City &amp; postcode *"  required autocomplete="postal-code" />
-        <textarea            id="sf-note"    placeholder="Any flavour preferences? (optional)"></textarea>
-        <button type="submit" class="sample-submit">Send My Free Sample Set →</button>
+        <input type="email"  id="sf-email"   data-i18n-placeholder="sample.email"   placeholder="Email address *"        required autocomplete="email" />
+        <input type="tel"    id="sf-phone"   data-i18n-placeholder="sample.phone"   placeholder="Phone number *"         required autocomplete="tel" />
+        <input type="text"   id="sf-address" data-i18n-placeholder="sample.address" placeholder="Delivery address *"     required autocomplete="street-address" />
+        <input type="text"   id="sf-city"    data-i18n-placeholder="sample.city"    placeholder="City &amp; postcode *"  required autocomplete="postal-code" />
+        <textarea            id="sf-note"    data-i18n-placeholder="sample.note"    placeholder="Any flavour preferences? (optional)"></textarea>
+        <button type="submit" class="sample-submit" data-i18n="sample.submit">Send My Free Sample Set →</button>
       </form>
-      <p class="sample-note">🔒 No credit card &nbsp;·&nbsp; UK delivery only &nbsp;·&nbsp; One set per address</p>
+      <p class="sample-note" data-i18n-html="sample.disclaimer">🔒 No credit card &nbsp;·&nbsp; UK delivery only &nbsp;·&nbsp; One set per address</p>
     </div>
 
     <!-- Thank you view -->
     <div class="sample-thanks" id="sampleThanks">
       <div class="sample-thanks-icon">🥳</div>
-      <h3>You're on the list!</h3>
-      <p>We've got your details. Your free sample set will be packed and on its way within 2–3 working days. Keep an eye on your inbox for tracking info.</p>
+      <h3 data-i18n="sample.thanks_title">You're on the list!</h3>
+      <p data-i18n="sample.thanks_desc">We've got your details. Your free sample set will be packed and on its way within 2–3 working days. Keep an eye on your inbox for tracking info.</p>
     </div>
   </div>
 </div>
@@ -1536,7 +1564,7 @@
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
   </svg>
-  <span class="cb-label">Contact Us</span>
+  <span class="cb-label" data-i18n="contact_btn">Contact Us</span>
 </a>
 
 <div id="sumToast">Added to cart!</div>
@@ -1585,7 +1613,7 @@
     items.forEach(i => { legacyCart[i.name] = { name: i.name, price: i.price, img: i.img, qty: i.qty }; });
     localStorage.setItem('ripSipCart', JSON.stringify(legacyCart));
     updateCartCount();
-    showToast(name + ' added to cart!');
+    showToast(name + ' — ' + (window.i18n ? window.i18n.t('toast.added') : 'Added to cart!'));
   }
 
   function showToast(msg) {

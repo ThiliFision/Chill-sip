@@ -39,6 +39,22 @@
     .nav-icons { display: flex; align-items: center; gap: 20px; }
     .cart-btn-nav { display: flex; align-items: center; gap: 6px; background: var(--purple); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
     .cart-btn-nav:hover { background: var(--brand); }
+    /* Language switcher */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 10px;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text); opacity: 0.4; font-size: 12px; font-weight: 700;
+      font-family: inherit; padding: 0 3px; transition: opacity 0.18s, color 0.18s; line-height: 1;
+    }
+    .lang-btn.active { color: var(--purple); opacity: 1; }
+    .lang-sep { color: var(--border); font-size: 11px; user-select: none; }
+    html.night-edition .lang-switch { background: rgba(176,107,255,.12); border-color: rgba(176,107,255,.25); }
+
+
     .theme-toggle { display: flex; align-items: center; gap: 6px; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer; text-decoration: none; white-space: nowrap; }
     .theme-toggle:hover { background: #eee; }
 
@@ -343,12 +359,13 @@
     });
   })();
   </script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
 <!-- PROMO BANNER -->
 <div class="promo-bar" id="promoBanner">
-  <p>☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
+  <p data-i18n-html="promo.text">☀️ Summer Vibes Sale! &nbsp;Use code&nbsp;<span class="promo-code">SUMMER20</span>&nbsp; for 20% off</p>
   <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">✕</button>
 </div>
 
@@ -357,14 +374,14 @@
   <div class="nav-inner">
     <a href="summer.html" class="nav-logo">Chill Sip</a>
     <div class="nav-links">
-      <a href="summer.html">Home</a>
-      <a href="summer-shop.html">Shop</a>
-      <a href="summer-cocktails.html">Our Cocktails</a>
-      <a href="summer-companies.html">For Companies</a>
-      <a href="summer-virgin.html" class="active">Virgin Collection</a>
+      <a href="summer.html" data-i18n="nav.home">Home</a>
+      <a href="summer-shop.html" data-i18n="nav.shop">Shop</a>
+      <a href="summer-cocktails.html" data-i18n="nav.cocktails">Our Cocktails</a>
+      <a href="summer-companies.html" data-i18n="nav.companies">For Companies</a>
+      <a href="summer-virgin.html" class="active" data-i18n="nav.virgin">Virgin Collection</a>
     </div>
     <div class="nav-icons">
-      <a href="#" class="theme-toggle">🌙 Night Edition</a>
+      <a href="#" class="theme-toggle" data-i18n="nav.night">🌙 Night Edition</a>
       <a href="summer-cart.html" class="cart-btn-nav">🛒 Cart</a>
     </div>
   </div>
@@ -377,14 +394,14 @@
   <div class="container">
     <div class="vg-hero-inner">
       <div>
-        <div class="vg-eyebrow">🌿 100% Alcohol-Free · All Ages Welcome</div>
-        <h1 class="vg-title">Our <span class="grad">Virgin Collection</span></h1>
-        <p class="vg-sub">Same real fruit. Same vibrant taste. Zero alcohol. Made for everyone — from school kids to designated drivers — because great flavour should have no age limit.</p>
+        <div class="vg-eyebrow" data-i18n="virgin.hero_eyebrow">🌿 100% Alcohol-Free · All Ages Welcome</div>
+        <h1 class="vg-title" data-i18n-html="virgin.hero_title">Our <span class="grad">Virgin Collection</span></h1>
+        <p class="vg-sub" data-i18n="virgin.hero_sub">Same real fruit. Same vibrant taste. Zero alcohol. Made for everyone — from school kids to designated drivers — because great flavour should have no age limit.</p>
         <div class="vg-hero-badges">
-          <span class="vg-badge">🚫 0% Alcohol</span>
-          <span class="vg-badge">🌱 Natural fruit</span>
-          <span class="vg-badge">👨‍👩‍👧 All ages</span>
-          <span class="vg-badge">⚡ Coming: Zero sugar</span>
+          <span class="vg-badge" data-i18n="virgin.badge_zero">🚫 0% Alcohol</span>
+          <span class="vg-badge" data-i18n="virgin.badge_natural">🌱 Natural fruit</span>
+          <span class="vg-badge" data-i18n="virgin.badge_ages">👨‍👩‍👧 All ages</span>
+          <span class="vg-badge" data-i18n="virgin.badge_sugar">⚡ Coming: Zero sugar</span>
         </div>
       </div>
       <div class="vg-hero-img">
@@ -535,7 +552,7 @@
     <div class="pk-header">
       <div class="sec-eyebrow pk-eyebrow">🌿 Section 03 — The Range</div>
       <h2 class="sec-title pk-title">Three flavours. <span class="grad">Zero alcohol.</span></h2>
-      <p class="sec-sub">Every packet is made with real fruit concentrate, no artificial colouring and absolutely no alcohol. Just shake, pour and enjoy.</p>
+      <p class="sec-sub" data-i18n="virgin.sec3_sub">Every packet is made with real fruit concentrate, no artificial colouring and absolutely no alcohol. Just shake, pour and enjoy.</p>
     </div>
 
     <div class="pk-grid">
@@ -545,10 +562,10 @@
         <div class="pk-img-area">
           <span class="pk-zero-badge">🌿 0% Alcohol</span>
           <img src="images/Pick-your-vide/Pineapple.png" alt="Virgin Pineapple Tropical" />
-          <div class="pk-no-alc-stamp">✔ No Alcohol · No Spirits</div>
+          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ No Alcohol · No Spirits</div>
         </div>
         <div class="pk-body">
-          <div class="pk-name">Virgin Pineapple Tropical</div>
+          <div class="pk-name" data-i18n="virgin.pk1_name">Virgin Pineapple Tropical</div>
           <div class="pk-desc">Cold-pressed golden pineapple with a gentle citrus lift. Sunshine in a packet — the whole family can enjoy it. Mix with soda water, coconut water or sparkling lemonade.</div>
           <div class="pk-facts">
             <span class="pk-fact">🍍 Real pineapple</span>
@@ -558,7 +575,7 @@
           </div>
           <div class="pk-footer">
             <div class="pk-price">£1.79 <span>/ unit</span></div>
-            <a href="summer-shop.html" class="pk-btn">Add to Cart →</a>
+            <a href="summer-shop.html" class="pk-btn" data-i18n="virgin.pk_btn">Add to Cart →</a>
           </div>
         </div>
       </div>
@@ -568,10 +585,10 @@
         <div class="pk-img-area">
           <span class="pk-zero-badge">🌿 0% Alcohol</span>
           <img src="images/Pick-your-vide/Passion.png" alt="Virgin Passion Fruit Fusion" />
-          <div class="pk-no-alc-stamp">✔ No Alcohol · No Spirits</div>
+          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ No Alcohol · No Spirits</div>
         </div>
         <div class="pk-body">
-          <div class="pk-name">Virgin Passion Fruit Fusion</div>
+          <div class="pk-name" data-i18n="virgin.pk2_name">Virgin Passion Fruit Fusion</div>
           <div class="pk-desc">Vibrant tropical passion fruit blended with fresh citrus zest. Exotic, fragrant and naturally sweet. Pairs beautifully with ginger beer or sparkling water for an instant tropical escape.</div>
           <div class="pk-facts">
             <span class="pk-fact">💜 Real passion fruit</span>
@@ -581,7 +598,7 @@
           </div>
           <div class="pk-footer">
             <div class="pk-price">£2.79 <span>/ unit</span></div>
-            <a href="summer-shop.html" class="pk-btn">Add to Cart →</a>
+            <a href="summer-shop.html" class="pk-btn" data-i18n="virgin.pk_btn">Add to Cart →</a>
           </div>
         </div>
       </div>
@@ -591,10 +608,10 @@
         <div class="pk-img-area">
           <span class="pk-zero-badge">🌿 0% Alcohol</span>
           <img src="images/Pick-your-vide/strawberry.png" alt="Virgin Strawberry & Mint" />
-          <div class="pk-no-alc-stamp">✔ No Alcohol · No Spirits</div>
+          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ No Alcohol · No Spirits</div>
         </div>
         <div class="pk-body">
-          <div class="pk-name">Virgin Strawberry &amp; Mint</div>
+          <div class="pk-name" data-i18n="virgin.pk3_name">Virgin Strawberry &amp; Mint</div>
           <div class="pk-desc">Fresh sun-ripened strawberry with a cool mint finish and a sharp lemon edge. The most-loved flavour in the range — now 100% alcohol-free. A refreshing classic that works at any occasion.</div>
           <div class="pk-facts">
             <span class="pk-fact">🍓 Real strawberry</span>
@@ -604,7 +621,7 @@
           </div>
           <div class="pk-footer">
             <div class="pk-price">£2.29 <span>/ unit</span></div>
-            <a href="summer-shop.html" class="pk-btn">Add to Cart →</a>
+            <a href="summer-shop.html" class="pk-btn" data-i18n="virgin.pk_btn">Add to Cart →</a>
           </div>
         </div>
       </div>
@@ -616,12 +633,12 @@
 <!-- CTA -->
 <div class="vg-cta">
   <div class="container">
-    <div class="vg-cta-eyebrow">🌿 Taste the difference</div>
-    <h2 class="vg-cta-title">Ready to try the <span class="grad">Virgin range?</span></h2>
-    <p class="vg-cta-sub">Order a mixed sample set of all three virgin flavours and taste them for yourself. Free UK delivery on orders over £10.</p>
+    <div class="vg-cta-eyebrow" data-i18n="virgin.cta_eyebrow">🌿 Taste the difference</div>
+    <h2 class="vg-cta-title" data-i18n-html="virgin.cta_title">Ready to try the <span class="grad">Virgin range?</span></h2>
+    <p class="vg-cta-sub" data-i18n="virgin.cta_sub">Order a mixed sample set of all three virgin flavours and taste them for yourself. Free UK delivery on orders over £10.</p>
     <div class="vg-cta-btns">
-      <a href="summer-shop.html" class="btn-green">Shop Virgin Collection →</a>
-      <a href="summer-contact.html" class="btn-outline-green">Bulk &amp; School Orders</a>
+      <a href="summer-shop.html" class="btn-green" data-i18n="virgin.cta_shop">Shop Virgin Collection →</a>
+      <a href="summer-contact.html" class="btn-outline-green" data-i18n="virgin.cta_bulk">Bulk &amp; School Orders</a>
     </div>
   </div>
 </div>
@@ -645,7 +662,7 @@
 <!-- FLOATING CONTACT -->
 <a href="summer-contact.html" class="contact-btn" title="Contact us">
   <span>✉</span>
-  <span class="cb-label">Contact Us</span>
+  <span class="cb-label" data-i18n="contact_btn">Contact Us</span>
 </a>
 
 </body>
