@@ -711,6 +711,91 @@
     .trust-item:last-child { border-right: none; }
     .trust-item span { display: block; font-size: 22px; margin-bottom: 6px; }
 
+    /* ── UPCOMING TASTINGS MAP ── */
+    .tasting-events {
+      margin-top: var(--space-8);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--space-6);
+    }
+    .events-intro { text-align: center; margin-bottom: 36px; }
+    .events-intro-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.10em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 10px;
+    }
+    .events-title {
+      font-size: 32px; font-weight: 700; letter-spacing: -0.8px;
+      color: #fff; margin-bottom: 10px;
+    }
+    .events-desc { font-size: 15px; color: rgba(255,255,255,0.5); }
+
+    .events-layout {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: start;
+    }
+    .events-map-wrap {
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+      position: relative;
+    }
+    #tastingMap { height: 420px; width: 100%; }
+
+    /* Event list */
+    .events-list {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .event-item {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.10);
+      border-radius: 14px; padding: 14px 16px;
+      transition: background 0.18s, border-color 0.18s;
+      cursor: pointer; text-decoration: none;
+    }
+    .event-item:hover { background: rgba(255,255,255,0.11); border-color: rgba(108,43,255,0.50); }
+    .event-item.event-next {
+      border-color: var(--cyan);
+      background: rgba(34,211,238,0.08);
+    }
+    .event-date-badge {
+      flex-shrink: 0; width: 48px; text-align: center;
+      background: rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 4px;
+    }
+    .event-item.event-next .event-date-badge { background: rgba(34,211,238,0.18); }
+    .event-day { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; }
+    .event-month { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    .event-item.event-next .event-month { color: var(--cyan); }
+    .event-info { flex: 1; min-width: 0; }
+    .event-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .event-meta { font-size: 12px; color: rgba(255,255,255,0.48); display: flex; flex-direction: column; gap: 1px; }
+    .event-chips { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+    .event-chip {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 3px 8px; border-radius: 40px;
+      background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.6);
+    }
+    .event-chip.chip-next { background: var(--cyan); color: #0a1a1a; }
+    .event-chip.chip-free { background: rgba(108,43,255,0.35); color: #d6c3ff; }
+    .event-directions {
+      flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--cyan);
+      opacity: 0.7; transition: opacity 0.18s;
+      white-space: nowrap;
+    }
+    .event-item:hover .event-directions { opacity: 1; }
+    .events-cta {
+      text-align: center; margin-top: 16px;
+    }
+    .events-cta a {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4);
+      text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 2px; transition: color 0.18s;
+    }
+    .events-cta a:hover { color: var(--cyan); border-color: var(--cyan); }
+
+    @media (max-width: 860px) {
+      .events-layout { grid-template-columns: 1fr; }
+      #tastingMap { height: 300px; }
+      .events-list { order: -1; }
+    }
+
     /* ── HERO TICKER ── */
     .hero-ticker {
       width: 100%; overflow: hidden; cursor: pointer;
@@ -1074,6 +1159,7 @@
   })();
   </script>
   <script src="js/i18n.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 </head>
 <body>
 
@@ -1581,6 +1667,122 @@
 
     </div>
 
+    <!-- ── Upcoming Tastings Map ── -->
+    <div class="tasting-events">
+      <div class="events-intro">
+        <div class="events-intro-label">📍 Find Us Near You</div>
+        <h3 class="events-title">Upcoming Free Pop-up Tastings</h3>
+        <p class="events-desc">Drop in, taste everything — completely free, no booking required at these UK pop-ups.</p>
+      </div>
+
+      <div class="events-layout">
+        <!-- Interactive map -->
+        <div class="events-map-wrap">
+          <div id="tastingMap"></div>
+        </div>
+
+        <!-- Events list -->
+        <div class="events-list">
+
+          <a class="event-item event-next" href="https://maps.google.com/?q=Brick+Lane+Market+London+E1" target="_blank" rel="noopener">
+            <div class="event-date-badge">
+              <div class="event-day">12</div>
+              <div class="event-month">May</div>
+            </div>
+            <div class="event-info">
+              <div class="event-name">Shoreditch Summer Market</div>
+              <div class="event-meta">
+                <span>📍 Brick Lane, London E1 6QL</span>
+                <span>⏰ 11:00 – 17:00</span>
+              </div>
+              <div class="event-chips">
+                <span class="event-chip chip-next">Next Up</span>
+                <span class="event-chip chip-free">Free Entry</span>
+              </div>
+            </div>
+            <span class="event-directions">Directions ↗</span>
+          </a>
+
+          <a class="event-item" href="https://maps.google.com/?q=Hove+Lawns+Brighton+BN3" target="_blank" rel="noopener">
+            <div class="event-date-badge">
+              <div class="event-day">17</div>
+              <div class="event-month">May</div>
+            </div>
+            <div class="event-info">
+              <div class="event-name">Brighton Food &amp; Drinks Fest</div>
+              <div class="event-meta">
+                <span>📍 Hove Lawns, Brighton BN3 2FH</span>
+                <span>⏰ 12:00 – 18:00</span>
+              </div>
+              <div class="event-chips">
+                <span class="event-chip chip-free">Free Entry</span>
+              </div>
+            </div>
+            <span class="event-directions">Directions ↗</span>
+          </a>
+
+          <a class="event-item" href="https://maps.google.com/?q=Covent+Garden+Piazza+London+WC2E" target="_blank" rel="noopener">
+            <div class="event-date-badge">
+              <div class="event-day">24</div>
+              <div class="event-month">May</div>
+            </div>
+            <div class="event-info">
+              <div class="event-name">Covent Garden Pop-up</div>
+              <div class="event-meta">
+                <span>📍 Covent Garden Piazza, London WC2E</span>
+                <span>⏰ 10:00 – 16:00</span>
+              </div>
+              <div class="event-chips">
+                <span class="event-chip chip-free">Free Entry</span>
+              </div>
+            </div>
+            <span class="event-directions">Directions ↗</span>
+          </a>
+
+          <a class="event-item" href="https://maps.google.com/?q=Northern+Quarter+Manchester+M1" target="_blank" rel="noopener">
+            <div class="event-date-badge">
+              <div class="event-day">01</div>
+              <div class="event-month">Jun</div>
+            </div>
+            <div class="event-info">
+              <div class="event-name">Manchester Indie Food Fair</div>
+              <div class="event-meta">
+                <span>📍 Northern Quarter, Manchester M1</span>
+                <span>⏰ 11:00 – 17:00</span>
+              </div>
+              <div class="event-chips">
+                <span class="event-chip chip-free">Free Entry</span>
+              </div>
+            </div>
+            <span class="event-directions">Directions ↗</span>
+          </a>
+
+          <a class="event-item" href="https://maps.google.com/?q=Grassmarket+Edinburgh+EH1" target="_blank" rel="noopener">
+            <div class="event-date-badge">
+              <div class="event-day">08</div>
+              <div class="event-month">Jun</div>
+            </div>
+            <div class="event-info">
+              <div class="event-name">Edinburgh Grassmarket Fair</div>
+              <div class="event-meta">
+                <span>📍 Grassmarket, Edinburgh EH1 2JR</span>
+                <span>⏰ 12:00 – 18:00</span>
+              </div>
+              <div class="event-chips">
+                <span class="event-chip chip-free">Free Entry</span>
+              </div>
+            </div>
+            <span class="event-directions">Directions ↗</span>
+          </a>
+
+          <div class="events-cta">
+            <a href="summer-contact.html">Want us at your city? Get in touch →</a>
+          </div>
+
+        </div><!-- end events-list -->
+      </div><!-- end events-layout -->
+    </div><!-- end tasting-events -->
+
     <!-- Trust bar -->
     <div class="tasting-trust">
       <div class="trust-item"><span>🔒</span><span data-i18n="tasting.trust1">No payment required</span></div>
@@ -1882,6 +2084,56 @@
       }
     }
   })();
+</script>
+
+<!-- ── Tasting Map (Leaflet + OpenStreetMap, no API key) ── -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+(function () {
+  var mapEl = document.getElementById('tastingMap');
+  if (!mapEl) return;
+
+  var map = L.map('tastingMap', { scrollWheelZoom: false }).setView([53.0, -1.8], 5);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+  }).addTo(map);
+
+  /* Custom pin SVG */
+  function makeIcon(isNext) {
+    var colour = isNext ? '#22d3ee' : '#b06bff';
+    return L.divIcon({
+      className: '',
+      iconAnchor: [14, 36],
+      popupAnchor: [0, -36],
+      html: '<svg width="28" height="38" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">'
+          + '<path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 24 14 24S28 23.33 28 14C28 6.27 21.73 0 14 0z" fill="' + colour + '"/>'
+          + '<circle cx="14" cy="14" r="6" fill="#fff"/>'
+          + '</svg>'
+    });
+  }
+
+  var events = [
+    { lat: 51.521, lng: -0.072, name: 'Shoreditch Summer Market', date: '12 May', time: '11:00–17:00', location: 'Brick Lane, London E1', next: true },
+    { lat: 50.823, lng: -0.149, name: 'Brighton Food & Drinks Fest', date: '17 May', time: '12:00–18:00', location: 'Hove Lawns, Brighton', next: false },
+    { lat: 51.511, lng: -0.122, name: 'Covent Garden Pop-up', date: '24 May', time: '10:00–16:00', location: 'Covent Garden, London', next: false },
+    { lat: 53.484, lng: -2.233, name: 'Manchester Indie Food Fair', date: '1 Jun', time: '11:00–17:00', location: 'Northern Quarter, Manchester', next: false },
+    { lat: 55.946, lng: -3.194, name: 'Edinburgh Grassmarket Fair', date: '8 Jun', time: '12:00–18:00', location: 'Grassmarket, Edinburgh', next: false }
+  ];
+
+  events.forEach(function (e) {
+    var popup = '<div style="font-family:\'Plus Jakarta Sans\',sans-serif;min-width:180px;">'
+      + (e.next ? '<span style="background:#22d3ee;color:#001a1a;font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 8px;border-radius:20px;text-transform:uppercase;">Next Up</span><br>' : '')
+      + '<strong style="font-size:14px;display:block;margin:6px 0 2px;">' + e.name + '</strong>'
+      + '<span style="font-size:12px;color:#555;">📍 ' + e.location + '</span><br>'
+      + '<span style="font-size:12px;color:#555;">📅 ' + e.date + ' &nbsp;⏰ ' + e.time + '</span>'
+      + '</div>';
+    var marker = L.marker([e.lat, e.lng], { icon: makeIcon(e.next) }).addTo(map);
+    marker.bindPopup(popup, { maxWidth: 240 });
+    if (e.next) { marker.openPopup(); }
+  });
+})();
 </script>
 
 </body>
