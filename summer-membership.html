@@ -322,15 +322,11 @@
       .mob-nav-item.active svg { transform: translateY(-2px); }
       .mob-nav-item:active { transform: scale(0.92); }
 
-      .mob-sheet-overlay {
+      /* Overlay hidden until sheet opens — no permanent fixed layer over the page */
+      .mob-sheet-overlay.open {
         display: block;
         position: fixed; inset: 0;
         z-index: 9991;
-        background: rgba(0,0,0,0);
-        pointer-events: none;
-        transition: background 0.25s;
-      }
-      .mob-sheet-overlay.open {
         background: rgba(0,0,0,0.32);
         pointer-events: all;
       }
