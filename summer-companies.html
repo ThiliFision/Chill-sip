@@ -29,13 +29,15 @@
       --space-10: 80px;
       --space-11: 88px;
       --space-12: 96px;
-      --container-max:     1200px;
-      --container-padding: var(--space-8);
+      --container-max:          1200px;
+      --container-padding:      var(--space-3);
+      --hero-padding-block:     100px;
+      --section-padding-block:  var(--space-11);
     }
 
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
+    .container { max-width: var(--container-max); margin: 0 auto; padding-inline: var(--container-padding); }
 
     /* ── PROMO BANNER ── */
     .promo-bar {
@@ -59,7 +61,7 @@
     }
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-2) var(--container-padding); max-width: 1296px; margin: 0 auto;
+      padding-block: var(--space-2); padding-inline: var(--container-padding); max-width: 1296px; margin: 0 auto;
     }
     .nav-logo {
       text-decoration: none; display: flex; align-items: center;
@@ -363,7 +365,7 @@
     }
     .footer-bottom {
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding);
+      flex-wrap: wrap; gap: 12px; max-width: var(--container-max); margin: 0 auto; padding-inline: var(--container-padding);
     }
     .f-logo {
       font-size: 22px; font-weight: 800; letter-spacing: -0.8px;

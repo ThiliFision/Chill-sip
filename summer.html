@@ -33,13 +33,15 @@
       --space-10: 80px;
       --space-11: 88px;
       --space-12: 96px;
-      --container-max:     1200px;
-      --container-padding: var(--space-8);
+      --container-max:          1200px;
+      --container-padding:      var(--space-3);
+      --hero-padding-block:     100px;
+      --section-padding-block:  var(--space-11);
     }
 
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
+    .container { max-width: var(--container-max); margin: 0 auto; padding-inline: var(--container-padding); }
 
     .grad-text {
       background: linear-gradient(135deg, var(--text) 0%, var(--pink) 100%);
@@ -573,7 +575,7 @@
       font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; transition: background 0.2s, color 0.2s;
     }
     .newsletter-row button:hover { background: var(--purple); color: #fff; }
-    .footer-bottom { text-align: center; font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.4; padding: 0 var(--container-padding); }
+    .footer-bottom { text-align: center; font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.4; padding-inline: var(--container-padding); }
 
     /* ── TOAST ── */
     #sumToast {

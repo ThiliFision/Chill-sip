@@ -31,13 +31,15 @@
       --space-10: 80px;
       --space-11: 88px;
       --space-12: 96px;
-      --container-max:     1200px;
-      --container-padding: var(--space-8);
+      --container-max:          1200px;
+      --container-padding:      var(--space-3);
+      --hero-padding-block:     100px;
+      --section-padding-block:  var(--space-11);
     }
 
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 var(--container-padding); }
+    .container { max-width: 1100px; margin: 0 auto; padding-inline: var(--container-padding); }
 
     /* ── PROMO BANNER ── */
     .promo-bar { background: var(--purple); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 48px; position: relative; }
@@ -48,7 +50,7 @@
 
     /* ── NAV ── */
     nav { position: sticky; top: 0; z-index: 999; background: #fff; border-bottom: 1px solid var(--border); box-shadow: 0 1px 16px rgba(46,22,100,0.06); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--container-padding); max-width: 1296px; margin: 0 auto; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-2); padding-inline: var(--container-padding); max-width: 1296px; margin: 0 auto; }
     .nav-logo { text-decoration: none; display: flex; align-items: center; font-size: 26px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .nav-links { display: flex; gap: var(--space-4); align-items: center; }
     .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text); transition: color 0.2s; }
@@ -228,7 +230,7 @@
 
     /* Footer */
     footer { background: #fff; border-top: 4px solid; border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1; padding: 40px 0 28px; }
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: var(--container-max); margin: 0 auto; padding-inline: var(--container-padding); }
     .f-logo { font-size: 22px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .f-links { display: flex; gap: var(--space-3); }
     .f-link { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); text-decoration: none; transition: color 0.2s; }
