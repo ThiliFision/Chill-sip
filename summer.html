@@ -349,22 +349,18 @@
 
     /* ── CAROUSEL ── */
     .fav-carousel-outer {
-      max-width: 1200px; margin: 40px auto 0; padding: 0 16px;
+      margin: 40px 0 0;
     }
     .fav-carousel {
-      flex: 1; min-width: 0;
-      display: flex; gap: 20px;
-      overflow-x: auto; scroll-snap-type: x mandatory;
-      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-      padding: 12px 12px 24px;
-      scrollbar-width: none;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+      padding: 12px 0 24px;
     }
-    .fav-carousel::-webkit-scrollbar { display: none; }
 
-    /* Cards inside carousel — grow to fill width, scroll if more items added */
+    /* Cards inside grid — equal height, consistent sizing */
     .fav-carousel .uni-card {
-      flex: 1 0 300px; min-width: 300px; max-width: 380px;
-      scroll-snap-align: start;
+      min-width: 0; width: 100%;
       min-height: 520px; height: auto;
     }
     .fav-carousel .uni-img {
@@ -377,22 +373,12 @@
     .fav-carousel .uni-rating { justify-content: center; }
     .fav-carousel .uni-footer { justify-content: center; gap: 16px; }
 
-    /* Arrow buttons */
+    /* Arrow buttons hidden — all cards visible in grid */
     .fav-carousel-wrap {
-      display: flex; align-items: center; gap: 16px;
+      display: block;
       max-width: 1200px; margin: 0 auto;
     }
-    .fav-arrow {
-      flex-shrink: 0;
-      z-index: 10; width: 48px; height: 48px; border-radius: 50%;
-      background: #fff; border: 2px solid var(--border);
-      box-shadow: 0 4px 18px rgba(46,22,100,0.14);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; cursor: pointer; transition: background 0.18s, border-color 0.18s, transform 0.15s;
-      color: var(--text); user-select: none;
-    }
-    .fav-arrow:hover { background: var(--purple); border-color: var(--purple); color: #fff; transform: scale(1.08); }
-    .fav-arrow:disabled { opacity: 0.3; pointer-events: none; }
+    .fav-arrow { display: none; }
 
     /* ── UNIFIED PRODUCT CARD ── */
     .uni-card {
@@ -869,6 +855,7 @@
       .hero-right { width: 100%; min-height: 340px; }
       .hero-headline { font-size: 52px; letter-spacing: -1.5px; }
       .hero-scroll-hint { display: none; }
+      .fav-carousel { grid-template-columns: repeat(2, 1fr); }
       .vibe-grid { grid-template-columns: repeat(2,1fr); }
       .how-steps { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -883,6 +870,7 @@
       .hero-right { min-height: 280px; }
       .hero-headline { font-size: 38px; letter-spacing: -1px; }
       .hero-ctas { flex-direction: column; }
+      .fav-carousel { grid-template-columns: 1fr; }
       .vibe-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr; }
       .proof-h2, .tasting-h2 { font-size: 36px; }
@@ -1145,7 +1133,7 @@
   </div>
 
   <!-- Wall-to-wall carousel -->
-  <div class="fav-carousel-outer">
+  <div class="fav-carousel-outer container">
     <div class="fav-carousel-wrap">
       <button class="fav-arrow left"  id="favPrev" onclick="favScroll(-1)" aria-label="Previous">&#8592;</button>
       <div class="fav-carousel" id="favCarousel">
