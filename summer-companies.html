@@ -17,11 +17,25 @@
       --pink:   #ff2d95;
       --green:  #2ae500;
       --border: rgba(46,22,100,0.12);
+    
+      /* ── SPACING SCALE (8px base unit) ── */
+      --space-1:  8px;
+      --space-2:  16px;
+      --space-3:  24px;
+      --space-4:  32px;
+      --space-5:  40px;
+      --space-6:  48px;
+      --space-8:  64px;
+      --space-10: 80px;
+      --space-11: 88px;
+      --space-12: 96px;
+      --container-max:     1200px;
+      --container-padding: var(--space-8);
     }
 
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
 
     /* ── PROMO BANNER ── */
     .promo-bar {
@@ -45,7 +59,7 @@
     }
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 48px; max-width: 1296px; margin: 0 auto;
+      padding: var(--space-2) var(--container-padding); max-width: 1296px; margin: 0 auto;
     }
     .nav-logo {
       text-decoration: none; display: flex; align-items: center;
@@ -53,7 +67,7 @@
       background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links { display: flex; gap: var(--space-4); align-items: center; }
     .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text); transition: color 0.2s; }
     .nav-links a:hover { color: var(--purple); }
     .nav-links a.active { color: var(--purple); font-weight: 700; }
@@ -93,7 +107,7 @@
 
     /* ── HERO ── */
     .co-hero {
-      padding: 88px 0 80px;
+      padding: var(--space-11) 0 var(--space-10);
       background: linear-gradient(135deg, #f0edff 0%, #fff5fb 55%, #edfffe 100%);
       border-bottom: 1px solid var(--border);
       position: relative; overflow: hidden;
@@ -107,14 +121,14 @@
     }
     .co-hero-inner {
       position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center;
     }
     .co-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px;
       color: var(--purple); background: rgba(108,43,255,0.08);
       border: 1px solid rgba(108,43,255,0.18); border-radius: 50px; padding: 6px 16px;
-      margin-bottom: 24px;
+      margin-bottom: var(--space-3);
     }
     .co-hero-title {
       font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; letter-spacing: -2px;
@@ -215,7 +229,7 @@
       background: linear-gradient(135deg, #f0edff 0%, #fff5fb 100%);
       border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
     }
-    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); }
     .why-card {
       background: #fff; border: 1.5px solid var(--border); border-radius: 20px;
       padding: 28px 24px; text-align: center;
@@ -230,7 +244,7 @@
     .usecases-header .section-sub { margin: 0 auto; }
 
     .usecase {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center;
       margin-bottom: 100px;
     }
     .usecase:last-child { margin-bottom: 0; }
@@ -252,7 +266,7 @@
     }
     .uc-desc {
       font-size: 15px; font-weight: 500; color: rgba(46,22,100,0.58); line-height: 1.75;
-      margin-bottom: 24px;
+      margin-bottom: var(--space-3);
     }
     .uc-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .uc-chip {
@@ -292,7 +306,7 @@
 
     /* ── ENQUIRY CTA ── */
     .enquiry-section {
-      padding: 80px 0 96px;
+      padding: var(--space-10) 0 var(--space-12);
       background: linear-gradient(135deg, #0e0528 0%, #2e0e70 50%, #1a0645 100%);
       position: relative; overflow: hidden;
     }
@@ -309,7 +323,7 @@
       font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
       color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.12); border-radius: 50px; padding: 6px 16px;
-      margin-bottom: 24px;
+      margin-bottom: var(--space-3);
     }
     .enquiry-title {
       font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 800; letter-spacing: -1.5px;
@@ -349,14 +363,14 @@
     }
     .footer-bottom {
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 48px;
+      flex-wrap: wrap; gap: 12px; max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding);
     }
     .f-logo {
       font-size: 22px; font-weight: 800; letter-spacing: -0.8px;
       background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .f-links { display: flex; gap: 24px; }
+    .f-links { display: flex; gap: var(--space-3); }
     .f-link { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); text-decoration: none; transition: color 0.2s; }
     .f-link:hover { color: var(--purple); }
     .f-copy { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.35); }
@@ -430,6 +444,110 @@
     html.night-edition .co-hero-title .grad{background:linear-gradient(135deg,#5a18cc 0%,#c0006e 100%) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
     html.night-edition .co-eyebrow{background:linear-gradient(135deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important;border-color:rgba(90,24,204,.3) !important}
     html.night-edition .co-hero-sub{color:rgba(45,6,82,.72) !important}
+    .breadcrumb { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 16px; position: relative; z-index: 1; }
+    .breadcrumb a { color: var(--dim); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--purple); }
+    .breadcrumb span { color: var(--muted); }
+    html.night-edition .breadcrumb, html.night-edition .breadcrumb a { color: rgba(45,6,82,.55) !important; }
+    .footer-socials { display: flex; gap: 12px; }
+    .footer-social { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgba(46,22,100,0.45); transition: background 0.2s, color 0.2s; }
+    .footer-social:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+    /* ── BUNDLE PRICING ── */
+    .bundle-section {
+      padding: var(--space-10) 0 var(--space-11);
+      background: linear-gradient(135deg, #f0edff 0%, #fff5fb 60%, #fff 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .bundle-header { text-align: center; margin-bottom: 52px; }
+    .bundle-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--purple); background: rgba(108,43,255,0.08);
+      border: 1px solid rgba(108,43,255,0.2); border-radius: 50px; padding: 6px 16px;
+      margin-bottom: 20px;
+    }
+    .bundle-title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1.5px;
+      color: var(--text); margin-bottom: 14px; line-height: 1.1;
+    }
+    .bundle-title .grad {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .bundle-sub {
+      font-size: 16px; font-weight: 500; color: rgba(46,22,100,0.5); max-width: 520px; margin: 0 auto; line-height: 1.65;
+    }
+    .bundle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+    .bundle-card {
+      background: #fff; border: 2px solid var(--border); border-radius: 24px;
+      padding: 36px 32px; position: relative; transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .bundle-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(108,43,255,0.12); }
+    .bundle-card.featured { border-color: var(--purple); box-shadow: 0 8px 40px rgba(108,43,255,0.18); }
+    .bundle-popular {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(120deg, var(--purple), var(--pink));
+      color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.5px; padding: 5px 18px; border-radius: 50px; white-space: nowrap;
+    }
+    .bundle-tier { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); margin-bottom: 10px; }
+    .bundle-qty { font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -2px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+    .bundle-qty-label { font-size: 14px; font-weight: 600; color: rgba(46,22,100,0.4); margin-bottom: 20px; }
+    .bundle-discount {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(42,229,0,0.12); color: #18a800;
+      font-size: 15px; font-weight: 800; padding: 5px 14px; border-radius: 8px; margin-bottom: var(--space-3);
+    }
+    .bundle-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .bundle-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .bundle-feat { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(46,22,100,0.65); }
+    .bundle-feat::before { content: '✓'; color: var(--purple); font-weight: 800; flex-shrink: 0; }
+    .bundle-cta { display: block; width: 100%; padding: 14px 24px; border-radius: 12px; text-align: center; font-size: 14px; font-weight: 700; text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
+    .bundle-cta-primary { background: linear-gradient(120deg, var(--purple), var(--pink)); color: #fff; }
+    .bundle-cta-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .bundle-cta-outline { border: 2px solid var(--border); color: var(--text); }
+    .bundle-cta-outline:hover { border-color: var(--purple); color: var(--purple); }
+    .bundle-note { text-align: center; margin-top: 28px; font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.4); }
+
+    /* ── WHY OFFER THIS ── */
+    .whyoffer-section { padding: var(--space-11) 0 var(--space-10); }
+    .whyoffer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center; margin-top: 52px; }
+    .whyoffer-headline {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; letter-spacing: -1.2px;
+      color: var(--text); line-height: 1.12; margin-bottom: 18px;
+    }
+    .whyoffer-headline .grad {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .whyoffer-body { font-size: 15px; font-weight: 500; color: rgba(46,22,100,0.58); line-height: 1.75; margin-bottom: var(--space-4); }
+    .whyoffer-stat-row { display: flex; gap: 28px; flex-wrap: wrap; }
+    .whyoffer-stat-val {
+      font-size: 26px; font-weight: 800; letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .whyoffer-stat-lbl { font-size: 12px; font-weight: 600; color: rgba(46,22,100,0.45); text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; }
+    .whyoffer-reasons { display: flex; flex-direction: column; gap: 16px; }
+    .reason-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 22px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 16px; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .reason-card:hover { border-color: rgba(108,43,255,0.3); box-shadow: 0 4px 20px rgba(108,43,255,0.07); }
+    .reason-icon {
+      font-size: 24px; flex-shrink: 0; width: 48px; height: 48px;
+      background: linear-gradient(135deg, rgba(108,43,255,0.1) 0%, rgba(255,45,149,0.08) 100%);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    }
+    .reason-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: -0.2px; }
+    .reason-desc { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.52); line-height: 1.55; }
+
+    @media (max-width: 900px) {
+      .bundle-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .whyoffer-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
   </style>
   <script>
   (function(){
@@ -500,6 +618,7 @@
     <div class="co-hero-inner">
 
       <div>
+        <div class="breadcrumb"><a href="summer.html" data-i18n="nav.home">Home</a> &rsaquo; <span data-i18n="nav.companies">For Companies</span></div>
         <div class="co-eyebrow" data-i18n="companies.hero_eyebrow">☀️ B2B &amp; Events</div>
         <h1 class="co-hero-title">
           Cocktails that <span class="grad">chill every crowd</span>
@@ -520,6 +639,155 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     BUNDLE PRICING
+──────────────────────────────────────────── -->
+<section class="bundle-section" id="pricing">
+  <div class="container">
+    <div class="bundle-header">
+      <div class="bundle-eyebrow">💼 Wholesale &amp; Bulk Pricing</div>
+      <h2 class="bundle-title">The more you order, the <span class="grad">more you save</span></h2>
+      <p class="bundle-sub">Simple, transparent pricing for businesses of every size. No hidden fees — just better cocktails, at better prices, at scale.</p>
+    </div>
+
+    <div class="bundle-grid">
+
+      <!-- STARTER -->
+      <div class="bundle-card">
+        <div class="bundle-tier">Starter</div>
+        <div class="bundle-qty">50</div>
+        <div class="bundle-qty-label">packets per order</div>
+        <div class="bundle-discount">🏷 5% off</div>
+        <div class="bundle-divider"></div>
+        <div class="bundle-features">
+          <div class="bundle-feat">All 4 summer flavours available</div>
+          <div class="bundle-feat">Free delivery on orders over £80</div>
+          <div class="bundle-feat">Mix &amp; match flavours</div>
+          <div class="bundle-feat">Perfect for team events &amp; birthdays</div>
+        </div>
+        <a href="summer-contact.html" class="bundle-cta bundle-cta-outline">Get a quote →</a>
+      </div>
+
+      <!-- GROWTH — featured -->
+      <div class="bundle-card featured">
+        <div class="bundle-popular">Most Popular</div>
+        <div class="bundle-tier">Growth</div>
+        <div class="bundle-qty">100</div>
+        <div class="bundle-qty-label">packets per order</div>
+        <div class="bundle-discount">🏷 10% off</div>
+        <div class="bundle-divider"></div>
+        <div class="bundle-features">
+          <div class="bundle-feat">All flavours + seasonal exclusives</div>
+          <div class="bundle-feat">Free next-day delivery included</div>
+          <div class="bundle-feat">Priority fulfilment &amp; reorder</div>
+          <div class="bundle-feat">Ideal for clubs, bars &amp; weddings</div>
+          <div class="bundle-feat">Dedicated account manager</div>
+        </div>
+        <a href="summer-contact.html" class="bundle-cta bundle-cta-primary">Get a quote →</a>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div class="bundle-card">
+        <div class="bundle-tier">Enterprise</div>
+        <div class="bundle-qty">1,000+</div>
+        <div class="bundle-qty-label">packets per order</div>
+        <div class="bundle-discount">🏷 15% off</div>
+        <div class="bundle-divider"></div>
+        <div class="bundle-features">
+          <div class="bundle-feat">Custom branding &amp; logo printing</div>
+          <div class="bundle-feat">White-label packaging available</div>
+          <div class="bundle-feat">Custom flavour blends on request</div>
+          <div class="bundle-feat">SLA-backed delivery schedule</div>
+          <div class="bundle-feat">For distributors, stadiums &amp; festivals</div>
+        </div>
+        <a href="summer-contact.html" class="bundle-cta bundle-cta-outline">Talk to us →</a>
+      </div>
+
+    </div>
+    <p class="bundle-note">Minimum order 50 packets · Custom quotes for orders over 5,000 · All prices ex. VAT</p>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     WHY WE OFFER THIS
+──────────────────────────────────────────── -->
+<section class="whyoffer-section" id="why">
+  <div class="container">
+
+    <div class="section-eyebrow">Section 01 — The Case for Chill Sip</div>
+    <div class="whyoffer-grid">
+
+      <div>
+        <h2 class="whyoffer-headline">Why Chill Sip is the <span class="grad">smartest bar product</span> you can stock</h2>
+        <p class="whyoffer-body">
+          Chill-K wasn't invented in a lab — it was born in South America, where cocktail culture runs deep. Our syrups carry the real flavours of Pisco, passion fruit, and tropical fruit blends that have been celebrated at parties and gatherings for generations. That heritage isn't just a story — it's a genuine talking point you can put in front of every customer.
+        </p>
+        <p class="whyoffer-body">
+          Today's young crowd doesn't want watered-down drinks or a 10-minute wait at the bar. They want something bold, flavourful, and ready now. Chill Sip delivers exactly that — and the energy in the room changes the moment the packets come out.
+        </p>
+        <div class="whyoffer-stat-row">
+          <div class="whyoffer-stat">
+            <div class="whyoffer-stat-val">10 sec</div>
+            <div class="whyoffer-stat-lbl">serve time</div>
+          </div>
+          <div class="whyoffer-stat">
+            <div class="whyoffer-stat-val">80%</div>
+            <div class="whyoffer-stat-lbl">less labour</div>
+          </div>
+          <div class="whyoffer-stat">
+            <div class="whyoffer-stat-val">5×</div>
+            <div class="whyoffer-stat-lbl">faster throughput</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="whyoffer-reasons">
+
+        <div class="reason-card">
+          <div class="reason-icon">🎯</div>
+          <div>
+            <div class="reason-title">Built for the young, energetic crowd</div>
+            <div class="reason-desc">Bold flavours and vibrant packaging are engineered to catch attention. Young guests reach for Chill Sip first — making it the easiest upsell you've ever stocked.</div>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-icon">📖</div>
+          <div>
+            <div class="reason-title">A rich story behind every sip</div>
+            <div class="reason-desc">Rooted in South American cocktail tradition — real Pisco, real passion fruit, real heritage. Your staff have an authentic story to tell every customer, building connection and loyalty.</div>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-icon">🔧</div>
+          <div>
+            <div class="reason-title">Syrup format = effortless large-scale supply</div>
+            <div class="reason-desc">Our concentrated syrup sachets are designed for mass distribution. No specialist equipment needed — just ice and a mixer. Scale from 50 to 50,000 servings without adding a single member of staff.</div>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-icon">⚡</div>
+          <div>
+            <div class="reason-title">Slash labour costs &amp; prep time</div>
+            <div class="reason-desc">A handcrafted cocktail from scratch takes 8–12 minutes and a skilled bartender. Chill Sip takes 10 seconds and any staff member. At 100 guests that's the difference between chaos and calm.</div>
+          </div>
+        </div>
+
+        <div class="reason-card">
+          <div class="reason-icon">🚀</div>
+          <div>
+            <div class="reason-title">5× faster throughput — no queue, no stress</div>
+            <div class="reason-desc">More drinks served per hour means higher revenue per event. Self-serve stations eliminate bar queues entirely — guests are happier, staff pressure drops, and sales go up.</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -810,6 +1078,11 @@
       <a href="summer-cocktails.html" class="f-link">Our Cocktails</a>
       <a href="summer-companies.html" class="f-link">For Companies</a>
       <a href="#" class="f-link">Privacy</a>
+    </div>
+    <div class="footer-socials">
+      <a href="#" class="footer-social" title="Facebook" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" class="footer-social" title="Instagram" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" class="footer-social" title="TikTok" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg></a>
     </div>
     <div class="f-copy">© 2026 Chill Sip · Drink Responsibly · 18+</div>
   </div>

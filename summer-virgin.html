@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Virgin Collection — Chill Sip</title>
+  <title>Virgin Collection — Same Drink, Your Choice — Chill Sip</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,10 +16,24 @@
       --pink:   #ff2d95;
       --green:  #2ae500;
       --border: rgba(46,22,100,0.12);
+    
+      /* ── SPACING SCALE (8px base unit) ── */
+      --space-1:  8px;
+      --space-2:  16px;
+      --space-3:  24px;
+      --space-4:  32px;
+      --space-5:  40px;
+      --space-6:  48px;
+      --space-8:  64px;
+      --space-10: 80px;
+      --space-11: 88px;
+      --space-12: 96px;
+      --container-max:     1200px;
+      --container-padding: var(--space-8);
     }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
 
     /* ── PROMO ── */
     .promo-bar { background: var(--purple); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 48px; position: relative; }
@@ -30,12 +44,12 @@
 
     /* ── NAV ── */
     nav { position: sticky; top: 0; z-index: 999; background: #fff; border-bottom: 1px solid var(--border); box-shadow: 0 1px 16px rgba(46,22,100,0.06); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; max-width: 1296px; margin: 0 auto; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) var(--container-padding); max-width: 1296px; margin: 0 auto; }
     .nav-logo { text-decoration: none; display: flex; align-items: center; font-size: 26px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links { display: flex; gap: var(--space-4); align-items: center; }
     .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--text); transition: color 0.2s; }
     .nav-links a:hover { color: var(--purple); }
-    .nav-links a.active { color: #18a800; font-weight: 700; }
+    .nav-links a.active { color: var(--purple); font-weight: 700; }
     .nav-icons { display: flex; align-items: center; gap: 20px; }
     .cart-btn-nav { display: flex; align-items: center; gap: 6px; background: var(--purple); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
     .cart-btn-nav:hover { background: var(--brand); }
@@ -61,23 +75,23 @@
     /* ── PAGE HERO ── */
     .vg-hero {
       padding: 80px 0 72px;
-      background: linear-gradient(135deg, #edfff4 0%, #f4fff0 50%, #f0fff8 100%);
-      border-bottom: 1px solid rgba(42,229,0,0.2);
+      background: linear-gradient(135deg, #f4f0ff 0%, #fff5fb 50%, #f9f7ff 100%);
+      border-bottom: 1px solid rgba(108,43,255,0.15);
       position: relative; overflow: hidden;
     }
     .vg-hero::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
       background:
-        radial-gradient(ellipse at 80% 30%, rgba(42,229,0,0.10) 0%, transparent 55%),
-        radial-gradient(ellipse at 15% 70%, rgba(0,219,233,0.07) 0%, transparent 50%);
+        radial-gradient(ellipse at 80% 30%, rgba(108,43,255,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 70%, rgba(255,45,149,0.07) 0%, transparent 50%);
     }
-    .vg-hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .vg-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: #18a800; background: rgba(42,229,0,0.08); border: 1px solid rgba(42,229,0,0.25); border-radius: 50px; padding: 6px 16px; margin-bottom: 22px; }
+    .vg-hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center; }
+    .vg-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--purple); background: rgba(108,43,255,0.08); border: 1px solid rgba(108,43,255,0.25); border-radius: 50px; padding: 6px 16px; margin-bottom: 22px; }
     .vg-title { font-size: clamp(2.6rem, 5.5vw, 4.2rem); font-weight: 800; letter-spacing: -2px; color: var(--text); line-height: 1.04; margin-bottom: 18px; }
-    .vg-title .grad { background: linear-gradient(135deg, #18a800 0%, #00c87a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .vg-sub { font-size: 17px; font-weight: 500; color: rgba(46,22,100,0.58); line-height: 1.65; margin-bottom: 32px; max-width: 480px; }
+    .vg-title .grad { background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .vg-sub { font-size: 17px; font-weight: 500; color: rgba(46,22,100,0.58); line-height: 1.65; margin-bottom: var(--space-4); max-width: 480px; }
     .vg-hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
-    .vg-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 50px; background: #fff; border: 1.5px solid rgba(42,229,0,0.3); color: #18a800; }
+    .vg-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 50px; background: #fff; border: 1.5px solid rgba(108,43,255,0.3); color: var(--purple); }
     .vg-hero-img { display: flex; gap: 16px; align-items: flex-end; justify-content: center; }
     .vg-img-card {
       flex: 1;
@@ -85,10 +99,10 @@
       border-radius: 24px;
       overflow: hidden;
       height: 220px;
-      box-shadow: 0 8px 32px rgba(42,229,0,0.15), 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 8px 32px rgba(108,43,255,0.15), 0 2px 8px rgba(0,0,0,0.06);
       transition: transform 0.4s, box-shadow 0.3s;
     }
-    .vg-img-card:hover { transform: translateY(-8px); box-shadow: 0 18px 48px rgba(42,229,0,0.22), 0 4px 12px rgba(0,0,0,0.08); }
+    .vg-img-card:hover { transform: translateY(-8px); box-shadow: 0 18px 48px rgba(108,43,255,0.22), 0 4px 12px rgba(0,0,0,0.08); }
     .vg-img-card:nth-child(2) { height: 270px; }
     .vg-img-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -101,7 +115,7 @@
        SECTION 1 — ALCOHOL DANGERS
     ═══════════════════════════════════════ */
     .danger-section {
-      padding: 88px 0 80px;
+      padding: var(--space-11) 0 var(--space-10);
       background: linear-gradient(170deg, #1a0232 0%, #0e0528 50%, #1e0848 100%);
       position: relative; overflow: hidden;
     }
@@ -123,7 +137,7 @@
     }
     .danger-intro strong { color: rgba(255,255,255,0.85); font-weight: 700; }
 
-    .danger-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .danger-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: 56px; }
     .danger-card {
       background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
       border-radius: 22px; padding: 32px 26px;
@@ -145,19 +159,19 @@
     /* ═══════════════════════════════════════
        SECTION 2 — WHY VIRGIN MATTERS
     ═══════════════════════════════════════ */
-    .why-virgin-section { padding: 88px 0 80px; background: var(--bg); }
-    .wv-eyebrow { color: #18a800; }
-    .wv-title .grad { background: linear-gradient(135deg, var(--purple) 0%, #18a800 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .why-virgin-section { padding: var(--space-11) 0 var(--space-10); background: var(--bg); }
+    .wv-eyebrow { color: var(--purple); }
+    .wv-title .grad { background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     .wv-intro { font-size: 16px; font-weight: 500; color: rgba(46,22,100,0.58); line-height: 1.8; max-width: 680px; margin-top: 20px; margin-bottom: 56px; }
 
-    .wv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .wv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
     .wv-card {
       border-radius: 22px; padding: 32px 28px;
       border: 2px solid transparent; transition: transform 0.25s, box-shadow 0.25s;
     }
     .wv-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(46,22,100,0.1); }
-    .wv-card.green  { background: linear-gradient(135deg, #edfce7, #f5fff0); border-color: rgba(42,229,0,0.2); }
+    .wv-card.green  { background: linear-gradient(135deg, #f4f0ff, #fdf5ff); border-color: rgba(108,43,255,0.18); }
     .wv-card.purple { background: linear-gradient(135deg, #f4f0ff, #fdf5ff); border-color: rgba(108,43,255,0.18); }
     .wv-card.cyan   { background: linear-gradient(135deg, #edfeff, #f0fffe); border-color: rgba(0,219,233,0.2); }
     .wv-card.yellow { background: linear-gradient(135deg, #fffbe8, #fffdf0); border-color: rgba(239,182,9,0.2); }
@@ -169,7 +183,7 @@
     /* Coming soon strip */
     .wv-coming-soon {
       margin-top: 48px; border-radius: 20px; padding: 32px 36px;
-      background: linear-gradient(112deg, var(--purple) 0%, #18a800 100%);
+      background: linear-gradient(112deg, var(--purple) 0%, var(--pink) 100%);
       display: flex; align-items: center; gap: 28px;
     }
     .wv-cs-icon { font-size: 48px; flex-shrink: 0; }
@@ -182,24 +196,24 @@
        SECTION 3 — THE THREE VIRGIN PACKETS
     ═══════════════════════════════════════ */
     .packets-section {
-      padding: 88px 0 96px;
-      background: linear-gradient(135deg, #f0fff6 0%, #edfff8 50%, #f5fff0 100%);
-      border-top: 1px solid rgba(42,229,0,0.18);
+      padding: var(--space-11) 0 var(--space-12);
+      background: linear-gradient(135deg, #f4f0ff 0%, #fdf5ff 50%, #fff5fb 100%);
+      border-top: 1px solid rgba(108,43,255,0.15);
     }
-    .pk-eyebrow { color: #18a800; }
-    .pk-title .grad { background: linear-gradient(135deg, #18a800 0%, #00c87a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .pk-header { text-align: center; margin-bottom: 64px; }
+    .pk-eyebrow { color: var(--purple); }
+    .pk-title .grad { background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .pk-header { text-align: center; margin-bottom: var(--space-8); }
     .pk-header .sec-sub { margin: 14px auto 0; }
 
-    .pk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .pk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
     .pk-card {
       background: #fff; border-radius: 28px; overflow: hidden;
-      border: 2px solid rgba(42,229,0,0.2);
-      box-shadow: 0 8px 32px rgba(42,229,0,0.08);
+      border: 2px solid rgba(108,43,255,0.15);
+      box-shadow: 0 8px 32px rgba(108,43,255,0.08);
       transition: transform 0.3s, box-shadow 0.3s;
       display: flex; flex-direction: column;
     }
-    .pk-card:hover { transform: translateY(-8px); box-shadow: 0 24px 64px rgba(42,229,0,0.16); }
+    .pk-card:hover { transform: translateY(-8px); box-shadow: 0 24px 64px rgba(108,43,255,0.16); }
 
     .pk-img-area {
       position: relative; padding: 48px 32px 24px;
@@ -213,7 +227,7 @@
     .pk-img-area img { height: 200px; width: auto; object-fit: contain; filter: drop-shadow(0 10px 24px rgba(0,0,0,0.12)); }
     .pk-zero-badge {
       position: absolute; top: 16px; right: 16px;
-      background: #18a800; color: #fff;
+      background: var(--purple); color: #fff;
       font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
       padding: 6px 14px; border-radius: 50px;
       display: flex; align-items: center; gap: 5px;
@@ -221,9 +235,9 @@
     .pk-no-alc-stamp {
       position: absolute; bottom: 16px; left: 16px;
       background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
-      border: 1.5px solid rgba(42,229,0,0.35); border-radius: 10px;
+      border: 1.5px solid rgba(108,43,255,0.35); border-radius: 10px;
       padding: 6px 12px; display: flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 800; color: #18a800; text-transform: uppercase; letter-spacing: 0.8px;
+      font-size: 11px; font-weight: 800; color: var(--purple); text-transform: uppercase; letter-spacing: 0.8px;
     }
 
     .pk-body { padding: 26px 28px 30px; flex: 1; display: flex; flex-direction: column; }
@@ -233,7 +247,7 @@
     .pk-facts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
     .pk-fact {
       font-size: 11px; font-weight: 700; padding: 5px 13px; border-radius: 50px;
-      background: rgba(42,229,0,0.07); border: 1px solid rgba(42,229,0,0.22); color: #18a800;
+      background: rgba(108,43,255,0.07); border: 1px solid rgba(108,43,255,0.22); color: var(--purple);
     }
 
     .pk-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(46,22,100,0.07); padding-top: 18px; }
@@ -241,35 +255,35 @@
     .pk-price span { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.4); margin-left: 2px; }
     .pk-btn {
       padding: 11px 20px; border-radius: 12px; border: none; cursor: pointer; outline: none;
-      background: linear-gradient(112deg, #2ae500 0%, #00c87a 100%);
+      background: linear-gradient(112deg, var(--purple) 0%, var(--pink) 100%);
       color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
       text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
-      box-shadow: 0 4px 16px rgba(42,229,0,0.28); transition: opacity 0.15s, transform 0.15s;
+      box-shadow: 0 4px 16px rgba(108,43,255,0.28); transition: opacity 0.15s, transform 0.15s;
     }
     .pk-btn:hover { opacity: 0.88; transform: translateY(-2px); }
 
     /* ── CTA STRIP ── */
     .vg-cta {
-      padding: 72px 0 88px;
+      padding: var(--space-8) 0 var(--space-11);
       background: #fff; border-top: 1px solid var(--border);
       text-align: center;
     }
-    .vg-cta-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: #18a800; margin-bottom: 16px; }
+    .vg-cta-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--purple); margin-bottom: 16px; }
     .vg-cta-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1.5px; color: var(--text); margin-bottom: 14px; }
-    .vg-cta-title .grad { background: linear-gradient(135deg, var(--purple), #18a800); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .vg-cta-title .grad { background: linear-gradient(135deg, var(--purple), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .vg-cta-sub { font-size: 16px; font-weight: 500; color: rgba(46,22,100,0.52); line-height: 1.65; max-width: 480px; margin: 0 auto 36px; }
     .vg-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn-green { padding: 15px 32px; border-radius: 12px; border: none; cursor: pointer; background: linear-gradient(112deg, #2ae500, #00c87a); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 28px rgba(42,229,0,0.3); transition: transform 0.15s; }
+    .btn-green { padding: 15px 32px; border-radius: 12px; border: none; cursor: pointer; background: linear-gradient(112deg, var(--purple), var(--pink)); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 28px rgba(108,43,255,0.3); transition: transform 0.15s; }
     .btn-green:hover { transform: translateY(-2px); }
-    .btn-outline-green { padding: 15px 32px; border-radius: 12px; background: rgba(42,229,0,0.06); border: 2px solid rgba(42,229,0,0.35); color: #18a800; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s; }
-    .btn-outline-green:hover { background: rgba(42,229,0,0.12); }
+    .btn-outline-green { padding: 15px 32px; border-radius: 12px; background: transparent; border: 2px solid rgba(108,43,255,0.35); color: var(--purple); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s; }
+    .btn-outline-green:hover { background: rgba(108,43,255,0.07); }
 
     /* ── FOOTER ── */
     footer { background: #fff; border-top: 4px solid; border-image: linear-gradient(90deg, var(--purple), var(--pink)) 1; padding: 40px 0 28px; }
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
     .f-logo { font-size: 22px; font-weight: 800; letter-spacing: -0.8px; background: linear-gradient(135deg, var(--brand) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .f-links { display: flex; gap: 24px; }
+    .f-links { display: flex; gap: var(--space-3); }
     .f-link { font-size: 13px; font-weight: 500; color: rgba(46,22,100,0.5); text-decoration: none; transition: color 0.2s; }
     .f-link:hover { color: var(--purple); }
     .f-copy { font-size: 12px; font-weight: 500; color: rgba(46,22,100,0.35); }
@@ -326,10 +340,18 @@
     html.night-edition input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]),
     html.night-edition textarea,
     html.night-edition select{background:#1f063d !important;color:var(--text) !important;border-color:var(--border) !important}
-    html.night-edition .vg-title{color:#1a3d00 !important;-webkit-text-fill-color:#1a3d00 !important}
-    html.night-edition .vg-title .grad{background:linear-gradient(135deg,#18a800 0%,#00966e 100%) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
-    html.night-edition .vg-sub{color:rgba(10,40,0,.68) !important}
-    html.night-edition .vg-eyebrow{background:linear-gradient(135deg,#5a18cc,#c0006e) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important;border-color:rgba(90,24,204,.3) !important}
+    html.night-edition .vg-title{color:var(--text) !important;-webkit-text-fill-color:unset !important}
+    html.night-edition .vg-title .grad{background:linear-gradient(135deg,var(--purple) 0%,var(--pink) 100%) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important}
+    html.night-edition .vg-sub{color:rgba(255,255,255,.58) !important}
+    html.night-edition .vg-eyebrow{color:var(--purple) !important;background:rgba(176,107,255,.12) !important;border-color:rgba(176,107,255,.3) !important}
+    .breadcrumb { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 16px; position: relative; z-index: 1; }
+    .breadcrumb a { color: var(--dim); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--purple); }
+    .breadcrumb span { color: var(--muted); }
+    html.night-edition .breadcrumb, html.night-edition .breadcrumb a { color: rgba(45,6,82,.55) !important; }
+    .footer-socials { display: flex; gap: 12px; }
+    .footer-social { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgba(46,22,100,0.45); transition: background 0.2s, color 0.2s; }
+    .footer-social:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
   </style>
   <script>
   (function(){
@@ -399,13 +421,14 @@
   <div class="container">
     <div class="vg-hero-inner">
       <div>
-        <div class="vg-eyebrow" data-i18n="virgin.hero_eyebrow">🌿 100% Alcohol-Free · All Ages Welcome</div>
-        <h1 class="vg-title" data-i18n-html="virgin.hero_title">Our <span class="grad">Virgin Collection</span></h1>
-        <p class="vg-sub" data-i18n="virgin.hero_sub">Same real fruit. Same vibrant taste. Zero alcohol. Made for everyone — from school kids to designated drivers — because great flavour should have no age limit.</p>
+        <div class="breadcrumb"><a href="summer.html" data-i18n="nav.home">Home</a> &rsaquo; <a href="summer-shop.html" data-i18n="nav.shop">Shop</a> &rsaquo; <span data-i18n="nav.virgin">Virgin Collection</span></div>
+        <div class="vg-eyebrow" data-i18n="virgin.hero_eyebrow">🍹 Same Drink · Two Versions · Everyone Included</div>
+        <h1 class="vg-title" data-i18n-html="virgin.hero_title">One Chill Sip.<br><span class="grad">Your Choice.</span></h1>
+        <p class="vg-sub" data-i18n="virgin.hero_sub">Every Chill Sip cocktail exists in two identical versions — with alcohol and without. At the same event, everyone raises the same drink. You just choose how you want yours.</p>
         <div class="vg-hero-badges">
-          <span class="vg-badge" data-i18n="virgin.badge_zero">🚫 0% Alcohol</span>
-          <span class="vg-badge" data-i18n="virgin.badge_natural">🌱 Natural fruit</span>
-          <span class="vg-badge" data-i18n="virgin.badge_ages">👨‍👩‍👧 All ages</span>
+          <span class="vg-badge" data-i18n="virgin.badge_zero">✨ Identical taste</span>
+          <span class="vg-badge" data-i18n="virgin.badge_natural">🌱 Real fruit</span>
+          <span class="vg-badge" data-i18n="virgin.badge_ages">🎉 Any event</span>
           <span class="vg-badge" data-i18n="virgin.badge_sugar">⚡ Coming: Zero sugar</span>
         </div>
       </div>
@@ -419,54 +442,54 @@
 </section>
 
 <!-- ────────────────────────────────────────────
-     SECTION 1 — THE REALITY OF ALCOHOL
+     SECTION 1 — TWO VERSIONS, ONE EXPERIENCE
 ──────────────────────────────────────────── -->
-<section class="danger-section" id="alcohol-awareness">
+<section class="danger-section" id="two-versions">
   <div class="container">
     <div class="danger-inner">
 
       <div style="text-align:center; margin-bottom:16px;">
-        <div class="sec-eyebrow danger-sec-eyebrow">⚠️ Section 01 — Alcohol Awareness</div>
-        <h2 class="sec-title danger-title">The reality of <span class="red">alcohol</span></h2>
-        <p class="sec-sub danger-sub-text" style="margin:12px auto 0;">We believe in honest conversations. Here's what excessive alcohol can do — and why having a great non-alcoholic option matters more than ever.</p>
+        <div class="sec-eyebrow danger-sec-eyebrow">✨ Section 01 — The Concept</div>
+        <h2 class="sec-title danger-title">Same drink. <span class="red">Two versions.</span></h2>
+        <p class="sec-sub danger-sub-text" style="margin:12px auto 0;">Every Chill Sip cocktail exists in a virgin twin. At the same event — the same table, the same glass — everyone toasts with the same drink. They just choose how they want theirs.</p>
       </div>
 
       <div class="danger-grid">
 
         <div class="danger-card">
+          <span class="danger-card-icon">💍</span>
+          <div class="danger-card-title">Weddings &amp; celebrations</div>
+          <div class="danger-card-body">Both sides of the family can raise the exact same glass. <strong>No visible difference between versions</strong> — same flavour, same occasion, same memory. Whether guests drink alcohol or not, everyone feels equally celebrated.</div>
+        </div>
+
+        <div class="danger-card">
+          <span class="danger-card-icon">🏢</span>
+          <div class="danger-card-title">Corporate events</div>
+          <div class="danger-card-body">No one gets left out based on personal choice. <strong>Serve both versions side by side</strong> — colleagues who prefer alcohol and those who don't can network, toast, and celebrate together without anyone feeling like an afterthought.</div>
+        </div>
+
+        <div class="danger-card">
+          <span class="danger-card-icon">🎉</span>
+          <div class="danger-card-title">Parties &amp; festivals</div>
+          <div class="danger-card-body">When your guest list is mixed — designated drivers, expectant friends, health-conscious guests — <strong>everyone still gets the same cocktail experience</strong>. Same vibe, same glass, same great taste. Nobody needs to explain their choice.</div>
+        </div>
+
+        <div class="danger-card">
+          <span class="danger-card-icon">🌍</span>
+          <div class="danger-card-title">Culturally inclusive events</div>
+          <div class="danger-card-body">For groups where some guests don't drink for religious, cultural or personal reasons, <strong>offering both versions is a mark of respect</strong>. Everyone participates in the same shared experience without compromise or exclusion.</div>
+        </div>
+
+        <div class="danger-card">
           <span class="danger-card-icon">🚗</span>
-          <div class="danger-card-title">Dangerous on the road</div>
-          <div class="danger-card-body">Alcohol slows your reaction time, blurs your vision and impairs your judgement. <strong>Drink-driving kills.</strong> In the UK alone, around 1,700 people are seriously injured in drink-drive accidents every year. If you've had a drink, hand over the keys — no exceptions.</div>
+          <div class="danger-card-title">Designated drivers</div>
+          <div class="danger-card-body">The person keeping everyone safe shouldn't be rewarded with tap water. <strong>Our virgin packets are visually identical</strong> to the cocktail versions — same packaging, same pour, same table presence. A proper drink for a proper evening.</div>
         </div>
 
         <div class="danger-card">
-          <span class="danger-card-icon">😡</span>
-          <div class="danger-card-title">Aggression and conflict</div>
-          <div class="danger-card-body">Alcohol lowers inhibitions and can make people <strong>unpredictable and aggressive</strong>. It is a factor in over 39% of violent crimes. What starts as a fun night out can quickly turn into a situation no one wanted. The morning after, many people can't remember why they reacted the way they did.</div>
-        </div>
-
-        <div class="danger-card">
-          <span class="danger-card-icon">🫀</span>
-          <div class="danger-card-title">Long-term health damage</div>
-          <div class="danger-card-body">Regular alcohol consumption damages the liver, weakens the heart, raises blood pressure and is linked to <strong>7 types of cancer</strong>. It disrupts sleep, depletes vitamins, and accelerates ageing. The NHS advises keeping alcohol intake below 14 units per week — and less is always better.</div>
-        </div>
-
-        <div class="danger-card">
-          <span class="danger-card-icon">🧠</span>
-          <div class="danger-card-title">Mental health impact</div>
-          <div class="danger-card-body">Alcohol is a depressant. While it may feel like it helps you relax, <strong>it worsens anxiety and depression</strong> over time. Many people drink to cope with stress, creating a harmful cycle. Young people are especially vulnerable — their brains are still developing until their mid-twenties.</div>
-        </div>
-
-        <div class="danger-card">
-          <span class="danger-card-icon">👶</span>
-          <div class="danger-card-title">Not for young people</div>
-          <div class="danger-card-body">Alcohol has a <strong>far more severe impact on developing brains and bodies</strong>. Drinking under 18 is illegal in the UK for good reason — it can permanently affect memory, learning, and emotional regulation. Young people deserve great drinks that don't carry these risks.</div>
-        </div>
-
-        <div class="danger-card">
-          <span class="danger-card-icon">💸</span>
-          <div class="danger-card-title">Social and financial cost</div>
-          <div class="danger-card-body">Alcohol misuse costs the UK economy <strong>over £21 billion a year</strong> — through healthcare, lost productivity and policing. On a personal level, it affects relationships, careers and self-confidence. Choosing alcohol-free doesn't just protect your health, it protects your future.</div>
+          <span class="danger-card-icon">👨‍👩‍👧</span>
+          <div class="danger-card-title">Family &amp; mixed-age gatherings</div>
+          <div class="danger-card-body">BBQs, birthday parties, reunions — when the group spans all ages and preferences, <strong>one pack of cocktail and one pack of virgin</strong> covers everyone. Kids, teens, adults and grandparents can all enjoy the same flavour together.</div>
         </div>
 
       </div>
@@ -474,20 +497,20 @@
       <!-- Stats strip -->
       <div class="danger-stats">
         <div class="danger-stat">
-          <div class="ds-val">1 in 5</div>
-          <div class="ds-lbl">adults drinks above recommended limits weekly</div>
+          <div class="ds-val">3</div>
+          <div class="ds-lbl">flavours available in both versions</div>
         </div>
         <div class="danger-stat">
-          <div class="ds-val">39%</div>
-          <div class="ds-lbl">of violent crimes involve alcohol</div>
+          <div class="ds-val">0%</div>
+          <div class="ds-lbl">alcohol in the virgin range</div>
         </div>
         <div class="danger-stat">
-          <div class="ds-val">7</div>
-          <div class="ds-lbl">types of cancer linked to alcohol</div>
+          <div class="ds-val">100%</div>
+          <div class="ds-lbl">identical flavour profile to the cocktail</div>
         </div>
         <div class="danger-stat">
-          <div class="ds-val">£21bn</div>
-          <div class="ds-lbl">annual cost of alcohol misuse in the UK</div>
+          <div class="ds-val">1 event</div>
+          <div class="ds-lbl">two versions — everyone included</div>
         </div>
       </div>
 
@@ -501,47 +524,47 @@
 <section class="why-virgin-section" id="why-virgin">
   <div class="container">
 
-    <div class="sec-eyebrow wv-eyebrow">🌿 Section 02 — Why It Matters</div>
-    <h2 class="sec-title wv-title">Everyone deserves a <span class="grad">great drink</span></h2>
+    <div class="sec-eyebrow wv-eyebrow">🍹 Section 02 — Why Two Versions Changes Everything</div>
+    <h2 class="sec-title wv-title">No one sits out. <span class="grad">Everyone toasts.</span></h2>
     <p class="wv-intro">
-      The alcohol-free market is booming — and for good reason. More people than ever are choosing to drink less or not at all, without wanting to miss out on the fun. Chill Sip's Virgin Collection was built for all of them.
+      Offering two versions of the same drink isn't a compromise — it's an upgrade. It's how you make every guest feel equally considered, without changing a single thing about the event.
     </p>
 
     <div class="wv-grid">
 
       <div class="wv-card green">
-        <div class="wv-card-icon">🧒</div>
-        <div class="wv-card-title">For younger kids &amp; families</div>
-        <div class="wv-card-body">Children shouldn't have to settle for plain water at a party. Our Virgin range gives younger kids a <strong>flavourful, exciting drink</strong> that feels as special as the adults' — without any alcohol. Perfect for family events, birthday parties, school celebrations and sports days.</div>
+        <div class="wv-card-icon">🥂</div>
+        <div class="wv-card-title">Same glass, same moment</div>
+        <div class="wv-card-body">When everyone holds the same drink, the toast feels equal. <strong>No split table, no awkward moment</strong> — both versions share identical flavour, identical presentation, identical experience. The only difference is personal preference.</div>
       </div>
 
       <div class="wv-card purple">
-        <div class="wv-card-icon">⚡</div>
-        <div class="wv-card-title">A tasty alternative to energy drinks</div>
-        <div class="wv-card-body">Most energy drinks aimed at young people are <strong>loaded with caffeine, artificial sweeteners and synthetic flavourings</strong>. Our Virgin Cocktails are made with real fruit concentrates — giving you a natural energy lift from fruit sugars without the jittery crash. A genuinely better choice for school-age kids.</div>
+        <div class="wv-card-icon">🎯</div>
+        <div class="wv-card-title">Preference, not exclusion</div>
+        <div class="wv-card-body">Some people don't drink alcohol — <strong>by choice, by culture, by health, or by necessity</strong>. The virgin version isn't a lesser option. It's the same cocktail, brewed for a different preference. Guests choose freely, without explanation.</div>
       </div>
 
       <div class="wv-card cyan">
-        <div class="wv-card-icon">🎓</div>
-        <div class="wv-card-title">Safe for school events</div>
-        <div class="wv-card-body">School fairs, year-end celebrations, sports tournaments and prom nights — all events where <strong>students deserve something more exciting than squash</strong>. Chill Sip Virgin Cocktails are school-safe, allergen-labelled and approved for under-18 events. Reach out for bulk school pricing.</div>
+        <div class="wv-card-icon">📦</div>
+        <div class="wv-card-title">Identical packaging</div>
+        <div class="wv-card-body">Virgin Chill Sip packets look and feel exactly like the cocktail version. <strong>No one at the table can tell the difference</strong> — same pour, same colour, same glass. It's seamless hospitality that respects everyone equally.</div>
       </div>
 
       <div class="wv-card yellow">
-        <div class="wv-card-icon">🚗</div>
-        <div class="wv-card-title">For designated drivers &amp; sober nights</div>
-        <div class="wv-card-body">Being the designated driver or choosing a sober night shouldn't mean being stuck with sparkling water all evening. <strong>Our Virgin packets look identical</strong> to the cocktail versions — same packaging, same experience, just without the alcohol. No awkward conversations. Just great taste.</div>
+        <div class="wv-card-icon">🛒</div>
+        <div class="wv-card-title">Easy to serve at scale</div>
+        <div class="wv-card-body">Stock one cocktail packet and one virgin packet per flavour, and let guests self-serve. <strong>No special equipment, no separate bar station</strong> — just two identical packs, side by side. Simple logistics, inclusive result.</div>
       </div>
 
     </div>
 
     <!-- Coming soon — zero sugar -->
     <div class="wv-coming-soon">
-      <div class="wv-cs-icon">🌱</div>
+      <div class="wv-cs-icon">✨</div>
       <div>
         <div class="wv-cs-label">Coming soon</div>
-        <div class="wv-cs-title">Zero Sugar &amp; No Artificial Sugar Collection</div>
-        <div class="wv-cs-body">We're working on a new range with <strong>zero added sugar and zero artificial sweeteners</strong> — sweetened only by the natural fruit itself. Ideal for health-conscious adults, diabetic-friendly diets, and anyone who wants all the flavour with none of the guilt. Sign up to be the first to know when it launches.</div>
+        <div class="wv-cs-title">Zero Sugar Virgin Collection</div>
+        <div class="wv-cs-body">We're expanding the twin concept further — <strong>a zero-sugar, zero-artificial-sweetener virgin range</strong> sweetened only by the natural fruit itself. Same two-version principle: one cocktail, one virgin, one zero-sugar virgin. Cover every preference at one event.</div>
       </div>
     </div>
 
@@ -555,9 +578,9 @@
   <div class="container">
 
     <div class="pk-header">
-      <div class="sec-eyebrow pk-eyebrow">🌿 Section 03 — The Range</div>
-      <h2 class="sec-title pk-title">Three flavours. <span class="grad">Zero alcohol.</span></h2>
-      <p class="sec-sub" data-i18n="virgin.sec3_sub">Every packet is made with real fruit concentrate, no artificial colouring and absolutely no alcohol. Just shake, pour and enjoy.</p>
+      <div class="sec-eyebrow pk-eyebrow">🍹 Section 03 — The Virgin Range</div>
+      <h2 class="sec-title pk-title">Three flavours. <span class="grad">Your version.</span></h2>
+      <p class="sec-sub" data-i18n="virgin.sec3_sub">Each virgin packet is the identical twin of its cocktail counterpart — same real fruit concentrate, same flavour profile, just without the alcohol. Pick your preference.</p>
     </div>
 
     <div class="pk-grid">
@@ -565,18 +588,18 @@
       <!-- Pineapple -->
       <div class="pk-card pk-pineapple">
         <div class="pk-img-area">
-          <span class="pk-zero-badge">🌿 0% Alcohol</span>
+          <span class="pk-zero-badge">✨ Virgin Version</span>
           <img src="images/Pick-your-vide/Pineapple.png" alt="Virgin Pineapple Tropical" />
-          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ No Alcohol · No Spirits</div>
+          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ Same Taste · 0% Alcohol</div>
         </div>
         <div class="pk-body">
           <div class="pk-name" data-i18n="virgin.pk1_name">Virgin Pineapple Tropical</div>
-          <div class="pk-desc">Cold-pressed golden pineapple with a gentle citrus lift. Sunshine in a packet — the whole family can enjoy it. Mix with soda water, coconut water or sparkling lemonade.</div>
+          <div class="pk-desc">The exact same golden pineapple flavour as our cocktail — cold-pressed, tropical and vibrant. Mix with soda water, coconut water or sparkling lemonade. Your version of the same drink.</div>
           <div class="pk-facts">
             <span class="pk-fact">🍍 Real pineapple</span>
             <span class="pk-fact">0% ABV</span>
-            <span class="pk-fact">Natural colour</span>
-            <span class="pk-fact">All ages</span>
+            <span class="pk-fact">Virgin twin</span>
+            <span class="pk-fact">Your choice</span>
           </div>
           <div class="pk-footer">
             <div class="pk-price">£1.79 <span>/ unit</span></div>
@@ -588,18 +611,18 @@
       <!-- Passion Fruit -->
       <div class="pk-card pk-passion">
         <div class="pk-img-area">
-          <span class="pk-zero-badge">🌿 0% Alcohol</span>
+          <span class="pk-zero-badge">✨ Virgin Version</span>
           <img src="images/Pick-your-vide/Passion.png" alt="Virgin Passion Fruit Fusion" />
-          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ No Alcohol · No Spirits</div>
+          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ Same Taste · 0% Alcohol</div>
         </div>
         <div class="pk-body">
           <div class="pk-name" data-i18n="virgin.pk2_name">Virgin Passion Fruit Fusion</div>
-          <div class="pk-desc">Vibrant tropical passion fruit blended with fresh citrus zest. Exotic, fragrant and naturally sweet. Pairs beautifully with ginger beer or sparkling water for an instant tropical escape.</div>
+          <div class="pk-desc">The virgin twin of our passion fruit cocktail — same fragrant, exotic depth without the alcohol. Pairs perfectly with ginger beer or sparkling water. Same table, same glass, your version.</div>
           <div class="pk-facts">
             <span class="pk-fact">💜 Real passion fruit</span>
             <span class="pk-fact">0% ABV</span>
-            <span class="pk-fact">Natural colour</span>
-            <span class="pk-fact">All ages</span>
+            <span class="pk-fact">Virgin twin</span>
+            <span class="pk-fact">Your choice</span>
           </div>
           <div class="pk-footer">
             <div class="pk-price">£2.79 <span>/ unit</span></div>
@@ -611,18 +634,18 @@
       <!-- Strawberry -->
       <div class="pk-card pk-strawberry">
         <div class="pk-img-area">
-          <span class="pk-zero-badge">🌿 0% Alcohol</span>
+          <span class="pk-zero-badge">✨ Virgin Version</span>
           <img src="images/Pick-your-vide/strawberry.png" alt="Virgin Strawberry & Mint" />
-          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ No Alcohol · No Spirits</div>
+          <div class="pk-no-alc-stamp" data-i18n="virgin.pk_no_alc">✔ Same Taste · 0% Alcohol</div>
         </div>
         <div class="pk-body">
           <div class="pk-name" data-i18n="virgin.pk3_name">Virgin Strawberry &amp; Mint</div>
-          <div class="pk-desc">Fresh sun-ripened strawberry with a cool mint finish and a sharp lemon edge. The most-loved flavour in the range — now 100% alcohol-free. A refreshing classic that works at any occasion.</div>
+          <div class="pk-desc">The virgin twin of our most-loved flavour — same fresh strawberry, cool mint and sharp lemon edge, zero alcohol. At any event, everyone gets the same refreshing classic. Just choose your version.</div>
           <div class="pk-facts">
             <span class="pk-fact">🍓 Real strawberry</span>
             <span class="pk-fact">0% ABV</span>
-            <span class="pk-fact">Natural colour</span>
-            <span class="pk-fact">All ages</span>
+            <span class="pk-fact">Virgin twin</span>
+            <span class="pk-fact">Your choice</span>
           </div>
           <div class="pk-footer">
             <div class="pk-price">£2.29 <span>/ unit</span></div>
@@ -638,12 +661,12 @@
 <!-- CTA -->
 <div class="vg-cta">
   <div class="container">
-    <div class="vg-cta-eyebrow" data-i18n="virgin.cta_eyebrow">🌿 Taste the difference</div>
-    <h2 class="vg-cta-title" data-i18n-html="virgin.cta_title">Ready to try the <span class="grad">Virgin range?</span></h2>
-    <p class="vg-cta-sub" data-i18n="virgin.cta_sub">Order a mixed sample set of all three virgin flavours and taste them for yourself. Free UK delivery on orders over £10.</p>
+    <div class="vg-cta-eyebrow" data-i18n="virgin.cta_eyebrow">🍹 One drink. Your version.</div>
+    <h2 class="vg-cta-title" data-i18n-html="virgin.cta_title">Serve both versions <span class="grad">at your next event.</span></h2>
+    <p class="vg-cta-sub" data-i18n="virgin.cta_sub">Order the cocktail and virgin versions together — same flavour, two choices. Every guest gets the same drink they want, and no one sits out. Free UK delivery on orders over £10.</p>
     <div class="vg-cta-btns">
-      <a href="summer-shop.html" class="btn-green" data-i18n="virgin.cta_shop">Shop Virgin Collection →</a>
-      <a href="summer-contact.html" class="btn-outline-green" data-i18n="virgin.cta_bulk">Bulk &amp; School Orders</a>
+      <a href="summer-shop.html" class="btn-green" data-i18n="virgin.cta_shop">Shop Both Versions →</a>
+      <a href="summer-contact.html" class="btn-outline-green" data-i18n="virgin.cta_bulk">Event &amp; Bulk Orders</a>
     </div>
   </div>
 </div>
@@ -659,6 +682,11 @@
       <a href="summer-companies.html" class="f-link">For Companies</a>
       <a href="summer-virgin.html" class="f-link">Virgin Collection</a>
       <a href="#" class="f-link">Privacy</a>
+    </div>
+    <div class="footer-socials">
+      <a href="#" class="footer-social" title="Facebook" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" class="footer-social" title="Instagram" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" class="footer-social" title="TikTok" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg></a>
     </div>
     <div class="f-copy">© 2026 Chill Sip · Drink Responsibly · 18+ for alcohol products</div>
   </div>
